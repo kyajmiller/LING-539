@@ -18,8 +18,8 @@ class MonteHall(object):
 
     def setWinningDoor(self):
         doorValues = [self.GoatDoor] * 3
-        winningDoor = randint(0,2)
-        doorValues[winningDoor] = self.WinningDoor
+        randomWinningDoor = randint(0,2)
+        doorValues[randomWinningDoor] = self.WinningDoor
         return doorValues
 
     def chooseDoor(self):
@@ -37,14 +37,14 @@ class MonteHall(object):
         return randIdx
 
     def doSwitch(self, chosenDoor, openedDoor):
-        available = 1
-        unavailable = -1
+        available = True
+        unavailable = False
         doors = [available] * 3
         doors[chosenDoor] = unavailable
         doors[openedDoor] = unavailable
 
         for i in range(0, 3):
-            if doors[i] == available:
+            if doors[i]:
                 return i
 
     def isCorrect(self, doorValues, chosenDoor):
@@ -59,7 +59,7 @@ class MonteHall(object):
         for i in range(0, self.numIterations):
             doorValues = self.setWinningDoor()
             chosenDoor = self.chooseDoor()
-            openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
+            #openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
 
             if self.isCorrect(doorValues, chosenDoor):
                 numCorrect += 1
