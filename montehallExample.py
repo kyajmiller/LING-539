@@ -64,10 +64,12 @@ class MonteHall(object):
             score = self.isCorrect(doorValues, chosenDoor)
             numCorrect = numCorrect + score
 
+            '''
             if score == 1:
                 print("Win!")
             else:
                 print("Lose!")
+            '''
 
         finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
@@ -86,10 +88,12 @@ class MonteHall(object):
             score = self.isCorrect(doorValues, switchDoor)
             numCorrect = numCorrect + score
 
+            '''
             if score == 1:
                 print("Win!")
             else:
                 print("Lose!")
+            '''
 
         finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
