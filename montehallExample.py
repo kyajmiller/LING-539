@@ -1,95 +1,99 @@
 __author__ = 'Kya'
 from random import randint
 
-#Global Constraints
-GoatDoorInit = 0
-WinningDoorInit = 1
-OpenDoorInit = 2
+class MonteHall(object):
+    def __init__(self, numIterations):
+        self.GoatDoorInit = 0
+        self.WinningDoorInit = 1
+        self.OpenDoorInit = 2
 
-def initWinningDoor():
-    doorValues = [GoatDoorInit] * 3
-    winningDoor = randint(0,2)
-    doorValues[winningDoor] = WinningDoorInit
-    return doorValues
+        self.numIterations = numIterations
 
-def chooseDoor():
-    return randint(0,2)
+        finalScoreNormal = self.doExperimentNormal()
+        finalScoreSwitch = self.doExperimentSwitch()
 
-def openNonWinningDoor(doorValues, chosenDoor):
-    randIdx = randint(0,2)
-    done = 0
-    while (done == 0):
-        if randIdx != chosenDoor and doorValues[randIdx] == GoatDoorInit:
-            done = 1
+        print("Final Score after %s iterations normal: %s" % (self.numIterations, finalScoreNormal))
+
+        print("Final Score after %s iterations experiment: %s" % (self.numIterations, finalScoreSwitch))
+
+    def initWinningDoor(self):
+        doorValues = [self.GoatDoorInit] * 3
+        winningDoor = randint(0,2)
+        doorValues[winningDoor] = self.WinningDoorInit
+        return doorValues
+
+    def chooseDoor(self):
+        return randint(0,2)
+
+    def openNonWinningDoor(self, doorValues, chosenDoor):
+        randIdx = randint(0,2)
+        done = 0
+        while (done == 0):
+            if randIdx != chosenDoor and doorValues[randIdx] == self.GoatDoorInit:
+                done = 1
+            else:
+                randIdx = randint(0,2)
+
+        return randIdx
+
+    def doSwitch(self, chosenDoor, openedDoor):
+        available = 1
+        unavailable = -1
+        doors = [available] * 3
+        doors[chosenDoor] = unavailable
+        doors[openedDoor] = unavailable
+
+        for i in range(0, 3):
+            if doors[i] == available:
+                return i
+
+    def isCorrect(self, doorValues, chosenDoor):
+        if doorValues[chosenDoor] == self.WinningDoorInit:
+            return 1
         else:
-            randIdx = randint(0,2)
+            return 0
 
-    return randIdx
+    def doExperimentNormal(self):
+        numCorrect = 0
 
-def doSwitch(chosenDoor, openedDoor):
-    available = 1
-    unavailable = -1
-    doors = [available] * 3
-    doors[chosenDoor] = unavailable
-    doors[openedDoor] = unavailable
+        for i in range(0, self.numIterations):
+            doorValues = self.initWinningDoor()
+            chosenDoor = self.chooseDoor()
+            openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
 
-    for i in range(0, 3):
-        if doors[i] == available:
-            return i
+            score = self.isCorrect(doorValues, chosenDoor)
+            numCorrect = numCorrect + score
 
-def isCorrect(doorValues, chosenDoor):
-    if doorValues[chosenDoor] == WinningDoorInit:
-        return 1
-    else:
-        return 0
+            if score == 1:
+                print("Win!")
+            else:
+                print("Lose!")
 
-def doExperimentNormal(numIterations):
-    numCorrect = 0
+        finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
-    for i in range(0, numIterations):
-        doorValues = initWinningDoor()
-        chosenDoor = chooseDoor()
-        openDoor = openNonWinningDoor(doorValues, chosenDoor)
-
-        score = isCorrect(doorValues, chosenDoor)
-        numCorrect = numCorrect + score
-
-        if score == 1:
-            print("Win!")
-        else:
-            print("Lose!")
-
-    finalScore = (float(numCorrect) / float(numIterations)) * 100
-
-    return finalScore
+        return finalScore
 
 
-def doExperimentSwitch(numIterations):
-    numCorrect = 0
+    def doExperimentSwitch(self):
+        numCorrect = 0
 
-    for i in range(0, numIterations):
-        doorValues = initWinningDoor()
-        chosenDoor = chooseDoor()
-        openDoor = openNonWinningDoor(doorValues, chosenDoor)
-        switchDoor = doSwitch(chosenDoor, openDoor)
+        for i in range(0, self.numIterations):
+            doorValues = self.initWinningDoor()
+            chosenDoor = self.chooseDoor()
+            openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
+            switchDoor = self.doSwitch(chosenDoor, openDoor)
 
-        score = isCorrect(doorValues, switchDoor)
-        numCorrect = numCorrect + score
+            score = self.isCorrect(doorValues, switchDoor)
+            numCorrect = numCorrect + score
 
-        if score == 1:
-            print("Win!")
-        else:
-            print("Lose!")
+            if score == 1:
+                print("Win!")
+            else:
+                print("Lose!")
 
-    finalScore = (float(numCorrect) / float(numIterations)) * 100
+        finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
-    return finalScore
+        return finalScore
 
-#Main Program
-n = 10000
-finalScoreNormal = doExperimentNormal(n)
-finalScoreSwitch = doExperimentSwitch(n)
+MonteHall(10000)
 
-print("Final Score after %s iterations normal: %s" % (n, finalScoreNormal))
-
-print("Final Score after %s iterations experiment: %s" % (n, finalScoreSwitch))
