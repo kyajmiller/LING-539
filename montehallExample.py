@@ -90,15 +90,6 @@ n = 10000
 finalScoreNormal = doExperimentNormal(n)
 finalScoreSwitch = doExperimentSwitch(n)
 
-print("Final Score after iterations normal: %s" % finalScoreNormal)
+print("Final Score after %s iterations normal: %s" % (n, finalScoreNormal))
 
-print("Final Score after iterations experiment: %s" % finalScoreSwitch)
-
-
-'''
-doors = initWinningDoor()
-chosenDoor = chooseDoor()
-
-print(initWinningDoor())
-print("Initialized Doors")
-'''
+print("Final Score after %s iterations experiment: %s" % (n, finalScoreSwitch))
