@@ -2,14 +2,14 @@ __author__ = 'Kya'
 from random import randint
 
 #Global Constraints
-GOAT_DOOR = 0
-WINNING_DOOR = 1
-OPEN_DOOR = 2
+GoatDoorInit = 0
+WinningDoorInit = 1
+OpenDoorInit = 2
 
 def initWinningDoor():
-    doorValues = [GOAT_DOOR] * 3
+    doorValues = [GoatDoorInit] * 3
     winningDoor = randint(0,2)
-    doorValues[winningDoor] = WINNING_DOOR
+    doorValues[winningDoor] = WinningDoorInit
     return doorValues
 
 def chooseDoor():
@@ -19,7 +19,7 @@ def openNonWinningDoor(doorValues, chosenDoor):
     randIdx = randint(0,2)
     done = 0
     while (done == 0):
-        if randIdx != chosenDoor and doorValues[randIdx] == GOAT_DOOR:
+        if randIdx != chosenDoor and doorValues[randIdx] == GoatDoorInit:
             done = 1
         else:
             randIdx = randint(0,2)
@@ -38,7 +38,7 @@ def doSwitch(chosenDoor, openedDoor):
             return i
 
 def isCorrect(doorValues, chosenDoor):
-    if doorValues[chosenDoor] == WINNING_DOOR:
+    if doorValues[chosenDoor] == WinningDoorInit:
         return 1
     else:
         return 0
