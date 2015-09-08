@@ -59,7 +59,6 @@ class MonteHall(object):
         for i in range(0, self.numIterations):
             doorValues = self.setWinningDoor()
             chosenDoor = self.chooseDoor()
-            #openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
 
             if self.isCorrect(doorValues, chosenDoor):
                 numCorrect += 1
