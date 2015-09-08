@@ -3,9 +3,9 @@ from random import randint
 
 class MonteHall(object):
     def __init__(self, numIterations):
-        self.GoatDoorInit = 0
-        self.WinningDoorInit = 1
-        self.OpenDoorInit = 2
+        self.GoatDoor = 0
+        self.WinningDoor = 1
+        self.OpenDoor = 2
 
         self.numIterations = numIterations
 
@@ -16,10 +16,10 @@ class MonteHall(object):
 
         print("Final Score after %s iterations experiment: %s" % (self.numIterations, finalScoreSwitch))
 
-    def initWinningDoor(self):
-        doorValues = [self.GoatDoorInit] * 3
+    def setWinningDoor(self):
+        doorValues = [self.GoatDoor] * 3
         winningDoor = randint(0,2)
-        doorValues[winningDoor] = self.WinningDoorInit
+        doorValues[winningDoor] = self.WinningDoor
         return doorValues
 
     def chooseDoor(self):
@@ -29,7 +29,7 @@ class MonteHall(object):
         randIdx = randint(0,2)
         done = 0
         while (done == 0):
-            if randIdx != chosenDoor and doorValues[randIdx] == self.GoatDoorInit:
+            if randIdx != chosenDoor and doorValues[randIdx] == self.GoatDoor:
                 done = 1
             else:
                 randIdx = randint(0,2)
@@ -48,7 +48,7 @@ class MonteHall(object):
                 return i
 
     def isCorrect(self, doorValues, chosenDoor):
-        if doorValues[chosenDoor] == self.WinningDoorInit:
+        if doorValues[chosenDoor] == self.WinningDoor:
             return True
         else:
             return False
@@ -57,7 +57,7 @@ class MonteHall(object):
         numCorrect = 0
 
         for i in range(0, self.numIterations):
-            doorValues = self.initWinningDoor()
+            doorValues = self.setWinningDoor()
             chosenDoor = self.chooseDoor()
             openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
 
@@ -80,7 +80,7 @@ class MonteHall(object):
         numCorrect = 0
 
         for i in range(0, self.numIterations):
-            doorValues = self.initWinningDoor()
+            doorValues = self.setWinningDoor()
             chosenDoor = self.chooseDoor()
             openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
             switchDoor = self.doSwitch(chosenDoor, openDoor)
