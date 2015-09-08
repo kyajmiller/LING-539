@@ -49,9 +49,9 @@ class MonteHall(object):
 
     def isCorrect(self, doorValues, chosenDoor):
         if doorValues[chosenDoor] == self.WinningDoorInit:
-            return 1
+            return True
         else:
-            return 0
+            return False
 
     def doExperimentNormal(self):
         numCorrect = 0
@@ -61,11 +61,11 @@ class MonteHall(object):
             chosenDoor = self.chooseDoor()
             openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
 
-            score = self.isCorrect(doorValues, chosenDoor)
-            numCorrect = numCorrect + score
+            if self.isCorrect(doorValues, chosenDoor):
+                numCorrect += 1
 
             '''
-            if score == 1:
+            if self.isCorrect(doorValues, chosenDoor):
                 print("Win!")
             else:
                 print("Lose!")
@@ -85,11 +85,11 @@ class MonteHall(object):
             openDoor = self.openNonWinningDoor(doorValues, chosenDoor)
             switchDoor = self.doSwitch(chosenDoor, openDoor)
 
-            score = self.isCorrect(doorValues, switchDoor)
-            numCorrect = numCorrect + score
+            if self.isCorrect(doorValues, switchDoor):
+                numCorrect += 1
 
             '''
-            if score == 1:
+            if self.isCorrect(doorValues, chosenDoor):
                 print("Win!")
             else:
                 print("Lose!")
