@@ -1,4 +1,6 @@
 __author__ = 'Kya'
+# September 8, 2015
+
 from random import randint
 
 class MonteHall(object):
