@@ -1,5 +1,4 @@
 __author__ = 'Kya'
-import nltk
 from nltk.book import *
 from pylab import *
 
@@ -19,3 +18,5 @@ for len in wordLengths:
 bar(lengths, counts)
 xlabel("Word Lengths")
 ylabel("Counts")
+grid(True)
+show()
