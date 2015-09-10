@@ -15,8 +15,12 @@ def makeDiceP_x(numSides):
     return dist
 
 
+def doDiceEntropy(diceSides):
+    diceP_x = makeDiceP_x(diceSides)
+    print("P_x: %s" % diceP_x)
+    print("Entropy of %s sided dice: %s bits" % (diceSides, entropy(diceP_x)))
+
 # main program
-diceSides = 6
-diceP_x = makeDiceP_x(diceSides)
-print("P_x: %s" % diceP_x)
-print("Entropy of %s sided dice: %s bits" % (diceSides, entropy(diceP_x)))
+doDiceEntropy(6)
+doDiceEntropy(4)
+doDiceEntropy(20)
