@@ -1,13 +1,17 @@
 __author__ = 'Kya'
 from collections import Counter
 
-brownTagNoLines = open('browntag_nolines.txt', 'r')
-brownTagNoLines = brownTagNoLines.read()
+filein = open('browntag_nolines.txt', 'r')
+brownTagNoLines = filein.read()
+filein.close()
+
+tagOutputFile = open('freqout_tag.txt', 'w')
+wordOutputFile = open('freqout_word.txt', 'w')
+taggedWordOutputFile = open('freqout_taggedword.txt', 'w')
 
 wordsPOSTagged = brownTagNoLines.split(' ')
 wordsOnlyList = []
 posTagsOnlyList = []
-wordsAndPOSTagsList = []
 
 for token in wordsPOSTagged:
     splitWordPOS = token.split('_', 1)
@@ -15,9 +19,15 @@ for token in wordsPOSTagged:
     posTagsOnlyList.append(splitWordPOS[1])
 
 wordsAndPOSTagFrequencyDict = Counter()
+
 for wordAndPOSTag in wordsPOSTagged:
     wordsAndPOSTagFrequencyDict[wordAndPOSTag] += 1
+
 wordsPOSTagsFrequencySorted = wordsAndPOSTagFrequencyDict.most_common()
+
+for wordPOSTag in wordsPOSTagsFrequencySorted:
+
+
 # for word in wordsPOSTagsFrequencySorted[:10]:
 #    print word[0], '\t', word[1]
 
