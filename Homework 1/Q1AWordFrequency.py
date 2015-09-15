@@ -18,9 +18,14 @@ for token in tokensPOSTagged:
 
     if token not in wordsAndPOSTagFrequencyDict.iterkeys():
         wordsAndPOSTagFrequencyDict[token] = 1
+        print(wordsAndPOSTagFrequencyDict[token])
     else:
         wordsAndPOSTagFrequencyDict[token] += 1
+        print(wordsAndPOSTagFrequencyDict[token])
 
+for token in sorted(wordsAndPOSTagFrequencyDict, key=wordsAndPOSTagFrequencyDict.get, reverse=True)[:10]:
+    print(token, wordsAndPOSTagFrequencyDict[token])
+'''
 for word in wordsOnly:
     if word not in wordsFrequencyDict.iterkeys():
         wordsFrequencyDict[word] = 1
@@ -36,3 +41,4 @@ for posTag in posTagsOnly:
 print(wordsFrequencyDict[0])
 print(posTagsFrequencyDict[0])
 print(wordsAndPOSTagFrequencyDict[0])
+'''
