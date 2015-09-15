@@ -18,27 +18,29 @@ for token in wordsPOSTagged:
     wordsOnlyList.append(splitWordPOS[0])
     posTagsOnlyList.append(splitWordPOS[1])
 
-wordsAndPOSTagFrequencyDict = Counter()
+wordsPOSTagsFrequencyDict = Counter()
+for wordPOSTag in wordsPOSTagged:
+    wordsPOSTagsFrequencyDict[wordPOSTag] += 1
+wordsPOSTagsFrequencySorted = wordsPOSTagsFrequencyDict.most_common()
 
-for wordAndPOSTag in wordsPOSTagged:
-    wordsAndPOSTagFrequencyDict[wordAndPOSTag] += 1
-
-wordsPOSTagsFrequencySorted = wordsAndPOSTagFrequencyDict.most_common()
-
-for wordPOSTag in wordsPOSTagsFrequencySorted:
-
-
-# for word in wordsPOSTagsFrequencySorted[:10]:
-#    print word[0], '\t', word[1]
+for taggedWord in wordsPOSTagsFrequencySorted:
+    formattedString = '%s \t %s \n' % (taggedWord[0], taggedWord[1])
+    taggedWordOutputFile.write(formattedString)
 
 wordsFrequencyDict = Counter()
 for word in wordsOnlyList:
     wordsFrequencyDict[word] += 1
 wordsFrequencySorted = wordsFrequencyDict.most_common()
-#print(wordsFrequencyDict)
+
+for word in wordsFrequencySorted:
+    formattedString = '%s \t %s \n' % (word[0], word[1])
+    wordOutputFile.write(formattedString)
 
 posTagsFrequencyDict = Counter()
 for posTag in posTagsOnlyList:
     posTagsFrequencyDict[posTag] += 1
 posTagsFrequencySorted = posTagsFrequencyDict.most_common()
-#print(posTagsFrequencyDict)
+
+for posTag in posTagsFrequencySorted:
+    formattedString = '%s \t %s \n' % (posTag[0], posTag[1])
+    tagOutputFile.write(formattedString)
