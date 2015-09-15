@@ -1,44 +1,34 @@
 __author__ = 'Kya'
+from collections import Counter
 
 brownTagNoLines = open('browntag_nolines.txt', 'r')
 brownTagNoLines = brownTagNoLines.read()
 
-tokensPOSTagged = brownTagNoLines.split(' ')
-wordsOnly = []
-posTagsOnly = []
+wordsPOSTagged = brownTagNoLines.split(' ')
+wordsOnlyList = []
+posTagsOnlyList = []
+wordsAndPOSTagsList = []
 
-wordsFrequencyDict = {}
-posTagsFrequencyDict = {}
-wordsAndPOSTagFrequencyDict = {}
-
-for token in tokensPOSTagged:
+for token in wordsPOSTagged:
     splitWordPOS = token.split('_', 1)
-    wordsOnly.append(splitWordPOS[0])
-    posTagsOnly.append(splitWordPOS[1])
+    wordsOnlyList.append(splitWordPOS[0])
+    posTagsOnlyList.append(splitWordPOS[1])
 
-    if token not in wordsAndPOSTagFrequencyDict.iterkeys():
-        wordsAndPOSTagFrequencyDict[token] = 1
-        print(wordsAndPOSTagFrequencyDict[token])
-    else:
-        wordsAndPOSTagFrequencyDict[token] += 1
-        print(wordsAndPOSTagFrequencyDict[token])
+wordsAndPOSTagFrequencyDict = Counter()
+for wordAndPOSTag in wordsPOSTagged:
+    wordsAndPOSTagFrequencyDict[wordAndPOSTag] += 1
+wordsPOSTagsFrequencySorted = wordsAndPOSTagFrequencyDict.most_common()
+# for word in wordsPOSTagsFrequencySorted[:10]:
+#    print word[0], '\t', word[1]
 
-for token in sorted(wordsAndPOSTagFrequencyDict, key=wordsAndPOSTagFrequencyDict.get, reverse=True)[:10]:
-    print(token, wordsAndPOSTagFrequencyDict[token])
-'''
-for word in wordsOnly:
-    if word not in wordsFrequencyDict.iterkeys():
-        wordsFrequencyDict[word] = 1
-    else:
-        wordsFrequencyDict[word] += 1
+wordsFrequencyDict = Counter()
+for word in wordsOnlyList:
+    wordsFrequencyDict[word] += 1
+wordsFrequencySorted = wordsFrequencyDict.most_common()
+#print(wordsFrequencyDict)
 
-for posTag in posTagsOnly:
-    if posTag not in posTagsFrequencyDict.iterkeys():
-        posTagsFrequencyDict[posTag] = 1
-    else:
-        posTagsFrequencyDict[posTag] += 1
-
-print(wordsFrequencyDict[0])
-print(posTagsFrequencyDict[0])
-print(wordsAndPOSTagFrequencyDict[0])
-'''
+posTagsFrequencyDict = Counter()
+for posTag in posTagsOnlyList:
+    posTagsFrequencyDict[posTag] += 1
+posTagsFrequencySorted = posTagsFrequencyDict.most_common()
+#print(posTagsFrequencyDict)
