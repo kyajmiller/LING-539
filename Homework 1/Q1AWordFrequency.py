@@ -51,3 +51,7 @@ posTagsFrequencySorted = posTagsFrequencyDict.most_common()
 for posTag in posTagsFrequencySorted:
     formattedString = '%s \t %s \n' % (posTag[0], posTag[1])
     tagOutputFile.write(formattedString)
+
+tagOutputFile.close()
+taggedWordOutputFile.close()
+wordOutputFile.close()
