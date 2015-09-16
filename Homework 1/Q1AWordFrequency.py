@@ -1,4 +1,5 @@
 __author__ = 'Kya'
+import re
 from collections import Counter
 
 filein = open('browntag_nolines.txt', 'r')
@@ -15,8 +16,14 @@ posTagsOnlyList = []
 
 for token in wordsPOSTagged:
     splitWordPOS = token.split('_', 1)
-    wordsOnlyList.append(splitWordPOS[0])
-    posTagsOnlyList.append(splitWordPOS[1])
+    word = splitWordPOS[0]
+    tag = splitWordPOS[1]
+    if re.search('_', tag):
+        resplit = tag.split('_', 1)
+        word = '%s%s' % (word, resplit[0])
+        tag = resplit[1]
+    wordsOnlyList.append(word)
+    posTagsOnlyList.append(tag)
 
 wordsPOSTagsFrequencyDict = Counter()
 for wordPOSTag in wordsPOSTagged:
