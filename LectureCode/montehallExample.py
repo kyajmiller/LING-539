@@ -14,9 +14,9 @@ class MonteHall(object):
         finalScoreNormal = self.doExperimentNormal()
         finalScoreSwitch = self.doExperimentSwitch()
 
-        print("Final Score after %s iterations normal: %s" % (self.numIterations, finalScoreNormal))
+        print("Final Score after %s iterations with no switching: %s" % (self.numIterations, finalScoreNormal))
 
-        print("Final Score after %s iterations experiment: %s" % (self.numIterations, finalScoreSwitch))
+        print("Final Score after %s iterations with switching: %s" % (self.numIterations, finalScoreSwitch))
 
     def setWinningDoor(self):
         doorValues = [self.GoatDoor] * 3
@@ -28,15 +28,15 @@ class MonteHall(object):
         return randint(0,2)
 
     def openNonWinningDoor(self, doorValues, chosenDoor):
-        randIdx = randint(0,2)
-        done = 0
-        while (done == 0):
-            if randIdx != chosenDoor and doorValues[randIdx] == self.GoatDoor:
-                done = 1
+        randomDoor = randint(0, 2)
+        done = False
+        while not done:
+            if randomDoor != chosenDoor and doorValues[randomDoor] == self.GoatDoor:
+                done = True
             else:
-                randIdx = randint(0,2)
+                randomDoor = randint(0, 2)
 
-        return randIdx
+        return randomDoor
 
     def doSwitch(self, chosenDoor, openedDoor):
         available = True
