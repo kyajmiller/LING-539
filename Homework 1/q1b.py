@@ -26,6 +26,8 @@ def doSentenceProbability(sentence):
 
 sentsInFile = open('sents_in.txt', 'r')
 sentsInData = sentsInFile.readlines()
+sentsInFile.close()
+
 sentsInData = [sentence.strip() for sentence in sentsInData]
 
 wordsFrequencySortedList = q1a.makeWordsSortedList()
