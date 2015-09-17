@@ -8,6 +8,31 @@ Q1A - Writes frequency information of words, part of speech tags, and tagged wor
 import re
 from collections import Counter
 
+
+def makeTaggedWordsSortedList():
+    taggedWordsFrequencyDict = Counter()
+    for taggedWord in wordsPOSTags:
+        taggedWordsFrequencyDict[taggedWord] += 1
+
+    return taggedWordsFrequencyDict.most_common()
+
+
+def makeWordsSortedList():
+    wordsFrequencyDict = Counter()
+    for word in wordsOnlyList:
+        wordsFrequencyDict[word] += 1
+
+    return wordsFrequencyDict.most_common()
+
+
+def makePOSTagsSortedList():
+    posTagsFrequencyDict = Counter()
+    for posTag in posTagsOnlyList:
+        posTagsFrequencyDict[posTag] += 1
+
+    return posTagsFrequencyDict.most_common()
+
+
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
@@ -16,11 +41,11 @@ tagOutputFile = open('freqout_tag.txt', 'w')
 wordOutputFile = open('freqout_word.txt', 'w')
 taggedWordOutputFile = open('freqout_taggedword.txt', 'w')
 
-wordsPOSTagged = brownTagNoLines.split(' ')
+wordsPOSTags = brownTagNoLines.split(' ')
 wordsOnlyList = []
 posTagsOnlyList = []
 
-for token in wordsPOSTagged:
+for token in wordsPOSTags:
     splitWordPOS = token.split('_', 1)
     word = splitWordPOS[0]
     tag = splitWordPOS[1]
@@ -31,30 +56,21 @@ for token in wordsPOSTagged:
     wordsOnlyList.append(word)
     posTagsOnlyList.append(tag)
 
-wordsPOSTagsFrequencyDict = Counter()
-for wordPOSTag in wordsPOSTagged:
-    wordsPOSTagsFrequencyDict[wordPOSTag] += 1
-wordsPOSTagsFrequencySorted = wordsPOSTagsFrequencyDict.most_common()
+taggedWordsSortedList = makeTaggedWordsSortedList()
 
-for taggedWord in wordsPOSTagsFrequencySorted:
+for taggedWord in taggedWordsSortedList:
     formattedString = '%s \t %s \n' % (taggedWord[0], taggedWord[1])
     taggedWordOutputFile.write(formattedString)
 
-wordsFrequencyDict = Counter()
-for word in wordsOnlyList:
-    wordsFrequencyDict[word] += 1
-wordsFrequencySorted = wordsFrequencyDict.most_common()
+wordsSortedList = makeWordsSortedList()
 
-for word in wordsFrequencySorted:
+for word in wordsSortedList:
     formattedString = '%s \t %s \n' % (word[0], word[1])
     wordOutputFile.write(formattedString)
 
-posTagsFrequencyDict = Counter()
-for posTag in posTagsOnlyList:
-    posTagsFrequencyDict[posTag] += 1
-posTagsFrequencySorted = posTagsFrequencyDict.most_common()
+posTagsSortedList = makePOSTagsSortedList()
 
-for posTag in posTagsFrequencySorted:
+for posTag in posTagsSortedList:
     formattedString = '%s \t %s \n' % (posTag[0], posTag[1])
     tagOutputFile.write(formattedString)
 
