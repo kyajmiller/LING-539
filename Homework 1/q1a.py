@@ -1,4 +1,3 @@
-__author__ = 'Kya'
 '''
 Kya Miller
 LING 539 Assignment 1
