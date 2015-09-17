@@ -1,8 +1,8 @@
-'''
+"""
 Kya Miller
 LING 539 Assignment 1
 Q1A - Writes frequency information of words, part of speech tags, and tagged words to three separate text files
-'''
+"""
 
 import re
 from collections import Counter
