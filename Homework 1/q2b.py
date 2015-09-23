@@ -82,7 +82,7 @@ class MonteHall(object):
         finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
         print("Final Score for non-switching experiment after %s iterations with %s total doors: %s" % (
-        self.numIterations, self.numTotalDoors, finalScore))
+            self.numIterations, self.numTotalDoors, finalScore))
 
         # return finalScore
 
@@ -104,7 +104,7 @@ class MonteHall(object):
         finalScore = (float(numCorrect) / float(self.numIterations)) * 100
 
         print("Final Score for switching experiment after %s iterations with %s total doors and %s opened doors: %s" % (
-        self.numIterations, self.numTotalDoors, self.numOpenedDoors, finalScore))
+            self.numIterations, self.numTotalDoors, self.numOpenedDoors, finalScore))
 
         # return finalScore
 
