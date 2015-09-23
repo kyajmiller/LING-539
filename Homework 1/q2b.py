@@ -79,17 +79,19 @@ class MonteHall(object):
             if self.CheckIfWinningDoor(doorValues, chosenDoor):
                 numCorrect += 1
 
-        finalScore = (float(numCorrect) / float(self.numIterations)) * 100
+        finalScore = (numCorrect / self.numIterations) * 100
 
+        '''
         print("Final Score for non-switching experiment after %s iterations with %s total doors: %s" % (
             self.numIterations, self.numTotalDoors, finalScore))
+        '''
 
-        # return finalScore
+        return finalScore
 
     def RunExperimentSwitch(self):
-        numCorrect = 0
-
         if self.numOpenedDoors <= self.numTotalDoors - 2:
+            numCorrect = 0
+
             for i in range(0, self.numIterations):
                 doorValues = self.InitializeDoorValues()
                 chosenDoor = self.ChooseDoor()
@@ -98,16 +100,19 @@ class MonteHall(object):
 
                 if self.CheckIfWinningDoor(doorValues, switchDoor):
                     numCorrect += 1
+
+            finalScore = (numCorrect / self.numIterations) * 100
+
+            '''
+            print("Final Score for switching experiment after %s iterations with %s total doors and %s opened doors: %s" % (
+                self.numIterations, self.numTotalDoors, self.numOpenedDoors, finalScore))
+            '''
+
+            return finalScore
         else:
-            print("Not enough total doors to support the number of opened doors.")
-
-        finalScore = (float(numCorrect) / float(self.numIterations)) * 100
-
-        print("Final Score for switching experiment after %s iterations with %s total doors and %s opened doors: %s" % (
-            self.numIterations, self.numTotalDoors, self.numOpenedDoors, finalScore))
-
-        # return finalScore
+            # print("Not enough total doors to support the number of opened doors.")
+            return '//'
 
 
-MonteHall(10000, 4, 2).RunExperimentNoSwitch()
-MonteHall(10000, 4, 2).RunExperimentSwitch()
+print(MonteHall(10000, 4, 2).RunExperimentNoSwitch())
+print(MonteHall(10000, 4, 2).RunExperimentSwitch())
