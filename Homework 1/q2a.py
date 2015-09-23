@@ -69,7 +69,7 @@ class MonteHall(object):
             if self.CheckIfWinningDoor(doorValues, chosenDoor):
                 numCorrect += 1
 
-        finalScore = (float(numCorrect) / float(self.numIterations)) * 100
+        finalScore = (numCorrect / self.numIterations) * 100
 
         return finalScore
 
