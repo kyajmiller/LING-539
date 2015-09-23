@@ -20,13 +20,6 @@ class MonteHall(object):
         self.numTotalDoors = numTotalDoors
         self.numOpenedDoors = numOpenedDoors
 
-        # finalScoreNormal = self.RunExperimentNoSwitch()
-        # finalScoreSwitch = self.RunExperimentSwitch()
-
-        # print("Final Score after %s iterations with no switching: %s" % (self.numIterations, finalScoreNormal))
-
-        # print("Final Score after %s iterations with switching: %s" % (self.numIterations, finalScoreSwitch))
-
     def InitializeDoorValues(self):
         doorValues = [self.BadDoor] * self.numTotalDoors
         randomWinningDoor = random.randint(0, self.numTotalDoors - 1)
@@ -82,11 +75,6 @@ class MonteHall(object):
 
         finalScore = (numCorrect / self.numIterations) * 100
 
-        '''
-        print("Final Score for non-switching experiment after %s iterations with %s total doors: %s" % (
-            self.numIterations, self.numTotalDoors, finalScore))
-        '''
-
         return finalScore
 
     def RunExperimentSwitch(self):
@@ -103,17 +91,10 @@ class MonteHall(object):
                     numCorrect += 1
 
             finalScore = (numCorrect / self.numIterations) * 100
-
-            '''
-            print("Final Score for switching experiment after %s iterations with %s total doors and %s opened doors: %s" % (
-                self.numIterations, self.numTotalDoors, self.numOpenedDoors, finalScore))
-            '''
-
             return finalScore
         elif self.numOpenedDoors == self.numTotalDoors - 1:
             return '100.00'
         else:
-            # print("Not enough total doors to support the number of opened doors.")
             return '//'
 
 
