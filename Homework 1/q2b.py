@@ -8,6 +8,7 @@ in a fancy table.
 
 from __future__ import division
 import random
+from prettytable import PrettyTable
 
 
 class MonteHall(object):
@@ -109,10 +110,52 @@ class MonteHall(object):
             '''
 
             return finalScore
+        elif self.numOpenedDoors == self.numTotalDoors - 1:
+            return '100.00'
         else:
             # print("Not enough total doors to support the number of opened doors.")
             return '//'
 
 
-print(MonteHall(10000, 4, 2).RunExperimentNoSwitch())
-print(MonteHall(10000, 4, 2).RunExperimentSwitch())
+def RunNonSwitchingExperiments():
+    noSwitchTable = PrettyTable(['k', '3', '4', '5', '6', '7', '8', '9', '10'])
+    noSwitchTable.add_row(
+        ['', MonteHall(10000, 3, 2).RunExperimentNoSwitch(), MonteHall(10000, 4, 2).RunExperimentNoSwitch(),
+         MonteHall(10000, 5, 2).RunExperimentNoSwitch(), MonteHall(10000, 6, 2).RunExperimentNoSwitch(),
+         MonteHall(10000, 7, 2).RunExperimentNoSwitch(), MonteHall(10000, 8, 2).RunExperimentNoSwitch(),
+         MonteHall(10000, 9, 2).RunExperimentNoSwitch(), MonteHall(10000, 10, 2).RunExperimentNoSwitch()])
+
+    print("Results for NonSwitching Experiments after 10,000 iterations:")
+    print noSwitchTable
+
+
+def RunSwitchingExperiments():
+    switchTable = PrettyTable(['s, k', '3', '4', '5', '6', '7', '8', '9', '10'])
+    switchTable.add_row(
+        ['2', MonteHall(10000, 3, 2).RunExperimentSwitch(), MonteHall(10000, 4, 2).RunExperimentSwitch(),
+         MonteHall(10000, 5, 2).RunExperimentSwitch(), MonteHall(10000, 6, 2).RunExperimentSwitch(),
+         MonteHall(10000, 7, 2).RunExperimentSwitch(), MonteHall(10000, 8, 2).RunExperimentSwitch(),
+         MonteHall(10000, 9, 2).RunExperimentSwitch(), MonteHall(10000, 10, 2).RunExperimentSwitch()])
+    switchTable.add_row(
+        ['3', MonteHall(10000, 3, 3).RunExperimentSwitch(), MonteHall(10000, 4, 3).RunExperimentSwitch(),
+         MonteHall(10000, 5, 3).RunExperimentSwitch(), MonteHall(10000, 6, 3).RunExperimentSwitch(),
+         MonteHall(10000, 7, 3).RunExperimentSwitch(), MonteHall(10000, 8, 3).RunExperimentSwitch(),
+         MonteHall(10000, 9, 3).RunExperimentSwitch(), MonteHall(10000, 10, 3).RunExperimentSwitch()])
+    switchTable.add_row(
+        ['4', MonteHall(10000, 3, 4).RunExperimentSwitch(), MonteHall(10000, 4, 4).RunExperimentSwitch(),
+         MonteHall(10000, 5, 4).RunExperimentSwitch(), MonteHall(10000, 6, 4).RunExperimentSwitch(),
+         MonteHall(10000, 7, 4).RunExperimentSwitch(), MonteHall(10000, 8, 4).RunExperimentSwitch(),
+         MonteHall(10000, 9, 4).RunExperimentSwitch(), MonteHall(10000, 10, 4).RunExperimentSwitch()])
+    switchTable.add_row(
+        ['5', MonteHall(10000, 3, 5).RunExperimentSwitch(), MonteHall(10000, 4, 5).RunExperimentSwitch(),
+         MonteHall(10000, 5, 5).RunExperimentSwitch(), MonteHall(10000, 6, 5).RunExperimentSwitch(),
+         MonteHall(10000, 7, 5).RunExperimentSwitch(), MonteHall(10000, 8, 5).RunExperimentSwitch(),
+         MonteHall(10000, 9, 5).RunExperimentSwitch(), MonteHall(10000, 10, 5).RunExperimentSwitch()])
+
+    print("Results for Switching Experiments after 10,000 iterations:")
+    print switchTable
+
+
+RunNonSwitchingExperiments()
+print("\n")
+RunSwitchingExperiments()
