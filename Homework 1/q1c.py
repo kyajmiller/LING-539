@@ -27,6 +27,7 @@ frequencyY = [frequency for rank, frequency in rankByFrequency]
 
 
 def plot_points():
+    plt.figure(1)
     plt.scatter(rankX, frequencyY)
     plt.xlabel("rank")
     plt.ylabel("frequency")
@@ -35,4 +36,15 @@ def plot_points():
     plt.show()
 
 
+def plot_line():
+    plt.figure(2)
+    plt.plot(rankX, frequencyY, 'r')
+    plt.xlabel('rank')
+    plt.ylabel('frequency')
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
+
+
 plot_points()
+plot_line()
