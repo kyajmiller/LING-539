@@ -33,5 +33,4 @@ frequencyY = [wordsFrequencySortedList[i][1] for i in range(len(wordsFrequencySo
 logX = [numpy.log10(x) for x in rankX]
 logY = [numpy.log10(y) for y in frequencyY]
 
-# plot_points()
 plotPointsAndLineOfBestFit()
