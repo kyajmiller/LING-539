@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 def plot_points():
     plt.figure(1)
     plt.scatter(rankX, frequencyY)
-    plt.xlabel("rank")
-    plt.ylabel("frequency")
+    plt.xlabel('rank')
+    plt.ylabel('frequency')
     plt.xscale('log')
     plt.yscale('log')
     plt.show()
