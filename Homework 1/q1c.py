@@ -17,14 +17,6 @@ pyplot.scatter
 makes line by .plot
 '''
 
-wordsFrequencySortedList = q1a.makeWordsSortedList()
-rankByFrequency = [[i + 1, wordsFrequencySortedList[i][1]] for i in range(len(wordsFrequencySortedList))]
-
-
-rankX = [rank for rank, frequency in rankByFrequency]
-logRankX = [math.log(rank) for rank in rankX]
-frequencyY = [frequency for rank, frequency in rankByFrequency]
-
 
 def plot_points():
     plt.figure(1)
@@ -45,6 +37,12 @@ def plot_line():
     plt.yscale('log')
     plt.show()
 
+
+wordsFrequencySortedList = q1a.makeWordsSortedList()
+rankByFrequency = [[i + 1, wordsFrequencySortedList[i][1]] for i in range(len(wordsFrequencySortedList))]
+
+rankX = [rank for rank, frequency in rankByFrequency]
+frequencyY = [frequency for rank, frequency in rankByFrequency]
 
 plot_points()
 plot_line()
