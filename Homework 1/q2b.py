@@ -1,7 +1,7 @@
 """
 Kya Miller
 LING 539 Assignment 1
-Q2A - Modifies the MonteHall simulation from Q2A to take arguments for the number of total doors and the number of doors
+Q2B - Modifies the MonteHall simulation from Q2A to take arguments for the number of total doors and the number of doors
 opened for the switching experiment. Runs simulations for 3-10 total doors and 2-5 opened doors, returns probabilities
 in a fancy table.
 """
