@@ -12,15 +12,13 @@ import matplotlib.pyplot as plt
 
 def plot_points():
     plt.figure(1)
-    plt.scatter(rankX, frequencyY)
+    plt.scatter(logX, logY)
     plt.xlabel('rank')
     plt.ylabel('frequency')
-    plt.xscale('log')
-    plt.yscale('log')
     plt.show()
 
 
-def plotPointsLogAlreadyFigured():
+def plotPointsAndLineOfBestFit():
     plt.scatter(logX, logY)
     plt.plot(logX, numpy.poly1d(numpy.polyfit(logX, logY, 1))(logX), 'r')
     plt.xlabel('rank')
@@ -36,4 +34,4 @@ logX = [numpy.log10(x) for x in rankX]
 logY = [numpy.log10(y) for y in frequencyY]
 
 # plot_points()
-plotPointsLogAlreadyFigured()
+plotPointsAndLineOfBestFit()
