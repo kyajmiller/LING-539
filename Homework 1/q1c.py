@@ -7,15 +7,6 @@ according to Zipf's Law.
 
 import q1a
 import matplotlib.pyplot as plt
-import math
-
-'''
--plot points by putting in the rank by the distribution
-xscale('log')
-yscale('log')
-pyplot.scatter
-makes line by .plot
-'''
 
 
 def plot_points():
@@ -39,10 +30,9 @@ def plot_line():
 
 
 wordsFrequencySortedList = q1a.makeWordsSortedList()
-rankByFrequency = [[i + 1, wordsFrequencySortedList[i][1]] for i in range(len(wordsFrequencySortedList))]
 
-rankX = [rank for rank, frequency in rankByFrequency]
-frequencyY = [frequency for rank, frequency in rankByFrequency]
+rankX = [i + 1 for i in range(len(wordsFrequencySortedList))]
+frequencyY = [wordsFrequencySortedList[i][1] for i in range(len(wordsFrequencySortedList))]
 
 plot_points()
 plot_line()
