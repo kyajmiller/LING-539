@@ -18,11 +18,6 @@ def calculateEntropy(listOfProbabilities):
     return -sum
 
 
-def printDiceEntropy(listOfProbabilities):
-    numSides = len(listOfProbabilities)
-    print("Entropy of a %s-sided dice: %s bits" % (numSides, calculateEntropy(listOfProbabilities)))
-
-
 dice1Entropy = calculateEntropy([0.25, 0.25, 0.25, 0.25])
 dice2Entropy = calculateEntropy([0.25, 0.25, 0.25, 0.25])
 sumEntropy = dice1Entropy + dice2Entropy
