@@ -2,6 +2,8 @@
 Kya Miller
 LING 539 Assignment 1
 Q3A - Calculates the entropy from the sum of the rolls of two 4-sided dice. Both dice are fairly weighted.
+I wasn't sure if the problem wanted the separate entropies of each dice added together, or the entropy of the probabilities
+of getting each possible sum from the two dice rolls (2-8), so I did both.
 """
 
 from __future__ import division
