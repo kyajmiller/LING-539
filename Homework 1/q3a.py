@@ -21,7 +21,7 @@ def calculateEntropy(listOfProbabilities):
 dice1Entropy = calculateEntropy([0.25, 0.25, 0.25, 0.25])
 dice2Entropy = calculateEntropy([0.25, 0.25, 0.25, 0.25])
 sumEntropy = dice1Entropy + dice2Entropy
-print(sumEntropy)
+print("The sum of the entropies of two fairly weighted dice: %s" % sumEntropy)
 
 totalSumsEntropy = calculateEntropy([1 / 16, 2 / 16, 3 / 16, 4 / 16, 3 / 16, 2 / 16, 1 / 16])
-print(totalSumsEntropy)
+print("The entropy of the sums of two fairly weighted dice: %s" % totalSumsEntropy)
