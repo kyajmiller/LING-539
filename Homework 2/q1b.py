@@ -132,3 +132,12 @@ unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram 
 # even though the bigramsFrequencyList works okay, trying to iterate through tuples by value is obnoxious. Easier to
 # iterate through dictionary keys.
 bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
+
+# do sentence probabilities
+for sentence in sentsInData:
+    unigramsProb = doSentenceProbabilityUnigramModel(sentence)
+    laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentence)
+    lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentence)
+
+    print "Sentence: %s;\nProbability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
+    sentence, unigramsProb, laplaceProb, lidstoneProb)
