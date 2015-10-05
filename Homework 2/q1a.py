@@ -53,3 +53,52 @@ wordsTrigramsTop100List = makeTop100List(wordsTrigrams)
 posUnigramsTop100List = makeTop100List(posTagsUnigrams)
 posBigramsTop100List = makeTop100List(posTagsBigrams)
 posTrigramsTop100List = makeTop100List(posTagsTrigrams)
+
+outputFile.write('Top 100 Unigrams (words)')
+outputFile.write('\n--------\n')
+
+for unigram in wordsUnigramsTop100List:
+    formattedString = '%s\t%s\n' % (unigram[0], unigram[1])
+    outputFile.write(formattedString)
+
+outputFile.write('\n--------\n')
+outputFile.write('Top 100 Bigrams (words)')
+outputFile.write('\n--------\n')
+
+for bigram in wordsBigramsTop100List:
+    formattedString = '%s\t%s\n' % (bigram[0], bigram[1])
+    outputFile.write(formattedString)
+
+outputFile.write('\n--------\n')
+outputFile.write('Top 100 Trigrams (words)')
+outputFile.write('\n--------\n')
+
+for trigram in wordsTrigramsTop100List:
+    formattedString = '%s\t%s\n' % (trigram[0], trigram[1])
+    outputFile.write(formattedString)
+
+outputFile.write('\n--------\n')
+outputFile.write('Top 100 Trigrams (pos)')
+outputFile.write('\n--------\n')
+
+for unigram in posUnigramsTop100List:
+    formattedString = '%s\t%s\n' % (unigram[0], unigram[1])
+    outputFile.write(formattedString)
+
+outputFile.write('\n--------\n')
+outputFile.write('Top 100 Bigrams (pos)')
+outputFile.write('\n--------\n')
+
+for bigram in posBigramsTop100List:
+    formattedString = '%s\t%s\n' % (bigram[0], bigram[1])
+    outputFile.write(formattedString)
+
+outputFile.write('\n--------\n')
+outputFile.write('Top 100 Trigrams (pos)')
+outputFile.write('\n--------\n')
+
+for trigram in posTrigramsTop100List:
+    formattedString = '%s\t%s\n' % (trigram[0], trigram[1])
+    outputFile.write(formattedString)
+
+outputFile.close()
