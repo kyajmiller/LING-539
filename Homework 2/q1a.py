@@ -9,6 +9,14 @@ using tabs.
 import re
 from collections import Counter
 
+
+def wordsUnigramsMakeTop100List():
+    wordsUnigramsFrequencyDict = Counter()
+    for unigram in wordsUnigrams:
+        wordsUnigramsFrequencyDict[unigram] += 1
+
+    return wordsUnigramsFrequencyDict.most_common(100)
+
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
