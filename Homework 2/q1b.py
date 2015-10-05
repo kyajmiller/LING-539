@@ -6,6 +6,7 @@ model where unknown words have probability 1.0; bigram model with Laplace smooth
 smoothing.
 """
 
+from __future__ import division
 import re
 from collections import Counter
 
@@ -57,3 +58,12 @@ for unigram in unigramsFrequencyList:
 totalBigrams = 0
 for bigram in bigramsFrequencyList:
     totalBigrams += bigram[1]
+
+# create dictionary of unigrams and their probabilities; do same for bigrams
+unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
+bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
+
+'''
+wordsProbabilitiesDict = {word[0]: word[1] / totalWords for word in wordsFrequencySortedList}
+wordsList = [word[0] for word in wordsFrequencySortedList]
+'''
