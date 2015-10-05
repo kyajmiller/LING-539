@@ -45,3 +45,11 @@ wordsTrigrams = ['%s\t%s\t%s' % (wordsUnigrams[i], wordsUnigrams[i + 1], wordsUn
 posTagsBigrams = ['%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1]) for i in range(len(posTagsUnigrams) - 1)]
 posTagsTrigrams = ['%s\t%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1], posTagsUnigrams[i + 2]) for i in
                    range(len(posTagsUnigrams) - 2)]
+
+wordsUnigramsTop100List = makeTop100List(wordsUnigrams)
+wordsBigramsTop100List = makeTop100List(wordsBigrams)
+wordsTrigramsTop100List = makeTop100List(wordsTrigrams)
+
+posUnigramsTop100List = makeTop100List(posTagsUnigrams)
+posBigramsTop100List = makeTop100List(posTagsBigrams)
+posTrigramsTop100List = makeTop100List(posTagsTrigrams)
