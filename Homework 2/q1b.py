@@ -54,13 +54,40 @@ def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
     return sentenceProb
 
 
+def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
+    # calculates and returns the probability of the sentence using a bigram model with Lidstone smoothing.
+    # lidstone = frequency(bigram) + A / numActualBigrams + numPossibleBigrams * lambda
+
+    sentenceWords = sentence.split(' ')
+    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
+    sentenceProb = 1
+
+    # estimations of alpha and lambda, shouldn't be too far from alpha = 0.5 and lambda = 1 / 100000
+    # I personally like 1 / 1,000,000 (1e-6) because every smoothing algorith I've done always seems to have the best
+    # lambda value as that.
+    alpha = 0.5
+    lamb = 1 / 100000
+
+    lidstoneUnknownBigramProb = alpha / (totalBigrams + (possibleBigrams * lamb))
+
+    for bigram in sentenceBigrams:
+        if bigram in bigramsFrequencyDict.iterkeys():
+            lidstoneBigramProb = (bigramsFrequencyDict[bigram] + alpha) / (totalBigrams + (possibleBigrams * lamb))
+            sentenceProb *= lidstoneBigramProb
+        else:
+            sentenceProb *= lidstoneUnknownBigramProb
+
+    return sentenceProb
 
 
-
-
-# open browntag_nolines.txt as input
+# open browntag_nolines.txt as input to get probabilities
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
+filein.close()
+
+# open sents_in.txt as input for testing
+filein = open('sents_in.txt', 'r')
+sentsInData = filein.read()
 filein.close()
 
 # tokenize input file on whitespace to get individual words_posTags. Declare words and list to be populated.
