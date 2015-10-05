@@ -69,14 +69,20 @@ def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
     lamb = 1 / 100000
 
     lidstoneUnknownBigramProb = alpha / (totalBigrams + (possibleBigrams * lamb))
+    print('Unknown Bigram Probability: %s' % lidstoneUnknownBigramProb)
+    unseenBigrams = []
 
     for bigram in sentenceBigrams:
         if bigram in bigramsFrequencyDict.iterkeys():
+            print('Bigram: %s, Probability (normal): %s' % (bigram, bigramsProbabilitiesDict[bigram]))
             lidstoneBigramProb = (bigramsFrequencyDict[bigram] + alpha) / (totalBigrams + (possibleBigrams * lamb))
+            print('Bigram: %s, Probability (smoothed): %s' % (bigram, lidstoneBigramProb))
             sentenceProb *= lidstoneBigramProb
         else:
             sentenceProb *= lidstoneUnknownBigramProb
+            unseenBigrams.append(bigram)
 
+    print('Unseen bigrams: %s' % unseenBigrams)
     return sentenceProb
 
 
@@ -107,7 +113,7 @@ for token in wordsPOSTags:
     wordsUnigrams.append(word)
 
 # create bigrams list using string interpolation
-wordsBigrams = ['%s\t%s' % (wordsUnigrams[i], wordsUnigrams[i + 1]) for i in range(len(wordsUnigrams) - 1)]
+wordsBigrams = ['%s %s' % (wordsUnigrams[i], wordsUnigrams[i + 1]) for i in range(len(wordsUnigrams) - 1)]
 
 # make frequency lists using previously declared function
 unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
@@ -133,7 +139,11 @@ unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram 
 # iterate through dictionary keys.
 bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
 
+# make bigramsProbabilitiesDict for comparison purposes
+bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
+
 # do sentence probabilities
+'''
 for sentence in sentsInData:
     sentence = sentence.strip()
     unigramsProb = doSentenceProbabilityUnigramModel(sentence)
@@ -143,3 +153,15 @@ for sentence in sentsInData:
     print "Sentence: %s" % sentence
     print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
     unigramsProb, laplaceProb, lidstoneProb)
+'''
+
+sentence = sentsInData[5].strip()
+unigramsProb = doSentenceProbabilityUnigramModel(sentence)
+laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentence)
+lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentence)
+
+print "Sentence: %s" % sentence
+print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
+    unigramsProb, laplaceProb, lidstoneProb)
+
+print(wordsBigrams)
