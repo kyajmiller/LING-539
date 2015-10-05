@@ -36,6 +36,22 @@ def doSentenceProbabilityUnigramModel(sentence):
     return sentenceProb
 
 
+def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
+    # calculates and returns the probability of the sentence using a bigram model with Laplace smoothing.
+    # laplace = frequency(bigram) + 1 / numActualBigrams + numPossibleBigrams.
+    sentenceWords = sentence.split(' ')
+    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
+    sentenceProb = 1
+    laplaceUnknownBigramProb = 1 / (totalBigrams + possibleBigrams)
+
+    for bigram in sentenceBigrams:
+        if bigram in bigramsProbabilitiesDict
+
+
+
+
+
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
@@ -74,11 +90,13 @@ totalBigrams = 0
 for bigram in bigramsFrequencyList:
     totalBigrams += bigram[1]
 
+# calculate total possible bigrams
+possibleBigrams = totalBigrams * totalBigrams
+
 # create dictionary of unigrams and their probabilities; do same for bigrams
 unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
-bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
+# bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
 
-'''
-wordsProbabilitiesDict = {word[0]: word[1] / totalWords for word in wordsFrequencySortedList}
-wordsList = [word[0] for word in wordsFrequencySortedList]
-'''
+# even though the bigramsFrequencyList works okay, trying to iterate through tuples by value is obnoxious. Easier to
+# iterate through dictionary keys.
+bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
