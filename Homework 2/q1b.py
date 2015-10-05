@@ -44,5 +44,16 @@ for token in wordsPOSTags:
 # create bigrams list using string interpolation
 wordsBigrams = ['%s\t%s' % (wordsUnigrams[i], wordsUnigrams[i + 1]) for i in range(len(wordsUnigrams) - 1)]
 
+# make frequency lists using previously declared function
 unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
 bigramsFrequencyList = makeFrequencyList(wordsBigrams)
+
+# get total unigrams count
+totalUnigrams = 0
+for unigram in unigramsFrequencyList:
+    totalUnigrams += unigram[1]
+
+# get total bigrams count
+totalBigrams = 0
+for bigram in bigramsFrequencyList:
+    totalBigrams += bigram[1]
