@@ -1,0 +1,635 @@
+Top 100 Unigrams (words)
+--------
+the	62658
+,	58040
+of	36085
+and	27603
+to	25740
+a	21879
+in	19538
+that	10217
+is	10018
+was	9798
+for	8817
+with	7022
+as	6705
+it	6659
+he	6507
+his	6454
+on	6408
+be	6349
+..
+the	6093
+had	5107
+by	5105
+at	4969
+not	4420
+are	4334
+from	4213
+or	4091
+this	3967
+have	3901
+an	3547
+which	3541
+I	3368
+were	3282
+--	3216
+her	2888
+but	2882
+one	2872
+you	2803
+all	2732
+they	2704
+..
+he	2697
+would	2684
+him	2581
+their	2551
+been	2474
+has	2426
+)	2246
+will	2205
+who	2198
+more	2126
+out	2058
+(	2046
+we	1993
+she	1944
+said	1943
+up	1878
+..
+it	1874
+there	1865
+no	1796
+than	1791
+them	1786
+into	1782
+its	1779
+about	1764
+when	1757
+J	1755
+so	1749
+can	1738
+:	1693
+only	1635
+other	1625
+..
+in	1612
+could	1585
+..
+I	1555
+time	1553
+what	1476
+if	1463
+some	1405
+two	1308
+any	1303
+..
+but	1297
+may	1295
+do	1271
+first	1245
+like	1235
+these	1226
+over	1208
+such	1187
+my	1168
+me	1168
+man	1153
+our	1145
+made	1120
+..
+this	1092
+new	1056
+most	1056
+now	1054
+then	1013
+must	1002
+did	1000
+F	999
+
+
+Top 100 Bigrams (words)
+--------
+of	the	9640
+,	and	6320
+in	the	5548
+,	the	3787
+to	the	3429
+on	the	2305
+and	the	2102
+,	but	1891
+for	the	1759
+to	be	1700
+at	the	1511
+,	he	1502
+with	the	1479
+of	a	1465
+that	the	1388
+from	the	1353
+in	a	1317
+by	the	1314
+,	a	1314
+,	in	1064
+,	as	969
+as	a	908
+with	a	882
+it	is	872
+is	a	869
+,	I	828
+of	his	805
+,	it	788
+is	the	787
+was	a	780
+had	been	761
+,	or	734
+for	a	734
+he	was	728
+it	was	722
+as	the	692
+,	for	684
+into	the	673
+,	to	672
+,	which	664
+he	had	657
+to	a	654
+have	been	650
+,	with	629
+would	be	609
+and	a	605
+the	same	601
+one	of	596
+will	be	593
+has	been	567
+in	his	566
+,	who	563
+that	he	559
+of	this	547
+the	first	545
+..
+it	is	533
+,	that	530
+was	the	529
+..
+it	was	529
+is	not	524
+out	of	522
+can	be	507
+said	,	504
+,	is	487
+on	a	473
+may	be	460
+in	this	456
+,	she	454
+,	was	444
+did	not	440
+it	,	423
+by	a	414
+,	of	410
+,	they	409
+,	we	406
+all	the	402
+..
+in	the	399
+United	States	391
+more	than	387
+to	do	383
+the	other	379
+in	which	378
+the	most	378
+)	,	375
+the	United	374
+and	he	372
+must	be	371
+was	not	368
+number	of	367
+,	however	365
+over	the	355
+through	the	355
+there	is	349
+to	make	348
+,	there	344
+should	be	344
+a	few	343
+,	then	342
+of	their	341
+..
+he	was	341
+
+
+Top 100 Trigrams (words)
+--------
+,	and	the	656
+one	of	the	323
+,	however	,	321
+the	United	States	320
+,	in	the	262
+,	he	said	257
+as	well	as	238
+,	it	is	234
+,	and	he	224
+,	of	course	189
+of	course	,	169
+out	of	the	168
+,	but	the	161
+,	and	a	158
+some	of	the	154
+the	fact	that	150
+the	end	of	148
+,	but	he	147
+part	of	the	140
+to	be	a	132
+,	and	I	132
+,	too	,	131
+,	it	was	129
+of	the	United	129
+,	with	the	124
+he	said	,	122
+,	but	it	120
+,	and	that	120
+,	and	in	119
+a	number	of	111
+,	and	it	109
+,	he	was	109
+end	of	the	108
+,	for	the	106
+members	of	the	105
+,	and	then	102
+,	she	said	102
+,	on	the	99
+in	order	to	99
+the	use	of	98
+that	he	had	98
+,	there	is	98
+the	number	of	97
+most	of	the	96
+,	with	a	94
+,	for	example	93
+the	same	time	93
+,	and	,	92
+that	he	was	89
+in	the	world	89
+,	in	a	87
+for	example	,	87
+side	of	the	87
+in	front	of	86
+,	that	the	86
+,	and	to	84
+,	but	I	84
+,	he	had	82
+of	the	most	82
+there	is	a	81
+..
+it	was	a	80
+and	in	the	80
+,	as	well	79
+,	as	the	78
+there	was	a	77
+it	would	be	77
+back	to	the	77
+because	of	the	77
+it	is	not	77
+to	be	the	76
+that	it	is	75
+,	I	said	75
+a	matter	of	74
+in	which	the	74
+,	which	is	74
+,	at	the	72
+the	rest	of	72
+that	it	was	71
+,	and	his	71
+of	the	world	71
+in	terms	of	70
+,	as	a	70
+would	have	been	69
+at	the	same	69
+in	the	first	69
+,	so	that	68
+in	the	United	68
+,	and	she	68
+,	which	was	67
+a	couple	of	67
+..
+one	of	the	67
+he	had	been	67
+more	than	a	66
+there	was	no	66
+,	such	as	66
+,	and	they	65
+of	the	new	65
+)	,	and	65
+,	there	was	65
+the	development	of	65
+
+
+Top 100 Unigrams (pos)
+--------
+NN	167529
+IN	122618
+AT	99099
+JJ	68588
+,	58044
+NNS	57984
+NP	39045
+CC	38158
+RB	36576
+VB	33940
+VBN	29935
+VBD	26210
+CS	22181
+PPS	18306
+VBG	18188
+PP$	16922
+TO	15001
+CD	14947
+PPSS	13845
+MD	12476
+PPO	11210
+BEZ	10105
+BEDZ	9828
+AP	9587
+DT	8977
+QL	8748
+VBZ	7462
+BE	6379
+RP	6034
+WDT	5573
+HVD	4904
+*	4614
+WRB	4562
+BER	4396
+WPS	3941
+HV	3938
+--	3385
+BED	3285
+ABN	3026
+DTI	2932
+NP$	2716
+PN	2587
+BEN	2476
+DTS	2437
+HVZ	2437
+)	2427
+(	2401
+EX	2168
+OD	2146
+JJR	1991
+NR	1890
+NN$	1865
+:	1677
+DO	1364
+NPS	1351
+PPL	1236
+RBR	1186
+DOD	1047
+JJT	1016
+MD*	867
+ABX	731
+BEG	686
+UH	624
+DO*	488
+DOZ	485
+PPSS+MD	484
+FW-NN	459
+PPS+BEZ	431
+DOD*	405
+JJS	382
+ABL	357
+PPLS	345
+NNS$	337
+HVG	285
+WPO	284
+PPSS+BER	279
+PPSS+BEM	270
+QLP	263
+WP$	252
+PPSS+HV	242
+HVN	237
+BEM	226
+WQL	181
+DT+BEZ	179
+PP$$	164
+BEDZ*	155
+PPS+MD	145
+FW-JJ	127
+FW-IN	124
+NN-NC	121
+FW-NNS	119
+BEZ*	117
+EX+BEZ	105
+DTX	104
+RBT	101
+HVD*	100
+DOZ*	90
+PN$	89
+PPSS+HVD	83
+PPS+HVD	83
+
+
+Top 100 Bigrams (pos)
+--------
+AT	NN	51804
+NN	IN	46946
+IN	AT	43932
+JJ	NN	31210
+AT	JJ	21346
+NN	,	20635
+IN	NN	19030
+NNS	IN	15873
+NN	NN	15540
+JJ	NNS	12820
+TO	VB	12428
+NN	CC	10965
+VBN	IN	10719
+,	CC	9091
+IN	JJ	8973
+PP$	NN	8823
+NP	NP	8428
+NNS	,	7982
+IN	NP	7699
+IN	PP$	7681
+AT	NNS	7612
+NN	NNS	7130
+VB	AT	6283
+NP	,	6281
+PPS	VBD	6194
+IN	NNS	5747
+CS	AT	5726
+RB	IN	5558
+,	AT	5484
+MD	VB	5160
+RB	,	4984
+NN	AT	4965
+VB	IN	4913
+NNS	CC	4771
+CC	NN	4755
+,	IN	4635
+DT	NN	4504
+VBD	IN	4467
+NN	CS	4432
+QL	JJ	4429
+NN	RB	4339
+IN	CD	4140
+VBD	AT	4081
+CC	AT	4054
+JJ	IN	4049
+IN	PPO	4020
+,	NP	3986
+NN	BEZ	3982
+NP	VBD	3914
+IN	VBG	3862
+NN	VBD	3759
+CD	NNS	3698
+NN	NP	3683
+JJ	,	3629
+CC	JJ	3573
+NN	PPS	3469
+JJ	JJ	3432
+,	RB	3427
+MD	BE	3369
+NP	NN	3304
+IN	DT	3302
+PP$	NNS	3292
+PPSS	VB	3209
+AT	NP	3177
+PP$	JJ	3137
+VB	PPO	3099
+RB	VBN	3089
+NN	MD	3087
+BE	VBN	3081
+,	CS	3052
+JJ	CC	3044
+AT	AP	3029
+CS	PPS	3021
+VBG	IN	3011
+VBG	NN	2995
+,	NN	2865
+PPSS	VBD	2860
+NN	BEDZ	2842
+NN	TO	2795
+PPS	BEDZ	2780
+AP	NN	2752
+,	PPS	2747
+,	JJ	2677
+VBG	AT	2605
+VBN	NN	2534
+CC	RB	2450
+CS	PPSS	2450
+RB	AT	2448
+AP	NNS	2399
+NP	CC	2334
+,	VBG	2330
+NN	VBZ	2242
+CC	VBD	2239
+BEDZ	VBN	2197
+NN	PPSS	2194
+HVD	VBN	2180
+NP	IN	2147
+CC	NP	2120
+NNS	RB	2119
+PPSS	MD	2109
+
+
+Top 100 Trigrams (pos)
+--------
+IN	AT	NN	22922
+AT	NN	IN	18768
+NN	IN	AT	16147
+AT	JJ	NN	14887
+JJ	NN	IN	9487
+IN	AT	JJ	9068
+NN	IN	NN	8745
+AT	NN	NN	5650
+NNS	IN	AT	5270
+AT	NN	,	4278
+VBN	IN	AT	4205
+JJ	NN	,	4090
+IN	NN	IN	4016
+IN	JJ	NN	3976
+NN	IN	JJ	3933
+IN	PP$	NN	3871
+NN	,	CC	3623
+JJ	NNS	IN	3566
+VB	AT	NN	3434
+IN	AT	NNS	3384
+NN	CC	NN	3279
+CS	AT	NN	3180
+NN	NN	IN	3136
+NN	IN	NP	3119
+IN	NN	,	3058
+IN	JJ	NNS	2980
+NNS	IN	NN	2872
+TO	VB	AT	2785
+AT	NNS	IN	2734
+,	AT	NN	2734
+NN	IN	PP$	2677
+AT	NN	CC	2673
+NN	IN	NNS	2638
+JJ	NN	NN	2528
+NN	AT	NN	2527
+NN	TO	VB	2489
+VBD	AT	NN	2311
+RB	IN	AT	2301
+AT	JJ	NNS	2260
+NN	NN	,	2250
+NN	,	AT	2240
+IN	DT	NN	2177
+NP	NP	,	2119
+JJ	JJ	NN	2022
+JJ	NN	CC	1994
+IN	NN	CC	1980
+CC	AT	NN	1977
+VBD	IN	AT	1900
+PP$	NN	IN	1862
+JJ	NNS	,	1846
+NP	NP	NP	1838
+PP$	JJ	NN	1780
+IN	AT	NP	1766
+JJ	CC	JJ	1765
+MD	BE	VBN	1765
+TO	VB	IN	1742
+IN	NN	NN	1740
+VB	IN	AT	1739
+NNS	,	CC	1618
+IN	NNS	IN	1572
+NN	IN	VBG	1569
+IN	PP$	JJ	1562
+NNS	IN	JJ	1546
+IN	NP	,	1530
+,	IN	AT	1517
+NN	,	NN	1495
+NN	NNS	IN	1494
+NN	NN	NN	1480
+AT	NN	VBD	1475
+VBN	IN	NN	1467
+NN	,	IN	1457
+NNS	CC	NNS	1433
+VBG	AT	NN	1405
+AT	NP	NN	1405
+IN	PP$	NNS	1403
+AT	NN	CS	1401
+AT	AP	NN	1393
+NN	IN	CD	1391
+AT	JJ	JJ	1384
+NN	CC	AT	1374
+IN	NN	NNS	1374
+BE	VBN	IN	1356
+VB	AT	JJ	1349
+IN	NP	NP	1338
+NP	,	NP	1336
+IN	AT	AP	1290
+VBN	TO	VB	1286
+AT	NN	RB	1282
+NN	CS	AT	1277
+JJ	IN	AT	1274
+VBG	IN	AT	1267
+,	AT	JJ	1265
+CC	JJ	NN	1264
+NN	PPS	VBD	1260
+RB	AT	NN	1232
+,	PPS	VBD	1227
+PP$	NN	,	1219
+JJ	NN	NNS	1212
+PPSS	MD	VB	1209
+AT	NN	AT	1199
