@@ -10,21 +10,12 @@ import re
 from collections import Counter
 
 
-def wordsUnigramsMakeTop100List():
-    wordsUnigramsFrequencyDict = Counter()
-    for unigram in wordsUnigrams:
-        wordsUnigramsFrequencyDict[unigram] += 1
+def makeTop100List(tokensList):
+    frequencyDict = Counter()
+    for token in tokensList:
+        frequencyDict[token] += 1
 
-    return wordsUnigramsFrequencyDict.most_common(100)
-
-
-def wordsBigramsMakeTop100List():
-    wordsBigramsFrequencyDict = Counter()
-    for bigram in wordsBigrams:
-        wordsBigramsFrequencyDict[bigram] += 1
-
-    return wordsBigramsFrequencyDict.most_common(100)
-
+    return frequencyDict.most_common(100)
 
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
