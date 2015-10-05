@@ -17,6 +17,15 @@ def wordsUnigramsMakeTop100List():
 
     return wordsUnigramsFrequencyDict.most_common(100)
 
+
+def wordsBigramsMakeTop100List():
+    wordsBigramsFrequencyDict = Counter()
+    for bigram in wordsBigrams:
+        wordsBigramsFrequencyDict[bigram] += 1
+
+    return wordsBigramsFrequencyDict.most_common(100)
+
+
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
