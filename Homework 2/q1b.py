@@ -65,24 +65,21 @@ def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
     # estimations of alpha and lambda, shouldn't be too far from alpha = 0.5 and lambda = 1 / 100000
     # I personally like 1 / 1,000,000 (1e-6) because every smoothing algorith I've done always seems to have the best
     # lambda value as that.
-    alpha = 0.5
-    lamb = 1 / 100000
+    # I choose lambda = 1 / 10,000,000 (1e-7) which is the smallest lambda value whereafter decreasing the value by an
+    # order of magnitude started having diminishing returns. The smaller values do have a slightly higher probability,
+    # but barely
+    alpha = 0.65
+    lamb = 1 / 10000000
 
     lidstoneUnknownBigramProb = alpha / (totalBigrams + (possibleBigrams * lamb))
-    print('Unknown Bigram Probability: %s' % lidstoneUnknownBigramProb)
-    unseenBigrams = []
 
     for bigram in sentenceBigrams:
         if bigram in bigramsFrequencyDict.iterkeys():
-            print('Bigram: %s, Probability (normal): %s' % (bigram, bigramsProbabilitiesDict[bigram]))
             lidstoneBigramProb = (bigramsFrequencyDict[bigram] + alpha) / (totalBigrams + (possibleBigrams * lamb))
-            print('Bigram: %s, Probability (smoothed): %s' % (bigram, lidstoneBigramProb))
             sentenceProb *= lidstoneBigramProb
         else:
             sentenceProb *= lidstoneUnknownBigramProb
-            unseenBigrams.append(bigram)
 
-    print('Unseen bigrams: %s' % unseenBigrams)
     return sentenceProb
 
 
@@ -139,11 +136,7 @@ unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram 
 # iterate through dictionary keys.
 bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
 
-# make bigramsProbabilitiesDict for comparison purposes
-bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
-
 # do sentence probabilities
-'''
 for sentence in sentsInData:
     sentence = sentence.strip()
     unigramsProb = doSentenceProbabilityUnigramModel(sentence)
@@ -153,15 +146,3 @@ for sentence in sentsInData:
     print "Sentence: %s" % sentence
     print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
     unigramsProb, laplaceProb, lidstoneProb)
-'''
-
-sentence = sentsInData[5].strip()
-unigramsProb = doSentenceProbabilityUnigramModel(sentence)
-laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentence)
-lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentence)
-
-print "Sentence: %s" % sentence
-print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
-    unigramsProb, laplaceProb, lidstoneProb)
-
-print(wordsBigrams)
