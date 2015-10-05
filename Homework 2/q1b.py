@@ -86,9 +86,9 @@ brownTagNoLines = filein.read()
 filein.close()
 
 # open sents_in.txt as input for testing
-filein = open('sents_in.txt', 'r')
-sentsInData = filein.read()
-filein.close()
+sentsInFile = open('sents_in.txt', 'r')
+sentsInData = sentsInFile.readlines()
+sentsInFile.close()
 
 # tokenize input file on whitespace to get individual words_posTags. Declare words and list to be populated.
 wordsPOSTags = brownTagNoLines.split(' ')
