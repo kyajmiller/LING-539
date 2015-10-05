@@ -45,7 +45,13 @@ def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
     laplaceUnknownBigramProb = 1 / (totalBigrams + possibleBigrams)
 
     for bigram in sentenceBigrams:
-        if bigram in bigramsProbabilitiesDict
+        if bigram in bigramsFrequencyDict.iterkeys():
+            laplaceBigramProb = (bigramsFrequencyDict[bigram] + 1) / (totalBigrams + possibleBigrams)
+            sentenceProb *= laplaceBigramProb
+        else:
+            sentenceProb *= laplaceUnknownBigramProb
+
+    return sentenceProb
 
 
 
