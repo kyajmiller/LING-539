@@ -21,6 +21,21 @@ def makeFrequencyList(tokensList):
     return frequencyDict.most_common()
 
 
+def doSentenceProbabilityUnigramModel(sentence):
+    # calculates and returns the probability of the sentence using a unigram model. If a unigram does not appear in the
+    # unigramsProbabilitiesDict, it is assigned a probability of 1.0.
+    sentenceWords = sentence.split(' ')
+    sentenceProb = 1
+    unknownWordProb = 1
+    for word in sentenceWords:
+        if word in unigramsProbabilitiesDict.iterkeys():
+            sentenceProb *= unigramsProbabilitiesDict[word]
+        else:
+            sentenceProb *= unknownWordProb
+
+    return sentenceProb
+
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
