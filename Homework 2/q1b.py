@@ -68,7 +68,7 @@ wordsPOSTags = brownTagNoLines.split(' ')
 wordsUnigrams = []
 
 # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
-# split if find second underscore. Append word part wordsUnigrams.
+# split if find second underscore. Append word part to wordsUnigrams.
 for token in wordsPOSTags:
     splitWordPOS = token.split('_', 1)
     word = splitWordPOS[0]
@@ -101,7 +101,6 @@ possibleBigrams = totalBigrams * totalBigrams
 
 # create dictionary of unigrams and their probabilities; do same for bigrams
 unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
-# bigramsProbabilitiesDict = {bigram[0]: bigram[1] / totalBigrams for bigram in bigramsFrequencyList}
 
 # even though the bigramsFrequencyList works okay, trying to iterate through tuples by value is obnoxious. Easier to
 # iterate through dictionary keys.
