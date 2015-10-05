@@ -135,6 +135,7 @@ bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
 
 # do sentence probabilities
 for sentence in sentsInData:
+    sentence = sentence.strip()
     unigramsProb = doSentenceProbabilityUnigramModel(sentence)
     laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentence)
     lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentence)
