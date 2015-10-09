@@ -20,6 +20,14 @@ def makeTop100List(tokensList):
     return frequencyDict.most_common(100)
 
 
+def makeWordsSortedList():
+    wordsFrequencyDict = Counter()
+    for word in wordsUnigrams:
+        wordsFrequencyDict[word] += 1
+
+    return wordsFrequencyDict.most_common()
+
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
