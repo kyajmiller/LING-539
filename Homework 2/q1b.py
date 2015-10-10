@@ -25,11 +25,9 @@ def doSentenceProbabilityUnigramModel(sentence):
     return sentenceProb
 
 
-def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
+def doSentenceProbabilityBigramsLaplaceSmoothing(sentenceBigrams):
     # calculates and returns the probability of the sentence using a bigram model with Laplace smoothing.
-    # laplace = frequency(bigram) + 1 / numActualBigrams + numPossibleBigrams.
-    sentenceWords = sentence.split(' ')
-    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
+    # laplace = bigramCount + 1 / numActualBigrams + numPossibleBigrams.
     sentenceProb = 1
     laplaceUnknownBigramProb = 1 / (totalSeenBigrams + totalPossibleBigrams)
 
@@ -61,12 +59,9 @@ def calculateLidstoneSmoothingProb(bigramCount):
     return lidstone
 
 
-def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
+def doSentenceProbabilityBigramsLidstoneSmoothing(sentenceBigrams):
     # calculates and returns the probability of the sentence using a bigram model with Lidstone smoothing.
-    # lidstone = frequency(bigram) + A / numActualBigrams + numPossibleBigrams * lambda
-
-    sentenceWords = sentence.split(' ')
-    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
+    # lidstone = bigramCount + alpha / numActualBigrams + numPossibleBigrams * lambda
     sentenceProb = 1
 
     for bigram in sentenceBigrams:
@@ -112,9 +107,21 @@ bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
 # do sentence probabilities
 for sentence in sentsInData:
     sentence = sentence.strip()
+
+    sentenceWords = sentence.split(' ')
+    sentenceUnigramsToMakeBigrams = ['#']
+
+    for word in sentenceWords:
+        sentenceUnigramsToMakeBigrams.append(word)
+
+    sentenceUnigramsToMakeBigrams.append('#')
+
+    sentenceBigrams = ['%s\t%s' % (sentenceUnigramsToMakeBigrams[i], sentenceUnigramsToMakeBigrams[i + 1]) for i in
+                       range(len(sentenceUnigramsToMakeBigrams) - 1)]
+
     unigramsProb = doSentenceProbabilityUnigramModel(sentence)
-    laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentence)
-    lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentence)
+    laplaceProb = doSentenceProbabilityBigramsLaplaceSmoothing(sentenceBigrams)
+    lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentenceBigrams)
 
     print "Sentence: %s" % sentence
     print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
