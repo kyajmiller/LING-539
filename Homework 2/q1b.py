@@ -124,5 +124,5 @@ for sentence in sentsInData:
     lidstoneProb = doSentenceProbabilityBigramsLidstoneSmoothing(sentenceBigrams)
 
     print "Sentence: %s" % sentence
-    print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s" % (
+    print "Probability (Unigrams): %s; Probability (Laplace): %s; Probability (Lidstone): %s\n" % (
     unigramsProb, laplaceProb, lidstoneProb)
