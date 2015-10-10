@@ -48,8 +48,12 @@ posTagsTrigrams = []
 # now read in line by line to get unigrams and sentence specific bigrams + trigrams
 for line in brownTagLineByLine:
     wordsPOSTags = line.split(' ')
-    wordsUnigramsLine = ['#']
-    posTagsUnigramsLine = ['#']
+
+    # declare separate lists to generate bigrams and trigrams
+    lineWordsUnigramsToMakeBigrams = ['#']
+    linePOSTagsUnigramsToMakeBigrams = ['#']
+    lineWordsUnigramsToMakeTrigrams = ['#', '#']
+    linePOSTagsUnigramsToMakeTrigrams = ['#', '#']
 
     # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
     # split if find second underscore. Append split parts to wordsUnigrams and posTagsUnigrams as appropriate.
@@ -63,26 +67,35 @@ for line in brownTagLineByLine:
                 word = '%s%s' % (word, resplit[0])
                 tag = resplit[1]
             wordsUnigrams.append(word)
-            wordsUnigramsLine.append(word)
+            lineWordsUnigramsToMakeBigrams.append(word)
+            lineWordsUnigramsToMakeTrigrams.append(word)
             posTagsUnigrams.append(tag)
-            posTagsUnigramsLine.append(tag)
+            linePOSTagsUnigramsToMakeBigrams.append(tag)
+            linePOSTagsUnigramsToMakeTrigrams.append(tag)
 
-    wordsUnigramsLine.append('#')
-    posTagsUnigramsLine.append('#')
+    # append appropriate number of # to bigrams and trigrams lists
+    lineWordsUnigramsToMakeBigrams.append('#')
+    linePOSTagsUnigramsToMakeBigrams.append('#')
+    lineWordsUnigramsToMakeTrigrams.append('#')
+    lineWordsUnigramsToMakeTrigrams.append('#')
+    linePOSTagsUnigramsToMakeTrigrams.append('#')
+    linePOSTagsUnigramsToMakeTrigrams.append('#')
 
     # create bigrams and trigrams using string interpolation and append to appropriate lists
-    for i in range(len(wordsUnigramsLine) - 1):
-        wordsBigrams.append('%s\t%s' % (wordsUnigramsLine[i], wordsUnigramsLine[i + 1]))
+    for i in range(len(lineWordsUnigramsToMakeBigrams) - 1):
+        wordsBigrams.append('%s\t%s' % (lineWordsUnigramsToMakeBigrams[i], lineWordsUnigramsToMakeBigrams[i + 1]))
 
-    for i in range(len(wordsUnigramsLine) - 2):
-        wordsTrigrams.append('%s\t%s\t%s' % (wordsUnigramsLine[i], wordsUnigramsLine[i + 1], wordsUnigramsLine[i + 2]))
+    for i in range(len(lineWordsUnigramsToMakeTrigrams) - 2):
+        wordsTrigrams.append('%s\t%s\t%s' % (lineWordsUnigramsToMakeTrigrams[i], lineWordsUnigramsToMakeTrigrams[i + 1],
+                                             lineWordsUnigramsToMakeTrigrams[i + 2]))
 
-    for i in range(len(posTagsUnigramsLine) - 1):
-        posTagsBigrams.append('%s\t%s' % (posTagsUnigramsLine[i], posTagsUnigramsLine[i + 1]))
+    for i in range(len(linePOSTagsUnigramsToMakeBigrams) - 1):
+        posTagsBigrams.append('%s\t%s' % (linePOSTagsUnigramsToMakeBigrams[i], linePOSTagsUnigramsToMakeBigrams[i + 1]))
 
-    for i in range(len(posTagsUnigramsLine) - 2):
+    for i in range(len(linePOSTagsUnigramsToMakeTrigrams) - 2):
         posTagsTrigrams.append(
-            '%s\t%s\t%s' % (posTagsUnigramsLine[i], posTagsUnigramsLine[i + 1], posTagsUnigramsLine[i + 2]))
+            '%s\t%s\t%s' % (linePOSTagsUnigramsToMakeTrigrams[i], linePOSTagsUnigramsToMakeTrigrams[i + 1],
+                            linePOSTagsUnigramsToMakeTrigrams[i + 2]))
 
 
 # make top 100 lists using previously declared function
