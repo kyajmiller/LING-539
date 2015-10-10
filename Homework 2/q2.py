@@ -59,6 +59,26 @@ def calculateWordEntropy(word):
     entropy = calculateEntropy([NNProb, VBProb, JJProb])
     return entropy
 
+
+def printOutputTable():
+    for word in sortedWordEntropyList:
+        wordFreqNN = 0
+        wordFreqVB = 0
+        wordFreqJJ = 0
+        actualWord = word[0]
+        entropy = word[1]
+
+        if actualWord in frequencyDictNN:
+            wordFreqNN += frequencyDictNN[actualWord]
+        if actualWord in frequencyDictVB:
+            wordFreqVB += frequencyDictVB[actualWord]
+        if actualWord in frequencyDictJJ:
+            wordFreqJJ += frequencyDictJJ[actualWord]
+
+        formattedString = '%s\tEntropy: %s\tNN: %s\tVB: %s\tJJ: %s\n' % (
+        actualWord, entropy, wordFreqNN, wordFreqVB, wordFreqJJ)
+        outputFile.write(formattedString)
+
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
@@ -124,19 +144,4 @@ for word in wordsMoreThan100FrequencySortedList:
 sortedWordEntropyList = wordEntropyDict.most_common()
 
 print('Preparing to print output...')
-for word in sortedWordEntropyList:
-    wordFreqNN = 0
-    wordFreqVB = 0
-    wordFreqJJ = 0
-    actualWord = word[0]
-    entropy = word[1]
-
-    if actualWord in frequencyDictNN:
-        wordFreqNN += frequencyDictNN[actualWord]
-    if actualWord in frequencyDictVB:
-        wordFreqVB += frequencyDictVB[actualWord]
-    if actualWord in frequencyDictJJ:
-        wordFreqJJ += frequencyDictJJ[actualWord]
-
-    formattedString = '%s\tEntropy: %s\tNN: %s\tVB: %s\tJJ: %s\n' % (word, entropy, wordFreqNN, wordFreqVB, wordFreqJJ)
-    outputFile.write(formattedString)
+printOutputTable()
