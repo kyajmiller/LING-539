@@ -164,7 +164,7 @@ for word in wordsMoreThan100FrequencySortedList:
 # sort the word : entropy in descending order
 sortedWordEntropyList = wordEntropyDict.most_common()
 
-# print thangs to ouput file
+# print thangs to output file
 print('Preparing to print output...')
 printOutputTable()
 
