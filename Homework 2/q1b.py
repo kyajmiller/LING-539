@@ -43,13 +43,10 @@ def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
     return sentenceProb
 
 
-def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
-    # calculates and returns the probability of the sentence using a bigram model with Lidstone smoothing.
-    # lidstone = frequency(bigram) + A / numActualBigrams + numPossibleBigrams * lambda
-
-    sentenceWords = sentence.split(' ')
-    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
-    sentenceProb = 1
+def calculateLidstoneSmoothingProb(bigramCount):
+    # calculates and returns the probability of a bigram after Lidstone smoothing.
+    # lidstone = bigramCount + alpha / numActualBigrams + numPossibleBigrams * lambda
+    # I decided to separate this from the sentence function so I can import it into q1c.py
 
     # estimations of alpha and lambda, shouldn't be too far from alpha = 0.5 and lambda = 1 / 100000
     # I personally like 1 / 1,000,000 (1e-6) because every smoothing algorith I've done always seems to have the best
@@ -60,14 +57,27 @@ def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
     alpha = 0.65
     lamb = 1 / 10000000
 
-    lidstoneUnknownBigramProb = alpha / (totalBigrams + (possibleBigrams * lamb))
+    lidstone = (bigramCount + alpha) / (totalBigrams + (possibleBigrams * lamb))
+
+    return lidstone
+
+
+def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
+    # calculates and returns the probability of the sentence using a bigram model with Lidstone smoothing.
+    # lidstone = frequency(bigram) + A / numActualBigrams + numPossibleBigrams * lambda
+
+    sentenceWords = sentence.split(' ')
+    sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
+    sentenceProb = 1
 
     for bigram in sentenceBigrams:
         if bigram in bigramsFrequencyDict.iterkeys():
-            lidstoneBigramProb = (bigramsFrequencyDict[bigram] + alpha) / (totalBigrams + (possibleBigrams * lamb))
-            sentenceProb *= lidstoneBigramProb
+            bigramCount = bigramsFrequencyDict[bigram]
+            prob = calculateLidstoneSmoothingProb(bigramCount)
+            sentenceProb *= prob
         else:
-            sentenceProb *= lidstoneUnknownBigramProb
+            prob = calculateLidstoneSmoothingProb(0)
+            sentenceProb *= prob
 
     return sentenceProb
 
