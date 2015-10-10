@@ -77,7 +77,7 @@ def plotLidstoneSmoothedZipfsLogLog():
     rankX = [i + 1 for i in range(len(bigramsFrequencySortedList))]
     frequencyYSmoothed = [bigramsFrequencySortedList[i][1] + alpha for i in range(len(bigramsFrequencySortedList))]
 
-    # add data for the first and last ranked unseen bigram
+    # add data for the first and last ranked unseen bigrams
     rankX.append(unseenBigramRankFirst)
     rankX.append(unseenBigramsRankLast)
     frequencyYSmoothed.append(unseenBigramFrequency)
