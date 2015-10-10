@@ -26,5 +26,6 @@ def plotUnsmoothedZipfsLogLog():
     plt.show()
 
 
-bigramsFrequencySortedList = makeBigramsSortedList()
+bigramsFrequencySortedList = makeFrequencyList(wordsBigrams)
+
 plotUnsmoothedZipfsLogLog()
