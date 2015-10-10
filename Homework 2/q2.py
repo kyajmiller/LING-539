@@ -45,3 +45,25 @@ for token in wordsPOSTags:
             wordsVBTag.append(word)
         elif tag == 'JJ':
             wordsJJTag.append(word)
+
+distinctWords = list(set(allWords))
+
+frequencyDictNN = makeWordsTagsSortedFrequencyDict(wordsNNTag)
+frequencyDictVB = makeWordsTagsSortedFrequencyDict(wordsVBTag)
+frequencyDictJJ = makeWordsTagsSortedFrequencyDict(wordsJJTag)
+
+wordTotalFrequencyDict = Counter()
+
+for word in distinctWords:
+    wordTotalFrequency = 0
+    if word in frequencyDictNN.iterkeys():
+        wordTotalFrequency += frequencyDictNN[word]
+    if word in frequencyDictVB.iterkeys():
+        wordTotalFrequency += frequencyDictVB[word]
+    if word in frequencyDictJJ.iterkeys():
+        wordTotalFrequency += frequencyDictJJ[word]
+
+    if wordTotalFrequency >= 100:
+        wordTotalFrequencyDict[word] = wordTotalFrequency
+
+sortedWordsFrequencyList = wordTotalFrequencyDict.most_common()
