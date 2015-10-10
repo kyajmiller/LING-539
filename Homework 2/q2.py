@@ -6,6 +6,17 @@ the entropy of each of those words. Includes a function that prints out these wo
 and shows the unsmoothed count of the associated POS tags.
 """
 import re
+from collections import Counter
+
+
+def makeWordsTagsSortedFrequencyDict(wordsTagList):
+    frequencyDict = Counter()
+    for word in wordsTagList:
+        frequencyDict[word] += 1
+
+    sortedList = frequencyDict.most_common()
+    sortedFrequencyDict = {sortedWord[0]: sortedWord[1] for sortedWord in sortedList}
+    return sortedFrequencyDict
 
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
