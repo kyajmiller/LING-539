@@ -108,8 +108,8 @@ totalPossibleBigrams = totalSeenBigrams * totalSeenBigrams
 # calculate how many unseen bigrams there are
 totalUnseenBigrams = totalPossibleBigrams - totalSeenBigrams
 
-# each unseen bigram has a count of 0.65, the same as the alpha value from q1b.py Lidstone model.
-alpha = 0.65
+# each unseen bigram has a count of 0.5, the same as the alpha value from q1b.py Lidstone model.
+alpha = 0.5
 unseenBigramFrequency = alpha
 
 # get the rank of the first and last unseen bigrams
