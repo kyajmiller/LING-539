@@ -30,6 +30,14 @@ def makeFrequencyList(tokensList):
     return frequencyDict.most_common()
 
 
+def makeBigramsFrequencyList():
+    bigramsFrequencyDict = Counter()
+    for bigram in wordsBigrams:
+        bigramsFrequencyDict[bigram] += 1
+
+    return bigramsFrequencyDict.most_common()
+
+
 # open ngram_frequencies.txt as output file
 outputFile = open('ngram_frequencies.txt', 'w')
 
