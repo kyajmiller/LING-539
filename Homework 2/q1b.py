@@ -7,18 +7,7 @@ smoothing.
 """
 
 from __future__ import division
-import re
-from collections import Counter
-
-
-def makeFrequencyList(tokensList):
-    # uses Counter module to make a frequency dictionary. Takes list of words/pos tokens as argument. Returns list of
-    # tokens with their counts in descending order.
-    frequencyDict = Counter()
-    for token in tokensList:
-        frequencyDict[token] += 1
-
-    return frequencyDict.most_common()
+from q1a import *
 
 
 def doSentenceProbabilityUnigramModel(sentence):
@@ -82,35 +71,10 @@ def doSentenceProbabilityBigramsLidstoneSmoothing(sentence):
 
     return sentenceProb
 
-
-# open browntag_nolines.txt as input to get probabilities
-filein = open('browntag_nolines.txt', 'r')
-brownTagNoLines = filein.read()
-filein.close()
-
 # open sents_in.txt as input for testing
 sentsInFile = open('sents_in.txt', 'r')
 sentsInData = sentsInFile.readlines()
 sentsInFile.close()
-
-# tokenize input file on whitespace to get individual words_posTags. Declare words and list to be populated.
-wordsPOSTags = brownTagNoLines.split(' ')
-wordsUnigrams = []
-
-# splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
-# split if find second underscore. Append word part to wordsUnigrams.
-for token in wordsPOSTags:
-    splitWordPOS = token.split('_', 1)
-    word = splitWordPOS[0]
-    tag = splitWordPOS[1]
-    if re.search('_', tag):
-        resplit = tag.split('_', 1)
-        word = '%s%s' % (word, resplit[0])
-        tag = resplit[1]
-    wordsUnigrams.append(word)
-
-# create bigrams list using string interpolation
-wordsBigrams = ['%s %s' % (wordsUnigrams[i], wordsUnigrams[i + 1]) for i in range(len(wordsUnigrams) - 1)]
 
 # make frequency lists using previously declared function
 unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
