@@ -31,11 +31,11 @@ def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
     sentenceWords = sentence.split(' ')
     sentenceBigrams = ['%s %s' % (sentenceWords[i], sentenceWords[i + 1]) for i in range(len(sentenceWords) - 1)]
     sentenceProb = 1
-    laplaceUnknownBigramProb = 1 / (totalBigrams + possibleBigrams)
+    laplaceUnknownBigramProb = 1 / (totalSeenBigrams + totalPossibleBigrams)
 
     for bigram in sentenceBigrams:
         if bigram in bigramsFrequencyDict.iterkeys():
-            laplaceBigramProb = (bigramsFrequencyDict[bigram] + 1) / (totalBigrams + possibleBigrams)
+            laplaceBigramProb = (bigramsFrequencyDict[bigram] + 1) / (totalSeenBigrams + totalPossibleBigrams)
             sentenceProb *= laplaceBigramProb
         else:
             sentenceProb *= laplaceUnknownBigramProb
@@ -57,7 +57,7 @@ def calculateLidstoneSmoothingProb(bigramCount):
     alpha = 0.65
     lamb = 1 / 10000000
 
-    lidstone = (bigramCount + alpha) / (totalBigrams + (possibleBigrams * lamb))
+    lidstone = (bigramCount + alpha) / (totalSeenBigrams + (totalPossibleBigrams * lamb))
 
     return lidstone
 
@@ -95,13 +95,13 @@ totalUnigrams = 0
 for unigram in unigramsFrequencyList:
     totalUnigrams += unigram[1]
 
-# get total bigrams count
-totalBigrams = 0
+# get total seen bigrams count
+totalSeenBigrams = 0
 for bigram in bigramsFrequencyList:
-    totalBigrams += bigram[1]
+    totalSeenBigrams += bigram[1]
 
 # calculate total possible bigrams
-possibleBigrams = totalBigrams * totalBigrams
+totalPossibleBigrams = totalSeenBigrams * totalSeenBigrams
 
 # create dictionary of unigrams and their probabilities; do same for bigrams
 unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
