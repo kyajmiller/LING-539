@@ -20,12 +20,14 @@ def makeTop100List(tokensList):
     return frequencyDict.most_common(100)
 
 
-def makeBigramsSortedList():
-    bigramsFrequencyDict = Counter()
-    for bigram in wordsBigrams:
-        bigramsFrequencyDict[bigram] += 1
+def makeFrequencyList(tokensList):
+    # uses Counter module to make a frequency dictionary. Takes list of words/pos tokens as argument. Returns list of
+    # tokens with their counts in descending order.
+    frequencyDict = Counter()
+    for token in tokensList:
+        frequencyDict[token] += 1
 
-    return bigramsFrequencyDict.most_common()
+    return frequencyDict.most_common()
 
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
