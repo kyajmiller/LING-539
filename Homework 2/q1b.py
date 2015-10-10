@@ -45,13 +45,11 @@ def calculateLidstoneSmoothingProb(bigramCount):
     # calculates and returns the probability of a bigram after Lidstone smoothing.
     # lidstone = bigramCount + alpha / numActualBigrams + numPossibleBigrams * lambda
 
-    # estimations of alpha and lambda, shouldn't be too far from alpha = 0.5 and lambda = 1 / 100000
-    # I personally like 1 / 1,000,000 (1e-6) because every smoothing algorith I've done always seems to have the best
-    # lambda value as that.
+    # I kept in an alpha value because I really didn't want to rewrite this equation.
     # I choose lambda = 1 / 10,000,000 (1e-7) which is the smallest lambda value whereafter decreasing the value by an
     # order of magnitude started having diminishing returns. The smaller values do have a slightly higher probability,
     # but barely
-    alpha = 0.65
+    alpha = 0.5
     lamb = 1 / 10000000
 
     lidstone = (bigramCount + alpha) / (totalSeenBigrams + (totalPossibleBigrams * lamb))
