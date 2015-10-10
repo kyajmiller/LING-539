@@ -35,8 +35,7 @@ outputFile = open('ngram_frequencies.txt', 'w')
 
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
-# brownTagWholeDocument = filein.read()
-brownTagLineByLine = filein.readlines()
+brownTagLineByLine = [line.strip() for line in filein]
 filein.close()
 
 wordsUnigrams = []
@@ -56,16 +55,17 @@ for line in brownTagLineByLine:
     # split if find second underscore. Append split parts to wordsUnigrams and posTagsUnigrams as appropriate.
     for token in wordsPOSTags:
         splitWordPOS = token.split('_', 1)
-        word = splitWordPOS[0]
-        tag = splitWordPOS[1]
-        if re.search('_', tag):
-            resplit = tag.split('_', 1)
-            word = '%s%s' % (word, resplit[0])
-            tag = resplit[1]
-        wordsUnigrams.append(word)
-        wordsUnigramsLine.append(word)
-        posTagsUnigrams.append(tag)
-        posTagsUnigramsLine.append(tag)
+        if len(splitWordPOS) == 2:
+            word = splitWordPOS[0]
+            tag = splitWordPOS[1]
+            if re.search('_', tag):
+                resplit = tag.split('_', 1)
+                word = '%s%s' % (word, resplit[0])
+                tag = resplit[1]
+            wordsUnigrams.append(word)
+            wordsUnigramsLine.append(word)
+            posTagsUnigrams.append(tag)
+            posTagsUnigramsLine.append(tag)
 
     wordsUnigramsLine.append('#')
     posTagsUnigramsLine.append('#')
@@ -83,6 +83,7 @@ for line in brownTagLineByLine:
     for i in range(len(posTagsUnigramsLine) - 2):
         posTagsTrigrams.append(
             '%s\t%s\t%s' % (posTagsUnigramsLine[i], posTagsUnigramsLine[i + 1], posTagsUnigramsLine[i + 2]))
+
 
 # make top 100 lists using previously declared function
 wordsUnigramsTop100List = makeTop100List(wordsUnigrams)
