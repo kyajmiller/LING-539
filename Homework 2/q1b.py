@@ -46,7 +46,6 @@ def doSentenceProbabilityBigramsLaplaceSmoothing(sentence):
 def calculateLidstoneSmoothingProb(bigramCount):
     # calculates and returns the probability of a bigram after Lidstone smoothing.
     # lidstone = bigramCount + alpha / numActualBigrams + numPossibleBigrams * lambda
-    # I decided to separate this from the sentence function so I can import it into q1c.py
 
     # estimations of alpha and lambda, shouldn't be too far from alpha = 0.5 and lambda = 1 / 100000
     # I personally like 1 / 1,000,000 (1e-6) because every smoothing algorith I've done always seems to have the best
