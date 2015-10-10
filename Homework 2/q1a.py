@@ -35,42 +35,57 @@ outputFile = open('ngram_frequencies.txt', 'w')
 
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
-brownTagNoLines = filein.read()
+# brownTagWholeDocument = filein.read()
+brownTagLineByLine = filein.readlines()
 filein.close()
 
-
-
-# tokenize input file on whitespace to get individual words_posTags. Declare separate words and posTags lists to be
-# populated.
-wordsPOSTags = brownTagNoLines.split(' ')
-wordsUnigramsTotal = []
+wordsUnigrams = []
 posTagsUnigrams = []
+wordsBigrams = []
+wordsTrigrams = []
+posTagsBigrams = []
+posTagsTrigrams = []
 
-# splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
-# split if find second underscore. Append split parts to wordsUnigrams and posTagsUnigrams as appropriate.
-for token in wordsPOSTags:
-    splitWordPOS = token.split('_', 1)
-    word = splitWordPOS[0]
-    tag = splitWordPOS[1]
-    if re.search('_', tag):
-        resplit = tag.split('_', 1)
-        word = '%s%s' % (word, resplit[0])
-        tag = resplit[1]
-    wordsUnigramsTotal.append(word)
-    posTagsUnigrams.append(tag)
+# now read in line by line to get unigrams and sentence specific bigrams + trigrams
+for line in brownTagLineByLine:
+    wordsPOSTags = line.split(' ')
+    wordsUnigramsLine = ['#']
+    posTagsUnigramsLine = ['#']
 
-# create bigrams and trigrams lists using string interpolation
-wordsBigrams = ['%s\t%s' % (wordsUnigramsTotal[i], wordsUnigramsTotal[i + 1]) for i in
-                range(len(wordsUnigramsTotal) - 1)]
-wordsTrigrams = ['%s\t%s\t%s' % (wordsUnigramsTotal[i], wordsUnigramsTotal[i + 1], wordsUnigramsTotal[i + 2]) for i in
-                 range(len(wordsUnigramsTotal) - 2)]
+    # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
+    # split if find second underscore. Append split parts to wordsUnigrams and posTagsUnigrams as appropriate.
+    for token in wordsPOSTags:
+        splitWordPOS = token.split('_', 1)
+        word = splitWordPOS[0]
+        tag = splitWordPOS[1]
+        if re.search('_', tag):
+            resplit = tag.split('_', 1)
+            word = '%s%s' % (word, resplit[0])
+            tag = resplit[1]
+        wordsUnigrams.append(word)
+        wordsUnigramsLine.append(word)
+        posTagsUnigrams.append(tag)
+        posTagsUnigramsLine.append(tag)
 
-posTagsBigrams = ['%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1]) for i in range(len(posTagsUnigrams) - 1)]
-posTagsTrigrams = ['%s\t%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1], posTagsUnigrams[i + 2]) for i in
-                   range(len(posTagsUnigrams) - 2)]
+    wordsUnigramsLine.append('#')
+    posTagsUnigramsLine.append('#')
+
+    # create bigrams and trigrams using string interpolation and append to appropriate lists
+    for i in range(len(wordsUnigramsLine) - 1):
+        wordsBigrams.append('%s\t%s' % (wordsUnigramsLine[i], wordsUnigramsLine[i + 1]))
+
+    for i in range(len(wordsUnigramsLine) - 2):
+        wordsTrigrams.append('%s\t%s\t%s' % (wordsUnigramsLine[i], wordsUnigramsLine[i + 1], wordsUnigramsLine[i + 2]))
+
+    for i in range(len(posTagsUnigramsLine) - 1):
+        posTagsBigrams.append('%s\t%s' % (posTagsUnigramsLine[i], posTagsUnigramsLine[i + 1]))
+
+    for i in range(len(posTagsUnigramsLine) - 2):
+        posTagsTrigrams.append(
+            '%s\t%s\t%s' % (posTagsUnigramsLine[i], posTagsUnigramsLine[i + 1], posTagsUnigramsLine[i + 2]))
 
 # make top 100 lists using previously declared function
-wordsUnigramsTop100List = makeTop100List(wordsUnigramsTotal)
+wordsUnigramsTop100List = makeTop100List(wordsUnigrams)
 wordsBigramsTop100List = makeTop100List(wordsBigrams)
 wordsTrigramsTop100List = makeTop100List(wordsTrigrams)
 
