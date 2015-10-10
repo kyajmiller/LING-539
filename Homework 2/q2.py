@@ -5,7 +5,10 @@ Q2 - Finds all of the words from the browntag corpus whose occurences as NN, JJ,
 the entropy of each of those words. Includes a function that prints out these words in order of decreasing entropy,
 and shows the unsmoothed count of the associated POS tags.
 """
+
+from __future__ import division
 import re
+import math
 from collections import Counter
 
 
@@ -14,9 +17,47 @@ def makeWordsTagsSortedFrequencyDict(wordsTagList):
     for word in wordsTagList:
         frequencyDict[word] += 1
 
-    sortedList = frequencyDict.most_common()
-    sortedFrequencyDict = {sortedWord[0]: sortedWord[1] for sortedWord in sortedList}
-    return sortedFrequencyDict
+    return frequencyDict
+
+
+def calculateEntropy(listOfProbabilities):
+    sum = 0
+    for probability in listOfProbabilities:
+        sum += probability * math.log(probability, 2)
+
+    return -sum
+
+
+def calculateWordEntropy(word):
+    totalFrequency = wordsMoreThan100FrequencyDict[word]
+    wordFreqNN = 0
+    wordFreqVB = 0
+    wordFreqJJ = 0
+
+    if word in frequencyDictNN:
+        wordFreqNN += frequencyDictNN[word]
+    else:
+        wordFreqNN = 0.01
+        totalFrequency += 0.01
+
+    if word in frequencyDictVB:
+        wordFreqVB += frequencyDictVB[word]
+    else:
+        wordFreqVB = 0.01
+        totalFrequency += 0.01
+
+    if word in frequencyDictJJ:
+        wordFreqJJ += frequencyDictJJ[word]
+    else:
+        wordFreqJJ = 0.01
+        totalFrequency += 0.01
+
+    NNProb = wordFreqNN / totalFrequency
+    VBProb = wordFreqVB / totalFrequency
+    JJProb = wordFreqJJ / totalFrequency
+
+    entropy = calculateEntropy([NNProb, VBProb, JJProb])
+    return entropy
 
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
@@ -52,7 +93,7 @@ frequencyDictNN = makeWordsTagsSortedFrequencyDict(wordsNNTag)
 frequencyDictVB = makeWordsTagsSortedFrequencyDict(wordsVBTag)
 frequencyDictJJ = makeWordsTagsSortedFrequencyDict(wordsJJTag)
 
-wordTotalFrequencyDict = Counter()
+wordsMoreThan100FrequencyDict = Counter()
 
 for word in distinctWords:
     wordTotalFrequency = 0
@@ -64,6 +105,7 @@ for word in distinctWords:
         wordTotalFrequency += frequencyDictJJ[word]
 
     if wordTotalFrequency >= 100:
-        wordTotalFrequencyDict[word] = wordTotalFrequency
+        wordsMoreThan100FrequencyDict[word] = wordTotalFrequency
 
-sortedWordsFrequencyList = wordTotalFrequencyDict.most_common()
+for word in wordsMoreThan100FrequencyDict:
+    wordEntropy = calculateWordEntropy(word)
