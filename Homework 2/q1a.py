@@ -29,18 +29,21 @@ def makeFrequencyList(tokensList):
 
     return frequencyDict.most_common()
 
+
+# open ngram_frequencies.txt as output file
+outputFile = open('ngram_frequencies.txt', 'w')
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
 
-# open ngram_frequencies.txt as output file
-outputFile = open('ngram_frequencies.txt', 'w')
+
 
 # tokenize input file on whitespace to get individual words_posTags. Declare separate words and posTags lists to be
 # populated.
 wordsPOSTags = brownTagNoLines.split(' ')
-wordsUnigrams = []
+wordsUnigramsTotal = []
 posTagsUnigrams = []
 
 # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
@@ -53,20 +56,21 @@ for token in wordsPOSTags:
         resplit = tag.split('_', 1)
         word = '%s%s' % (word, resplit[0])
         tag = resplit[1]
-    wordsUnigrams.append(word)
+    wordsUnigramsTotal.append(word)
     posTagsUnigrams.append(tag)
 
 # create bigrams and trigrams lists using string interpolation
-wordsBigrams = ['%s\t%s' % (wordsUnigrams[i], wordsUnigrams[i + 1]) for i in range(len(wordsUnigrams) - 1)]
-wordsTrigrams = ['%s\t%s\t%s' % (wordsUnigrams[i], wordsUnigrams[i + 1], wordsUnigrams[i + 2]) for i in
-                 range(len(wordsUnigrams) - 2)]
+wordsBigrams = ['%s\t%s' % (wordsUnigramsTotal[i], wordsUnigramsTotal[i + 1]) for i in
+                range(len(wordsUnigramsTotal) - 1)]
+wordsTrigrams = ['%s\t%s\t%s' % (wordsUnigramsTotal[i], wordsUnigramsTotal[i + 1], wordsUnigramsTotal[i + 2]) for i in
+                 range(len(wordsUnigramsTotal) - 2)]
 
 posTagsBigrams = ['%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1]) for i in range(len(posTagsUnigrams) - 1)]
 posTagsTrigrams = ['%s\t%s\t%s' % (posTagsUnigrams[i], posTagsUnigrams[i + 1], posTagsUnigrams[i + 2]) for i in
                    range(len(posTagsUnigrams) - 2)]
 
 # make top 100 lists using previously declared function
-wordsUnigramsTop100List = makeTop100List(wordsUnigrams)
+wordsUnigramsTop100List = makeTop100List(wordsUnigramsTotal)
 wordsBigramsTop100List = makeTop100List(wordsBigrams)
 wordsTrigramsTop100List = makeTop100List(wordsTrigrams)
 
