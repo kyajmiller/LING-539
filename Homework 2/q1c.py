@@ -67,12 +67,10 @@ def plotUnsmoothedZipfsLogLog():
     logY = [numpy.log10(y) for y in frequencyYUnsmoothed]
 
     plt.figure()
-    plt.scatter(logX, logY)
     plt.plot(logX, logY, 'r')
     plt.xlabel('rank')
     plt.ylabel('frequency')
     plt.title('Log/Log Graph Unsmoothed Bigrams')
-    plt.show()
 
 
 def plotLidstoneSmoothedZipfsLogLog():
@@ -85,8 +83,14 @@ def plotLidstoneSmoothedZipfsLogLog():
     frequencyYSmoothed.append(unseenBigramFrequency)
     frequencyYSmoothed.append(unseenBigramFrequency)
 
-    if len(rankX) == len(frequencyYSmoothed):
-        print('length matches')
+    logX = [numpy.log10(x) for x in rankX]
+    logY = [numpy.log10(y) for y in frequencyYSmoothed]
+
+    plt.figure()
+    plt.plot(logX, logY, 'r')
+    plt.xlabel('rank')
+    plt.ylabel('frequency')
+    plt.title('Log/Log Graph Lidstone Smoothed Bigrams')
 
 
 # get the bigrams; reads in the browntag corpus, gets the bigrams, and uses the Counter module to
@@ -112,6 +116,6 @@ unseenBigramFrequency = alpha
 unseenBigramRankFirst = totalSeenBigrams + 1
 unseenBigramsRankLast = totalPossibleBigrams
 
-
-
 plotUnsmoothedZipfsLogLog()
+plotLidstoneSmoothedZipfsLogLog()
+plt.show()
