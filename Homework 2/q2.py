@@ -65,6 +65,7 @@ filein.close()
 
 outputFile = open('zeroentropy.txt', 'w')
 
+print("Getting word POS counts...")
 wordsPOSTags = brownTagNoLines.split(' ')
 wordsNNTag = []
 wordsVBTag = []
@@ -91,10 +92,12 @@ for token in wordsPOSTags:
 
 distinctWords = list(set(allWords))
 
+print('Creating frequency dictionaries...')
 frequencyDictNN = makeWordsTagsSortedFrequencyDict(wordsNNTag)
 frequencyDictVB = makeWordsTagsSortedFrequencyDict(wordsVBTag)
 frequencyDictJJ = makeWordsTagsSortedFrequencyDict(wordsJJTag)
 
+print('Getting words that appear more than 100 times...')
 wordsMoreThan100FrequencyDict = Counter()
 
 for word in distinctWords:
@@ -111,6 +114,7 @@ for word in distinctWords:
 
 wordsMoreThan100FrequencySortedList = wordsMoreThan100FrequencyDict.most_common()
 
+print('Calculating word entropies...')
 wordEntropyDict = Counter()
 for word in wordsMoreThan100FrequencySortedList:
     wordOnly = word[0]
@@ -119,17 +123,20 @@ for word in wordsMoreThan100FrequencySortedList:
 
 sortedWordEntropyList = wordEntropyDict.most_common()
 
+print('Preparing to print output...')
 for word in sortedWordEntropyList:
     wordFreqNN = 0
     wordFreqVB = 0
     wordFreqJJ = 0
+    actualWord = word[0]
+    entropy = word[1]
 
-    if word in frequencyDictNN:
-        wordFreqNN += frequencyDictNN[word]
-    if word in frequencyDictVB:
-        wordFreqVB += frequencyDictVB[word]
-    if word in frequencyDictJJ:
-        wordFreqJJ += frequencyDictJJ[word]
+    if actualWord in frequencyDictNN:
+        wordFreqNN += frequencyDictNN[actualWord]
+    if actualWord in frequencyDictVB:
+        wordFreqVB += frequencyDictVB[actualWord]
+    if actualWord in frequencyDictJJ:
+        wordFreqJJ += frequencyDictJJ[actualWord]
 
-    formattedString = '%s\tNN: %s\tVB: %s\tJJ: %s' % (word, wordFreqNN, wordFreqVB, wordFreqJJ)
+    formattedString = '%s\tEntropy: %s\tNN: %s\tVB: %s\tJJ: %s\n' % (word, entropy, wordFreqNN, wordFreqVB, wordFreqJJ)
     outputFile.write(formattedString)
