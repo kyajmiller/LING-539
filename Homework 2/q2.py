@@ -63,6 +63,8 @@ filein = open('browntag_nolines.txt', 'r')
 brownTagNoLines = filein.read()
 filein.close()
 
+outputFile = open('zeroentropy.txt', 'w')
+
 wordsPOSTags = brownTagNoLines.split(' ')
 wordsNNTag = []
 wordsVBTag = []
@@ -107,5 +109,27 @@ for word in distinctWords:
     if wordTotalFrequency >= 100:
         wordsMoreThan100FrequencyDict[word] = wordTotalFrequency
 
-for word in wordsMoreThan100FrequencyDict:
-    wordEntropy = calculateWordEntropy(word)
+wordsMoreThan100FrequencySortedList = wordsMoreThan100FrequencyDict.most_common()
+
+wordEntropyDict = Counter()
+for word in wordsMoreThan100FrequencySortedList:
+    wordOnly = word[0]
+    entropy = calculateWordEntropy(wordOnly)
+    wordEntropyDict[wordOnly] = entropy
+
+sortedWordEntropyList = wordEntropyDict.most_common()
+
+for word in sortedWordEntropyList:
+    wordFreqNN = 0
+    wordFreqVB = 0
+    wordFreqJJ = 0
+
+    if word in frequencyDictNN:
+        wordFreqNN += frequencyDictNN[word]
+    if word in frequencyDictVB:
+        wordFreqVB += frequencyDictVB[word]
+    if word in frequencyDictJJ:
+        wordFreqJJ += frequencyDictJJ[word]
+
+    formattedString = '%s\tNN: %s\tVB: %s\tJJ: %s' % (word, wordFreqNN, wordFreqVB, wordFreqJJ)
+    outputFile.write(formattedString)
