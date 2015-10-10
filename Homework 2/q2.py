@@ -76,7 +76,7 @@ def printOutputTable():
             wordFreqJJ += frequencyDictJJ[actualWord]
 
         formattedString = '%s\tEntropy: %s\tNN: %s\tVB: %s\tJJ: %s\n' % (
-        actualWord, entropy, wordFreqNN, wordFreqVB, wordFreqJJ)
+            actualWord, entropy, wordFreqNN, wordFreqVB, wordFreqJJ)
         outputFile.write(formattedString)
 
 filein = open('browntag_nolines.txt', 'r')
