@@ -86,14 +86,19 @@ bigramsFrequencyList = makeFrequencyList(wordsBigrams)
 totalUnigrams = 0
 for unigram in unigramsFrequencyList:
     totalUnigrams += unigram[1]
-
-# get total seen bigrams count
+'''
+# get total seen bigrams count - this is wrong!
 totalSeenBigrams = 0
 for bigram in bigramsFrequencyList:
     totalSeenBigrams += bigram[1]
+'''
+# commented out version is wrong, returning how many bigrams period, not how many unique bigrams. Messing up count
+# for total possible bigrams. Really bad.
+totalSeenBigrams = len(bigramsFrequencyList)
 
 # calculate total possible bigrams
-totalPossibleBigrams = totalSeenBigrams * totalSeenBigrams
+# previous version was wrong, was supposed to square num unigrams not the wrong num of bigrams
+totalPossibleBigrams = totalUnigrams * totalUnigrams
 
 # create dictionary of unigrams and their probabilities; do same for bigrams
 unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
