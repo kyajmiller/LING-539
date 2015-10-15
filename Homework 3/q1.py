@@ -4,6 +4,9 @@ LING 539 Assignment 3
 Q1 - Reads in sentences from sents_in.txt and returns the probability of each sentence. Uses a bigram model trained on
 the browntag corpus and Lidstone smoothing. lambda = 1/100,000. Different from previous models in that it uses actual
 conditional probabilities.
+
+To get conditional probability:
+p(cat|the) = p(the cat)/p(the)
 """
 
 from __future__ import division
@@ -56,3 +59,7 @@ for line in brownTagLineByLine:
     # create bigrams and trigrams using string interpolation and append to appropriate lists
     for i in range(len(lineWordsUnigramsToMakeBigrams) - 1):
         wordsBigrams.append('%s\t%s' % (lineWordsUnigramsToMakeBigrams[i], lineWordsUnigramsToMakeBigrams[i + 1]))
+
+# make frequency lists using previously declared function
+unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
+bigramsFrequencyList = makeFrequencyList(wordsBigrams)
