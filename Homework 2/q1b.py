@@ -97,8 +97,9 @@ for bigram in bigramsFrequencyList:
 totalSeenBigrams = len(bigramsFrequencyList)
 
 # calculate total possible bigrams
-# previous version was wrong, was supposed to square num unigrams not the wrong num of bigrams
-totalPossibleBigrams = totalUnigrams * totalUnigrams
+# previous version was wrong, was supposed to square num unique unigrams not the wrong num of bigrams
+numUniqueUnigrams = len(unigramsFrequencyList)
+totalPossibleBigrams = numUniqueUnigrams * numUniqueUnigrams
 
 # create dictionary of unigrams and their probabilities; do same for bigrams
 unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigrams for unigram in unigramsFrequencyList}
