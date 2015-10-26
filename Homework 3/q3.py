@@ -25,6 +25,11 @@ def getPercentageOfWordsWithMoreThanOnePOSTag():
 
 
 def trainAndTestNaiveTagger(trainingPercentage):
+    trainingSplitInteger = trainingPercentage * 100
+    testingSplitInteger = 100 - trainingSplitInteger
+
+    print('Preparing sets for %s/%s split...' % (trainingSplitInteger, testingSplitInteger))
+
     # calculate how many lines should be in training and testing
     numTotalLines = len(brownTagLineByLine)
     numTrainingLines = int(math.ceil((numTotalLines * trainingPercentage)))
@@ -34,17 +39,18 @@ def trainAndTestNaiveTagger(trainingPercentage):
     trainingSet = brownTagLineByLine[:numTrainingLines]
     testingSet = brownTagLineByLine[-numTestingLines:]
 
+    print('Beginning training on %s%s of corpus...' % (trainingSplitInteger, '%'))
     mostCommonPOSTagsPerWord = getMostCommonPOSTagPerWord(trainingSet)
+
+    print('Testing Naive tagger on %s%s of corpus...' % (testingSplitInteger, '%'))
     percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
                                                                                          testingSet)
-
-    trainingSplitInteger = trainingPercentage * 100
-    testingSplitInteger = 100 - trainingSplitInteger
 
     formattedString = '%s/%s\t%s%s\t%s%s' % (
     trainingSplitInteger, testingSplitInteger, percentageWordsTaggedCorrectly, '%', percentageSentencesTaggedCorrectly,
     '%')
     outputFile.write(formattedString)
+    print('Complete.')
 
 
 def getWordsPOSTagsDict(setOfLines):
