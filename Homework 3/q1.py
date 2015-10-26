@@ -45,17 +45,18 @@ def doSentenceProbabilityLidstoneSmoothing(sentenceBigrams):
         # get probability of first unigram in the bigram
         bigramParts = bigram.split(' ')
         firstPart = bigramParts[0]
-        firstPartProb = unigramsProbabilitiesDict[firstPart]
+        if firstPart in unigramsProbabilitiesDict.iterkeys():
+            firstPartProb = unigramsProbabilitiesDict[firstPart]
 
-        # get the lidstone smoothed probability of the bigram
-        if bigram in bigramsFrequencyDict.iterkeys():
-            bigramFrequencyCount = bigramsFrequencyDict[bigram]
-            bigramProb = calculateLidstoneSmoothingProb(bigramFrequencyCount)
-        else:
-            bigramProb = calculateLidstoneSmoothingProb(0)
+            # get the lidstone smoothed probability of the bigram
+            if bigram in bigramsFrequencyDict.iterkeys():
+                bigramFrequencyCount = bigramsFrequencyDict[bigram]
+                bigramProb = calculateLidstoneSmoothingProb(bigramFrequencyCount)
+            else:
+                bigramProb = calculateLidstoneSmoothingProb(0)
 
-        conditionalProb = bigramProb / firstPartProb
-        sentenceProb *= conditionalProb
+            conditionalProb = bigramProb / firstPartProb
+            sentenceProb *= conditionalProb
 
     return sentenceProb
 
