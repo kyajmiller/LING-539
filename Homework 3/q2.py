@@ -49,3 +49,22 @@ def getAllPossiblePaths():
             allPathsFiltered.append(path)
 
     return allPathsFiltered
+
+
+transitionsMatrix = [
+    [0.2, 0.6, 0.2],
+    [0.3, 0.3, 0.4],
+    [0.1, 0.8, 0.1]
+]
+
+emissionsMatrix = [
+    [0.3, 0.1, 0.6],
+    [0.5, 0.3, 0.2],
+    [0.1, 0.7, 0.2]
+]
+
+transitionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2}
+emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
+
+allSentences = getAllSentences()
+allPossiblePaths = getAllPossiblePaths()
