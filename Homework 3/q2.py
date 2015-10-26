@@ -77,6 +77,8 @@ def calculateAllPathsTransmissionProbabilities():
     return allPathTransmissionProbs
 
 
+outputFile = open('hmm_output.txt', 'w')
+
 transitionsMatrix = [
     [0.2, 0.6, 0.2],
     [0.3, 0.3, 0.4],
@@ -94,28 +96,34 @@ emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1,
 
 allSentences = getAllSentences()
 allPossiblePaths = getAllPossiblePaths()
+allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities()
+
+beginningTableString = 'Sentence\tWinningTagSequence\tProduct'
+outputFile.write(beginningTableString)
 
 for sentence in allSentences:
     pathProbs = []
-    for path in allPossiblePaths:
-        # get transitions probability
-        pathTransitionProb = 1
-
-        if path[0] == 'tag1':
-            pathTransitionProb *= 0.3
-        elif path[0] == 'tag2':
-            pathTransitionProb *= 0.5
-        else:
-            pathTransitionProb *= 0.2
-
-        for i in range(len(path) - 1):
-            currentState = path[i]
-            currentStateIndex = transitionsMappingDictionary[currentState]
-            nextState = path[i + 1]
-            nextStateIndex = transitionsMappingDictionary[nextState]
-            transitionProb = transitionsMatrix[currentState][nextState]
-            pathTransitionProb *= transitionProb
+    for i in range(len(allPossiblePaths)):
+        path = allPossiblePaths[i]
+        pathTransmissionProb = allPathTransmissionProbs[i]
 
         # get emissions probability
         pathEmissionsProb = 1
-        for state in path:
+        for j in range(len(path)):
+            currentState = path[j]
+            currentWord = sentence[j]
+            stateIndex = emissionsMappingDictionary[currentState]
+            wordIndex = emissionsMappingDictionary[currentWord]
+            emissionsProb = emissionsMatrix[stateIndex][wordIndex]
+
+            pathEmissionsProb *= emissionsProb
+
+        pathProb = pathTransmissionProb * pathEmissionsProb
+        pathProbs.append(pathProb)
+
+    bestProbIndex = pathProbs.index(max(pathProbs))
+    bestProbPath = allPossiblePaths[bestProbIndex]
+    bestProb = pathProbs[bestProbIndex]
+
+    formattedString = '%s\t\t%s\t\t\t%s' % (sentence, bestProbPath, bestProb)
+    outputFile.write(formattedString)
