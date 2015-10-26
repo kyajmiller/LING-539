@@ -96,12 +96,18 @@ emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1,
 
 allSentences = getAllSentences()
 allPossiblePaths = getAllPossiblePaths()
+
+sentenceStrings = [', '.join(sentence) for sentence in allSentences]
+pathStrings = [', '.join(path) for path in allPossiblePaths]
+
 allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities()
 
-beginningTableString = 'Sentence\tWinningTagSequence\tProduct'
+beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
 
-for sentence in allSentences:
+for i in range(len(allSentences)):
+    sentence = allSentences[i]
+    sentenceString = sentenceStrings[i]
     pathProbs = []
     for i in range(len(allPossiblePaths)):
         path = allPossiblePaths[i]
@@ -122,8 +128,8 @@ for sentence in allSentences:
         pathProbs.append(pathProb)
 
     bestProbIndex = pathProbs.index(max(pathProbs))
-    bestProbPath = allPossiblePaths[bestProbIndex]
+    bestProbPathString = pathStrings[bestProbIndex]
     bestProb = pathProbs[bestProbIndex]
 
-    formattedString = '%s\t\t%s\t\t\t%s' % (sentence, bestProbPath, bestProb)
+    formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
     outputFile.write(formattedString)
