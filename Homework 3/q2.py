@@ -68,3 +68,27 @@ emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1,
 
 allSentences = getAllSentences()
 allPossiblePaths = getAllPossiblePaths()
+
+for sentence in allSentences:
+    pathProbs = []
+    for path in allPossiblePaths:
+        # get transitions probability
+        pathTransitionProb = 1
+
+        if path[0] == 'tag1':
+            pathTransitionProb *= 0.3
+        elif path[0] == 'tag2':
+            pathTransitionProb *= 0.5
+        else:
+            pathTransitionProb *= 0.2
+
+        for i in range(len(path) - 1):
+            currentState = path[i]
+            currentStateIndex = transitionsMappingDictionary[currentState]
+            nextState = path[i + 1]
+            nextStateIndex = transitionsMappingDictionary[nextState]
+            transitionProb = transitionsMatrix[currentState][nextState]
+            pathTransitionProb *= transitionProb
+
+        # get emissions probability
+        pathEmissionsProb = 1
