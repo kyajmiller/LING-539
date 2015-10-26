@@ -13,12 +13,38 @@ from collections import Counter
 
 
 def getPercentageOfWordsWithMoreThanOnePOSTag():
+    wordsPOSTagsDict = getWordsPOSTagsList(brownTagLineByLine)
+
+    wordsMoreThanOnePOS = 0
+    for word in wordsPOSTagsDict:
+        if len(wordsPOSTagsDict[word][0]) > 1:
+            wordsMoreThanOnePOS += 1
+
+    percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsPOSTagsDict)) * 100
+    return percentWordsMoreThanOnePOS
+
+
+def trainAndTestNaiveTagger(trainingPercentage):
+    trainingPercentageInteger = trainingPercentage * 100
+    testingPercentage = 1 - trainingPercentage
+
+    # calculate how many lines should be in training and testing
+    numTotalLines = len(brownTagLineByLine)
+    numTrainingLines = math.ceil((numTotalLines * trainingPercentage))
+    numTestingLines = numTotalLines - numTrainingLines
+
+    # use slicing to get the training and testing sets
+    trainingSet = brownTagLineByLine[:numTrainingLines]
+    testingSet = brownTagLineByLine[-numTestingLines:]
+
+
+def getWordsPOSTagsList(setOfLines):
     # first just read in browntag stuff and get unique words and unigrams in a list
     wordsDict = Counter()
     posDict = Counter()
 
     # get unique words and unigrams, establish words dictionary
-    for line in brownTagLineByLine:
+    for line in setOfLines:
         wordsPOSTags = line.split(' ')
 
         for token in wordsPOSTags:
@@ -59,28 +85,7 @@ def getPercentageOfWordsWithMoreThanOnePOSTag():
                     tagIndex = wordsPOSTagsDict[word][0].index(tag)
                     wordsPOSTagsDict[word][1][tagIndex] += 1
 
-    wordsMoreThanOnePOS = 0
-    for word in wordsPOSTagsDict:
-        if len(wordsPOSTagsDict[word][0]) > 1:
-            wordsMoreThanOnePOS += 1
-
-    percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsDict)) * 100
-    return percentWordsMoreThanOnePOS
-
-
-def trainAndTestNaiveTagger(trainingPercentage):
-    trainingPercentageInteger = trainingPercentage * 100
-    testingPercentage = 1 - trainingPercentage
-
-    # calculate how many lines should be in training and testing
-    numTotalLines = len(brownTagLineByLine)
-    numTrainingLines = math.ceil((numTotalLines * trainingPercentage))
-    numTestingLines = numTotalLines - numTrainingLines
-
-    # use slicing to get the training and testing sets
-    trainingSet = brownTagLineByLine[:numTrainingLines]
-    testingSet = brownTagLineByLine[-numTestingLines:]
-
+    return wordsPOSTagsDict
 
 def getMostCommonPOSTagPerWord(trainingSet):
     # first just read in browntag stuff and get unique words and unigrams in a list
