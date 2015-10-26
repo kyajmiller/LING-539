@@ -1,23 +1,35 @@
-Sentence		WinningTagSequence			Product
-w1, w1, w1		tag1, tag1, tag2			0.0162
-w1, w1, w2		tag2, tag2, tag3			0.028
-w1, w1, w3		tag2, tag2, tag1			0.0135
-w1, w2, w2		tag2, tag3, tag2			0.0672
-w1, w2, w3		tag2, tag3, tag2			0.0448
-w1, w2, w1		tag2, tag3, tag2			0.112
-w1, w3, w3		tag1, tag1, tag2			0.01296
-w1, w3, w2		tag1, tag1, tag2			0.01944
-w1, w3, w1		tag1, tag1, tag2			0.0324
-w2, w2, w2		tag3, tag3, tag2			0.09408
-w2, w2, w3		tag3, tag3, tag2			0.06272
-w2, w2, w1		tag3, tag3, tag2			0.1568
-w2, w3, w3		tag3, tag3, tag2			0.01792
-w2, w3, w2		tag3, tag3, tag2			0.02688
-w2, w3, w1		tag3, tag3, tag2			0.0448
-w2, w1, w1		tag3, tag3, tag2			0.0224
-w3, w3, w3		tag1, tag1, tag2			0.02592
-w3, w3, w2		tag1, tag1, tag2			0.03888
-w3, w3, w1		tag1, tag1, tag2			0.0648
-w3, w2, w2		tag1, tag3, tag2			0.08064
-w3, w2, w1		tag1, tag3, tag2			0.1344
-w3, w1, w1		tag1, tag1, tag2			0.0324
+Sentence		WinningTagSequence		Product
+w1				t2						0.25
+w2				t2						0.15
+w3				t1						0.18
+w1 w1			t1 t2					0.054
+w1 w2			t2 t3					0.056
+w1 w3			t2 t1					0.027
+w2 w2			t3 t2					0.1344
+w2 w3			t3 t2					0.0896
+w2 w1			t3 t2					0.224
+w3 w3			t1 t2					0.0432
+w3 w2			t1 t2					0.0648
+w3 w1			t1 t2					0.108
+w1 w1 w1		t1 t1 t2				0.0162
+w1 w1 w2		t2 t2 t3				0.028
+w1 w1 w3		t2 t2 t1				0.0135
+w1 w2 w2		t2 t3 t2				0.0672
+w1 w2 w3		t2 t3 t2				0.0448
+w1 w2 w1		t2 t3 t2				0.112
+w1 w3 w3		t1 t1 t2				0.01296
+w1 w3 w2		t1 t1 t2				0.01944
+w1 w3 w1		t1 t1 t2				0.0324
+w2 w2 w2		t3 t3 t2				0.09408
+w2 w2 w3		t3 t3 t2				0.06272
+w2 w2 w1		t3 t3 t2				0.1568
+w2 w3 w3		t3 t3 t2				0.01792
+w2 w3 w2		t3 t3 t2				0.02688
+w2 w3 w1		t3 t3 t2				0.0448
+w2 w1 w1		t3 t3 t2				0.0224
+w3 w3 w3		t1 t1 t2				0.02592
+w3 w3 w2		t1 t1 t2				0.03888
+w3 w3 w1		t1 t1 t2				0.0648
+w3 w2 w2		t1 t3 t2				0.08064
+w3 w2 w1		t1 t3 t2				0.1344
+w3 w1 w1		t1 t1 t2				0.0324
