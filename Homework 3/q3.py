@@ -74,7 +74,7 @@ def getWordsPOSTagsDict(setOfLines):
     wordsPOSTagsDict = {word: [[], []] for word in wordsDict}
 
     # then cycle back through the browntag stuff and populate the dictionary with lists of pos tags
-    for line in brownTagLineByLine:
+    for line in setOfLines:
         wordsPOSTags = line.split(' ')
 
         for token in wordsPOSTags:
