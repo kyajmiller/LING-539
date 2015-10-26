@@ -1,12 +1,12 @@
 """
 Kya Miller
 LING 539 Assignment 3
-Q2 - Simulates a simple Hidden Markov Model for a 3 word, 3 POS tag language. {w1, w2, w3}, {tag1, tag2, tag3}
+Q2 - Simulates a simple Hidden Markov Model for a 3 word, 3 POS tag language. {w1, w2, w3}, {t1, t2, t3}
 Finds all possible 3 word sentences. Finds most probable tag sequence for each sentence.
 Saves output and emission/transmission probabilities to hmm_output.txt.
 
 transitions matrix
-        tag1  tag2  tag3
+        t1  t2  t3
 start   0.3   0.5   0.2
 tag1    0.2   0.6   0.2
 tag2    0.3   0.3   0.4
@@ -14,9 +14,9 @@ tag3    0.1   0.8   0.1
 
 emissions matrix
         w1  w2  w3
-tag1    0.3 0.1 0.6
-tag2    0.5 0.3 0.2
-tag3    0.1 0.7 0.2
+t1    0.3 0.1 0.6
+t2    0.5 0.3 0.2
+t3    0.1 0.7 0.2
 """
 
 import itertools
@@ -40,7 +40,7 @@ def getAllSentencesGivenLength(length):
 
 def getAllPossiblePathsGivenLength(length):
     # this works exactly the same as the getAllSentences function, just has a different list.
-    states = ['tag1', 'tag2', 'tag3', 'tag2', 'tag1']
+    states = ['t1', 't2', 't3', 't2', 't1']
     allPathsObject = itertools.combinations_with_replacement(states, length)
 
     allPathsFiltered = []
@@ -57,9 +57,9 @@ def calculateAllPathsTransmissionProbabilities(pathsList):
     for path in pathsList:
         transitionProb = 1
 
-        if path[0] == 'tag1':
+        if path[0] == 't1':
             transitionProb *= 0.3
-        elif path[0] == 'tag2':
+        elif path[0] == 't2':
             transitionProb *= 0.5
         else:
             transitionProb *= 0.2
@@ -134,8 +134,8 @@ emissionsMatrix = [
     [0.1, 0.7, 0.2]
 ]
 
-transitionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2}
-emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
+transitionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2}
+emissionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
 
 beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
