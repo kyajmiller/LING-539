@@ -4,6 +4,19 @@ LING 539 Assignment 3
 Q2 - Simulates a simple Hidden Markov Model for a 3 word, 3 POS tag language. {w1, w2, w3}, {tag1, tag2, tag3}
 Finds all possible 3 word sentences. Finds most probable tag sequence for each sentence.
 Saves output and emission/transmission probabilities to hmm_output.txt.
+
+transitions matrix
+        tag1  tag2  tag3
+start   0.3   0.5   0.2
+tag1    0.2   0.6   0.2
+tag2    0.3   0.3   0.4
+tag3    0.1   0.8   0.1
+
+emissions matrix
+        w1  w2  w3
+tag1    0.3 0.1 0.6
+tag2    0.5 0.3 0.2
+tag3    0.1 0.7 0.2
 """
 
 import itertools
