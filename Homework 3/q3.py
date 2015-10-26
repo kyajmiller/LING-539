@@ -13,7 +13,7 @@ from collections import Counter
 
 
 def getPercentageOfWordsWithMoreThanOnePOSTag():
-    wordsPOSTagsDict = getWordsPOSTagsList(brownTagLineByLine)
+    wordsPOSTagsDict = getWordsPOSTagsDict(brownTagLineByLine)
 
     wordsMoreThanOnePOS = 0
     for word in wordsPOSTagsDict:
@@ -38,7 +38,7 @@ def trainAndTestNaiveTagger(trainingPercentage):
     testingSet = brownTagLineByLine[-numTestingLines:]
 
 
-def getWordsPOSTagsList(setOfLines):
+def getWordsPOSTagsDict(setOfLines):
     # first just read in browntag stuff and get unique words and unigrams in a list
     wordsDict = Counter()
     posDict = Counter()
@@ -87,52 +87,9 @@ def getWordsPOSTagsList(setOfLines):
 
     return wordsPOSTagsDict
 
+
 def getMostCommonPOSTagPerWord(trainingSet):
-    # first just read in browntag stuff and get unique words and unigrams in a list
-    wordsDict = Counter()
-    posDict = Counter()
-
-    # get unique words and unigrams, establish words dictionary
-    for line in trainingSet:
-        wordsPOSTags = line.split(' ')
-
-        for token in wordsPOSTags:
-            splitWordPOS = token.split('_', 1)
-            if len(splitWordPOS) == 2:
-                word = splitWordPOS[0]
-                tag = splitWordPOS[1]
-                if re.search('_', tag):
-                    resplit = tag.split('_', 1)
-                    word = '%s%s' % (word, resplit[0])
-                    tag = resplit[1]
-                word = word.lower()
-                wordsDict[word] += 1
-                posDict[tag] += 1
-
-    # now that we have the dictionary of words, clear out the entries to make room for lists of POS tags
-    # each entry has two lists, first list is pos tags, second list is count
-    wordsPOSTagsDict = {word: [[], []] for word in wordsDict}
-
-    # then cycle back through the browntag stuff and populate the dictionary with lists of pos tags
-    for line in brownTagLineByLine:
-        wordsPOSTags = line.split(' ')
-
-        for token in wordsPOSTags:
-            splitWordPOS = token.split('_', 1)
-            if len(splitWordPOS) == 2:
-                word = splitWordPOS[0]
-                tag = splitWordPOS[1]
-                if re.search('_', tag):
-                    resplit = tag.split('_', 1)
-                    word = '%s%s' % (word, resplit[0])
-                    tag = resplit[1]
-                word = word.lower()
-                if tag not in wordsPOSTagsDict[word][0]:
-                    wordsPOSTagsDict[word][0].append(tag)
-                    wordsPOSTagsDict[word][1].append(1)
-                else:
-                    tagIndex = wordsPOSTagsDict[word][0].index(tag)
-                    wordsPOSTagsDict[word][1][tagIndex] += 1
+    wordsPOSTagsDict = getWordsPOSTagsDict(trainingSet)
 
     wordsMostCommonPOSTagList = []
     for word in wordsPOSTagsDict:
