@@ -43,7 +43,7 @@ def doSentenceProbabilityLidstoneSmoothing(sentenceBigrams):
         # get those conditional probabilities
 
         # get probability of first unigram in the bigram
-        bigramParts = ' '.split(bigram)
+        bigramParts = bigram.split(' ')
         firstPart = bigramParts[0]
         firstPartProb = unigramsProbabilitiesDict[firstPart]
 
@@ -129,7 +129,7 @@ bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
 for sentence in sentsInData:
     sentence = sentence.strip()
 
-    sentenceWords = ' '.split(sentence)
+    sentenceWords = sentence.split(' ')
     sentenceUnigramsToMakeBigrams = ['#']
 
     for word in sentenceWords:
