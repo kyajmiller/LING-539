@@ -187,7 +187,7 @@ filein.close()
 print('Percentage of words with more than one POS tag: %.2f percent' % getPercentageOfWordsWithMoreThanOnePOSTag())
 
 # open output file
-outputFile = open('niave_tagger.txt', 'w')
+outputFile = open('naive_tagger.txt', 'w')
 outputFile.write('Train/Test\tWordsTaggedCorrectly\tEntireSentencesTaggedCorrectly\n')
 
 # do the things
