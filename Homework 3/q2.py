@@ -23,3 +23,16 @@ def getAllSentences():
             allSentencesFilteredList.append(sentence)
 
     return allSentencesFilteredList
+
+
+def getAllPossiblePaths():
+    # this works exactly the same as the getAllSentences function, just has a different list.
+    states = ['tag1', 'tag2', 'tag3', 'tag2', 'tag1']
+    allPathsObject = itertools.combinations_with_replacement(states, 3)
+
+    allPathsFiltered = []
+    for path in allPathsObject:
+        if path not in allPathsFiltered:
+            allPathsFiltered.append(path)
+
+    return allPathsFiltered
