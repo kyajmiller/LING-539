@@ -38,6 +38,14 @@ def trainAndTestNaiveTagger(trainingPercentage):
     percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
                                                                                          testingSet)
 
+    trainingSplitInteger = trainingPercentage * 100
+    testingSplitInteger = 100 - trainingSplitInteger
+
+    formattedString = '%s/%s\t%s%s\t%s%s' % (
+    trainingSplitInteger, testingSplitInteger, percentageWordsTaggedCorrectly, '%', percentageSentencesTaggedCorrectly,
+    '%')
+    outputFile.write(formattedString)
+
 
 def getWordsPOSTagsDict(setOfLines):
     # first just read in browntag stuff and get unique words and unigrams in a list
@@ -152,3 +160,11 @@ brownTagLineByLine = [line.strip() for line in filein]
 filein.close()
 
 print('Percentage of words with more than one POS tag: %.2f percent' % getPercentageOfWordsWithMoreThanOnePOSTag())
+
+outputFile = open('niave_tagger.txt', 'w')
+outputFile.write('Train/Test\tWordsTaggedCorrectly\tEntireSentencesTaggedCorrectly')
+
+trainAndTestNaiveTagger(0.75)
+trainAndTestNaiveTagger(0.50)
+trainAndTestNaiveTagger(0.10)
+trainAndTestNaiveTagger(0.01)
