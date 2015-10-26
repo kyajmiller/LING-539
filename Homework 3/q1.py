@@ -36,8 +36,28 @@ def calculateLidstoneSmoothingProb(bigramCount):
 
 
 def doSentenceProbabilityLidstoneSmoothing(sentenceBigrams):
+    # get the probability of the sentence using the conditional probabilities of the bigrams.
+    # conditional probability = lidstoneSmoothedProb(bigram) / normalProb(firstUnigram)
     sentenceProb = 1
-    for bigram in sentenceBigrams
+    for bigram in sentenceBigrams:
+        # get those conditional probabilities
+
+        # get probability of first unigram in the bigram
+        bigramParts = ' '.split(bigram)
+        firstPart = bigramParts[0]
+        firstPartProb = unigramsProbabilitiesDict[firstPart]
+
+        # get the lidstone smoothed probability of the bigram
+        if bigram in bigramsFrequencyDict.iterkeys():
+            bigramFrequencyCount = bigramsFrequencyDict[bigram]
+            bigramProb = calculateLidstoneSmoothingProb(bigramFrequencyCount)
+        else:
+            bigramProb = calculateLidstoneSmoothingProb(0)
+
+        conditionalProb = bigramProb / firstPartProb
+        sentenceProb *= conditionalProb
+
+    return sentenceProb
 
 
 # open browntag_nolines.txt as input
