@@ -88,7 +88,7 @@ def getMostCommonPOSTagPerWord(trainingSet):
     posDict = Counter()
 
     # get unique words and unigrams, establish words dictionary
-    for line in brownTagLineByLine:
+    for line in trainingSet:
         wordsPOSTags = line.split(' ')
 
         for token in wordsPOSTags:
