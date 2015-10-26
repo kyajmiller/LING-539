@@ -52,7 +52,7 @@ def trainAndTestNaiveTagger(trainingPercentage):
     percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
                                                                                          testingSet)
     # write to file
-    formattedString = '%s/%s\t\t%.2f%s\t\t%.2f%s\n' % (
+    formattedString = '%s/%s\t\t%.2f%s\t\t\t\t\t%.2f%s\n' % (
     trainingSplitInteger, testingSplitInteger, percentageWordsTaggedCorrectly, '%', percentageSentencesTaggedCorrectly,
     '%')
     outputFile.write(formattedString)
