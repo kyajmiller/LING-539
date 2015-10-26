@@ -32,5 +32,7 @@ for line in brownTagLineByLine:
                 word = '%s%s' % (word, resplit[0])
                 word = word.lower()
                 tag = resplit[1]
-            wordsUnigrams.append(word)
-            posTagsUnigrams.append(tag)
+            if word not in wordsUnigrams:
+                wordsUnigrams.append(word)
+            if tag not in posTagsUnigrams:
+                posTagsUnigrams.append(tag)
