@@ -36,7 +36,8 @@ def calculateLidstoneSmoothingProb(bigramCount):
 
 
 def doSentenceProbabilityLidstoneSmoothing(sentenceBigrams):
-    pass
+    sentenceProb = 1
+    for bigram in sentenceBigrams
 
 
 # open browntag_nolines.txt as input
@@ -59,6 +60,9 @@ for line in brownTagLineByLine:
     # declare separate lists to generate bigrams and trigrams
     lineWordsUnigramsToMakeBigrams = ['#']
 
+    # go ahead and add word boundary things to the total unigrams list for later prob stuff
+    wordsUnigrams.append('#')
+
     # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
     # split if find second underscore. Append word portion to wordsUnigrams.
     for token in wordsPOSTags:
@@ -72,9 +76,6 @@ for line in brownTagLineByLine:
                 tag = resplit[1]
             wordsUnigrams.append(word)
             lineWordsUnigramsToMakeBigrams.append(word)
-
-    # append appropriate number of # to bigrams and trigrams lists
-    lineWordsUnigramsToMakeBigrams.append('#')
 
     # create bigrams and trigrams using string interpolation and append to appropriate lists
     for i in range(len(lineWordsUnigramsToMakeBigrams) - 1):
@@ -112,8 +113,6 @@ for sentence in sentsInData:
 
     for word in sentenceWords:
         sentenceUnigramsToMakeBigrams.append(word)
-
-    sentenceUnigramsToMakeBigrams.append('#')
 
     sentenceBigrams = ['%s\t%s' % (sentenceUnigramsToMakeBigrams[i], sentenceUnigramsToMakeBigrams[i + 1]) for i in
                        range(len(sentenceUnigramsToMakeBigrams) - 1)]
