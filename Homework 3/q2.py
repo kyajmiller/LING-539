@@ -137,7 +137,7 @@ emissionsMatrix = [
 transitionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2}
 emissionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
 
-beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
+beginningTableString = 'Sentence\t\tWinningTagSequence\t\tProduct\n'
 outputFile.write(beginningTableString)
 
 calculateBestPathForSentenceGivenLength(1)
