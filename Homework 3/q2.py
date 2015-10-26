@@ -117,7 +117,7 @@ def calculateBestPathForSentenceGivenLength(length):
         elif length == 2:
             formattedString = '%s\t\t\t%s\t\t\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
         else:
-            formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
+            formattedString = '%s\t\t%s\t\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
         outputFile.write(formattedString)
 
 outputFile = open('hmm_output.txt', 'w')
