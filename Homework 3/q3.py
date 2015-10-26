@@ -69,4 +69,3 @@ for word in wordsPOSTagsDict:
 
 percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsDict)) * 100
 print('Percentage of words with more than one POS tag: %.2f percent' % percentWordsMoreThanOnePOS)
-print(wordsPOSTagsDict)
