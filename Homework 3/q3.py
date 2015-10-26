@@ -87,13 +87,12 @@ def getWordsPOSTagsDict(setOfLines):
                     word = '%s%s' % (word, resplit[0])
                     tag = resplit[1]
                 word = word.lower()
-                if word in wordsPOSTagsDict.iterkeys():
-                    if tag not in wordsPOSTagsDict[word][0]:
-                        wordsPOSTagsDict[word][0].append(tag)
-                        wordsPOSTagsDict[word][1].append(1)
-                    else:
-                        tagIndex = wordsPOSTagsDict[word][0].index(tag)
-                        wordsPOSTagsDict[word][1][tagIndex] += 1
+                if tag not in wordsPOSTagsDict[word][0]:
+                    wordsPOSTagsDict[word][0].append(tag)
+                    wordsPOSTagsDict[word][1].append(1)
+                else:
+                    tagIndex = wordsPOSTagsDict[word][0].index(tag)
+                    wordsPOSTagsDict[word][1][tagIndex] += 1
 
     return wordsPOSTagsDict
 
