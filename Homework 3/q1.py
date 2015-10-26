@@ -135,7 +135,7 @@ for sentence in sentsInData:
     for word in sentenceWords:
         sentenceUnigramsToMakeBigrams.append(word)
 
-    sentenceBigrams = ['%s\t%s' % (sentenceUnigramsToMakeBigrams[i], sentenceUnigramsToMakeBigrams[i + 1]) for i in
+    sentenceBigrams = ['%s %s' % (sentenceUnigramsToMakeBigrams[i], sentenceUnigramsToMakeBigrams[i + 1]) for i in
                        range(len(sentenceUnigramsToMakeBigrams) - 1)]
 
     sentenceProb = doSentenceProbabilityLidstoneSmoothing(sentenceBigrams)
