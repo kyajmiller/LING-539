@@ -51,6 +51,32 @@ def getAllPossiblePaths():
     return allPathsFiltered
 
 
+def calculateAllPathsTransmissionProbabilities():
+    allPathTransmissionProbs = []
+
+    for path in allPossiblePaths:
+        transitionProb = 1
+
+        if path[0] == 'tag1':
+            transitionProb *= 0.3
+        elif path[0] == 'tag2':
+            transitionProb *= 0.5
+        else:
+            transitionProb *= 0.2
+
+        for i in range(len(path) - 1):
+            currentState = path[i]
+            currentStateIndex = transitionsMappingDictionary[currentState]
+            nextState = path[i + 1]
+            nextStateIndex = transitionsMappingDictionary[nextState]
+            transitionProb = transitionsMatrix[currentStateIndex][nextStateIndex]
+            transitionProb *= transitionProb
+
+        allPathTransmissionProbs.append(transitionProb)
+
+    return allPathTransmissionProbs
+
+
 transitionsMatrix = [
     [0.2, 0.6, 0.2],
     [0.3, 0.3, 0.4],
@@ -92,3 +118,4 @@ for sentence in allSentences:
 
         # get emissions probability
         pathEmissionsProb = 1
+        for state in path:
