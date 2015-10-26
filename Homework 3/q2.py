@@ -81,8 +81,8 @@ def calculateBestPathForSentenceGivenLength(length):
     allSentences = getAllSentencesGivenLength(length)
     allPaths = getAllPossiblePathsGivenLength(length)
 
-    sentenceStrings = [', '.join(sentence) for sentence in allSentences]
-    pathStrings = [', '.join(path) for path in allPaths]
+    sentenceStrings = [' '.join(sentence) for sentence in allSentences]
+    pathStrings = [' '.join(path) for path in allPaths]
 
     allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities(allPaths)
 
@@ -112,7 +112,12 @@ def calculateBestPathForSentenceGivenLength(length):
         bestProbPathString = pathStrings[bestProbIndex]
         bestProb = pathProbs[bestProbIndex]
 
-        formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
+        if length == 1:
+            formattedString = '%s\t\t\t\t%s\t\t\t\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
+        elif length == 2:
+            formattedString = '%s\t\t\t%s\t\t\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
+        else:
+            formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
         outputFile.write(formattedString)
 
 outputFile = open('hmm_output.txt', 'w')
@@ -135,4 +140,6 @@ emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1,
 beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
 
-
+calculateBestPathForSentenceGivenLength(1)
+calculateBestPathForSentenceGivenLength(2)
+calculateBestPathForSentenceGivenLength(3)
