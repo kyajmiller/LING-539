@@ -27,7 +27,7 @@ def getPercentageOfWordsWithMoreThanOnePOSTag():
 def trainAndTestNaiveTagger(trainingPercentage):
     # calculate how many lines should be in training and testing
     numTotalLines = len(brownTagLineByLine)
-    numTrainingLines = math.ceil((numTotalLines * trainingPercentage))
+    numTrainingLines = int(math.ceil((numTotalLines * trainingPercentage)))
     numTestingLines = numTotalLines - numTrainingLines
 
     # use slicing to get the training and testing sets
@@ -87,12 +87,13 @@ def getWordsPOSTagsDict(setOfLines):
                     word = '%s%s' % (word, resplit[0])
                     tag = resplit[1]
                 word = word.lower()
-                if tag not in wordsPOSTagsDict[word][0]:
-                    wordsPOSTagsDict[word][0].append(tag)
-                    wordsPOSTagsDict[word][1].append(1)
-                else:
-                    tagIndex = wordsPOSTagsDict[word][0].index(tag)
-                    wordsPOSTagsDict[word][1][tagIndex] += 1
+                if word in wordsPOSTagsDict.iterkeys():
+                    if tag not in wordsPOSTagsDict[word][0]:
+                        wordsPOSTagsDict[word][0].append(tag)
+                        wordsPOSTagsDict[word][1].append(1)
+                    else:
+                        tagIndex = wordsPOSTagsDict[word][0].index(tag)
+                        wordsPOSTagsDict[word][1][tagIndex] += 1
 
     return wordsPOSTagsDict
 
