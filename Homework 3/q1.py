@@ -100,7 +100,7 @@ for line in brownTagLineByLine:
 
     # create bigrams and trigrams using string interpolation and append to appropriate lists
     for i in range(len(lineWordsUnigramsToMakeBigrams) - 1):
-        wordsBigrams.append('%s\t%s' % (lineWordsUnigramsToMakeBigrams[i], lineWordsUnigramsToMakeBigrams[i + 1]))
+        wordsBigrams.append('%s %s' % (lineWordsUnigramsToMakeBigrams[i], lineWordsUnigramsToMakeBigrams[i + 1]))
 
 # make frequency lists using previously declared function
 unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
