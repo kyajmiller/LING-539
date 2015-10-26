@@ -13,6 +13,8 @@ from collections import Counter
 
 
 def getPercentageOfWordsWithMoreThanOnePOSTag():
+    # calculates the percentage of words with more than one part of speech tag. Calls function to get words and their lists
+    # of pos tags; if the word has more than one pos tag, increments count by one
     wordsPOSTagsDict = getWordsPOSTagsDict(brownTagLineByLine)
 
     wordsMoreThanOnePOS = 0
@@ -25,6 +27,8 @@ def getPercentageOfWordsWithMoreThanOnePOSTag():
 
 
 def trainAndTestNaiveTagger(trainingPercentage):
+    # big function to control testing and training of the Naive Tagger
+    # convert training percentage to integer for pretty printing, not important
     trainingSplitInteger = int(trainingPercentage * 100)
     testingSplitInteger = int(100 - trainingSplitInteger)
 
@@ -39,13 +43,15 @@ def trainAndTestNaiveTagger(trainingPercentage):
     trainingSet = brownTagLineByLine[:numTrainingLines]
     testingSet = brownTagLineByLine[-numTestingLines:]
 
+    # do training
     print('Beginning training on %s%s of corpus...' % (trainingSplitInteger, '%'))
     mostCommonPOSTagsPerWord = getMostCommonPOSTagPerWord(trainingSet)
 
+    # do testing
     print('Testing Naive tagger on %s%s of corpus...' % (testingSplitInteger, '%'))
     percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
                                                                                          testingSet)
-
+    # write to file
     formattedString = '%s/%s\t\t%.2f%s\t\t%.2f%s\n' % (
     trainingSplitInteger, testingSplitInteger, percentageWordsTaggedCorrectly, '%', percentageSentencesTaggedCorrectly,
     '%')
@@ -104,6 +110,8 @@ def getWordsPOSTagsDict(setOfLines):
 
 
 def getMostCommonPOSTagPerWord(trainingSet):
+    # calls previous function, gets list of words + pos tags, uses counts to figure out which tag is the most common
+    # for the word, returns list of words with their most common tag
     wordsPOSTagsDict = getWordsPOSTagsDict(trainingSet)
 
     wordsMostCommonPOSTagList = []
@@ -116,6 +124,8 @@ def getMostCommonPOSTagPerWord(trainingSet):
 
 
 def testNaiveTagger(mostCommonPOSTagsPerWord, testingSet):
+    # test the Naive tagger using the trained list of most common pos tags per word and the testing set lines
+    # split up into words list and pos tags list
     trainedWordsList = [wordPOSPairing[0] for wordPOSPairing in mostCommonPOSTagsPerWord]
     trainedPOSList = [wordPOSPairing[1] for wordPOSPairing in mostCommonPOSTagsPerWord]
 
@@ -125,6 +135,7 @@ def testNaiveTagger(mostCommonPOSTagsPerWord, testingSet):
     totalSentences = 0
     totalSentenceMatches = 0
 
+    # iterate line by line through testing set
     for line in testingSet:
         sentenceWords = 0
         sentenceWordMatches = 0
@@ -132,6 +143,7 @@ def testNaiveTagger(mostCommonPOSTagsPerWord, testingSet):
 
         wordsPOSTags = line.split(' ')
 
+        # split tokens between words and tags
         for token in wordsPOSTags:
             splitWordPOS = token.split('_', 1)
             if len(splitWordPOS) == 2:
@@ -145,15 +157,21 @@ def testNaiveTagger(mostCommonPOSTagsPerWord, testingSet):
                 totalWords += 1
                 sentenceWords += 1
 
+                # check if word in training set (THIS IS WHY THIS THING IS SO SLOW OMG)
+                # if you don't do the check, then it's going to throw key errors left and right. Pls send help.
                 if word in trainedWordsList:
                     wordIndex = trainedWordsList.index(word)
                     correctPOSTag = trainedPOSList[wordIndex]
+                    # if tag matches, then yay
                     if tag == correctPOSTag:
                         totalWordMatches += 1
                         sentenceWordMatches += 1
+
+        #see how many entire sentences are matches
         if sentenceWords == sentenceWordMatches:
             totalSentenceMatches += 1
 
+    # get percentages and return
     percentageWordsTaggedCorrectly = (totalWordMatches / totalWords) * 100
     percentageSentencesTaggedCorrectly = (totalSentenceMatches / totalSentences) * 100
 
@@ -165,11 +183,14 @@ filein = open('browntag_nolines.txt', 'r')
 brownTagLineByLine = [line.strip() for line in filein]
 filein.close()
 
+# get percentage of words with more than one tag
 print('Percentage of words with more than one POS tag: %.2f percent' % getPercentageOfWordsWithMoreThanOnePOSTag())
 
+# open output file
 outputFile = open('niave_tagger.txt', 'w')
 outputFile.write('Train/Test\tWordsTaggedCorrectly\tEntireSentencesTaggedCorrectly\n')
 
+# do the things
 trainAndTestNaiveTagger(0.75)
 trainAndTestNaiveTagger(0.50)
 trainAndTestNaiveTagger(0.10)
