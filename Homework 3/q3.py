@@ -26,7 +26,6 @@ def getPercentageOfWordsWithMoreThanOnePOSTag():
 
 def trainAndTestNaiveTagger(trainingPercentage):
     trainingPercentageInteger = trainingPercentage * 100
-    testingPercentage = 1 - trainingPercentage
 
     # calculate how many lines should be in training and testing
     numTotalLines = len(brownTagLineByLine)
@@ -38,6 +37,8 @@ def trainAndTestNaiveTagger(trainingPercentage):
     testingSet = brownTagLineByLine[-numTestingLines:]
 
     mostCommonPOSTagsPerWord = getMostCommonPOSTagPerWord(trainingSet)
+    percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
+                                                                                         testingSet)
 
 
 def getWordsPOSTagsDict(setOfLines):
