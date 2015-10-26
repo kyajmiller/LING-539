@@ -22,7 +22,7 @@ tag3    0.1 0.7 0.2
 import itertools
 
 
-def getAllSentences():
+def getAllSentencesLength3():
     # the words list needs to have w1 and w2 repeated after w3, or else itertools won't consider a combination where
     # w1 or w2 can appear after w3
     words = ['w1', 'w2', 'w3', 'w2', 'w1']
@@ -38,7 +38,7 @@ def getAllSentences():
     return allSentencesFilteredList
 
 
-def getAllPossiblePaths():
+def getAllPossiblePathsLength3():
     # this works exactly the same as the getAllSentences function, just has a different list.
     states = ['tag1', 'tag2', 'tag3', 'tag2', 'tag1']
     allPathsObject = itertools.combinations_with_replacement(states, 3)
@@ -54,7 +54,7 @@ def getAllPossiblePaths():
 def calculateAllPathsTransmissionProbabilities():
     allPathTransmissionProbs = []
 
-    for path in allPossiblePaths:
+    for path in allPossiblePathsLength3:
         transitionProb = 1
 
         if path[0] == 'tag1':
@@ -94,23 +94,23 @@ emissionsMatrix = [
 transitionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2}
 emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
 
-allSentences = getAllSentences()
-allPossiblePaths = getAllPossiblePaths()
+allSentencesLength3 = getAllSentencesLength3()
+allPossiblePathsLength3 = getAllPossiblePathsLength3()
 
-sentenceStrings = [', '.join(sentence) for sentence in allSentences]
-pathStrings = [', '.join(path) for path in allPossiblePaths]
+sentenceStrings = [', '.join(sentence) for sentence in allSentencesLength3]
+pathStrings = [', '.join(path) for path in allPossiblePathsLength3]
 
 allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities()
 
 beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
 
-for i in range(len(allSentences)):
-    sentence = allSentences[i]
+for i in range(len(allSentencesLength3)):
+    sentence = allSentencesLength3[i]
     sentenceString = sentenceStrings[i]
     pathProbs = []
-    for i in range(len(allPossiblePaths)):
-        path = allPossiblePaths[i]
+    for i in range(len(allPossiblePathsLength3)):
+        path = allPossiblePathsLength3[i]
         pathTransmissionProb = allPathTransmissionProbs[i]
 
         # get emissions probability
