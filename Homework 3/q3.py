@@ -46,7 +46,7 @@ def trainAndTestNaiveTagger(trainingPercentage):
     percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly = testNaiveTagger(mostCommonPOSTagsPerWord,
                                                                                          testingSet)
 
-    formattedString = '%s/%s\t%s%s\t%s%s' % (
+    formattedString = '%s/%s\t\t%s%s\t\t%s%s\n' % (
     trainingSplitInteger, testingSplitInteger, percentageWordsTaggedCorrectly, '%', percentageSentencesTaggedCorrectly,
     '%')
     outputFile.write(formattedString)
@@ -168,7 +168,7 @@ filein.close()
 print('Percentage of words with more than one POS tag: %.2f percent' % getPercentageOfWordsWithMoreThanOnePOSTag())
 
 outputFile = open('niave_tagger.txt', 'w')
-outputFile.write('Train/Test\tWordsTaggedCorrectly\tEntireSentencesTaggedCorrectly')
+outputFile.write('Train/Test\tWordsTaggedCorrectly\tEntireSentencesTaggedCorrectly\n')
 
 trainAndTestNaiveTagger(0.75)
 trainAndTestNaiveTagger(0.50)
