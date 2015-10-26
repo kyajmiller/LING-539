@@ -37,6 +37,8 @@ def trainAndTestNaiveTagger(trainingPercentage):
     trainingSet = brownTagLineByLine[:numTrainingLines]
     testingSet = brownTagLineByLine[-numTestingLines:]
 
+    mostCommonPOSTagsPerWord = getMostCommonPOSTagPerWord(trainingSet)
+
 
 def getWordsPOSTagsDict(setOfLines):
     # first just read in browntag stuff and get unique words and unigrams in a list
@@ -98,6 +100,52 @@ def getMostCommonPOSTagPerWord(trainingSet):
         wordsMostCommonPOSTagList.append([word, mostCommonPOSTag])
 
     return wordsMostCommonPOSTagList
+
+
+def testNaiveTagger(mostCommonPOSTagsPerWord, testingSet):
+    trainedWordsList = [wordPOSPairing[0] for wordPOSPairing in mostCommonPOSTagsPerWord]
+    trainedPOSList = [wordPOSPairing[1] for wordPOSPairing in mostCommonPOSTagsPerWord]
+
+    totalWords = 0
+    totalWordMatches = 0
+
+    totalSentences = 0
+    totalSentenceMatches = 0
+
+    for line in testingSet:
+        sentenceWords = 0
+        sentenceWordMatches = 0
+        totalSentences += 1
+
+        wordsPOSTags = line.split(' ')
+
+        for token in wordsPOSTags:
+            splitWordPOS = token.split('_', 1)
+            if len(splitWordPOS) == 2:
+                word = splitWordPOS[0]
+                tag = splitWordPOS[1]
+                if re.search('_', tag):
+                    resplit = tag.split('_', 1)
+                    word = '%s%s' % (word, resplit[0])
+                    tag = resplit[1]
+                word = word.lower()
+                totalWords += 1
+                sentenceWords += 1
+
+                if word in trainedWordsList:
+                    wordIndex = trainedWordsList.index(word)
+                    correctPOSTag = trainedPOSList[wordIndex]
+                    if tag == correctPOSTag:
+                        totalWordMatches += 1
+                        sentenceWordMatches += 1
+        if sentenceWords == sentenceWordMatches:
+            totalSentenceMatches += 1
+
+    percentageWordsTaggedCorrectly = (totalWordMatches / totalWords) * 100
+    percentageSentencesTaggedCorrectly = (totalSentenceMatches / totalSentences) * 100
+
+    return percentageWordsTaggedCorrectly, percentageSentencesTaggedCorrectly
+
 
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
