@@ -22,11 +22,11 @@ tag3    0.1 0.7 0.2
 import itertools
 
 
-def getAllSentencesLength3():
+def getAllSentencesGivenLength(length):
     # the words list needs to have w1 and w2 repeated after w3, or else itertools won't consider a combination where
     # w1 or w2 can appear after w3
     words = ['w1', 'w2', 'w3', 'w2', 'w1']
-    allSentencesObject = itertools.combinations_with_replacement(words, 3)
+    allSentencesObject = itertools.combinations_with_replacement(words, length)
 
     # however, because it still counts those repeated w1 and w2 as separate objects, you will get repeats. So filter
     # out the repeats.
@@ -38,10 +38,10 @@ def getAllSentencesLength3():
     return allSentencesFilteredList
 
 
-def getAllPossiblePathsLength3():
+def getAllPossiblePathsGivenLength(length):
     # this works exactly the same as the getAllSentences function, just has a different list.
     states = ['tag1', 'tag2', 'tag3', 'tag2', 'tag1']
-    allPathsObject = itertools.combinations_with_replacement(states, 3)
+    allPathsObject = itertools.combinations_with_replacement(states, length)
 
     allPathsFiltered = []
     for path in allPathsObject:
@@ -51,10 +51,10 @@ def getAllPossiblePathsLength3():
     return allPathsFiltered
 
 
-def calculateAllPathsTransmissionProbabilities():
+def calculateAllPathsTransmissionProbabilities(pathsList):
     allPathTransmissionProbs = []
 
-    for path in allPossiblePathsLength3:
+    for path in pathsList:
         transitionProb = 1
 
         if path[0] == 'tag1':
@@ -94,20 +94,20 @@ emissionsMatrix = [
 transitionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2}
 emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
 
-allSentencesLength3 = getAllSentencesLength3()
-allPossiblePathsLength3 = getAllPossiblePathsLength3()
+allSentencesLength3 = getAllSentencesGivenLength(3)
+allPossiblePathsLength3 = getAllPossiblePathsGivenLength(3)
 
-sentenceStrings = [', '.join(sentence) for sentence in allSentencesLength3]
-pathStrings = [', '.join(path) for path in allPossiblePathsLength3]
+sentenceStringsLength3 = [', '.join(sentence) for sentence in allSentencesLength3]
+pathStringsLength3 = [', '.join(path) for path in allPossiblePathsLength3]
 
-allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities()
+allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities(allPossiblePathsLength3)
 
 beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
 
 for i in range(len(allSentencesLength3)):
     sentence = allSentencesLength3[i]
-    sentenceString = sentenceStrings[i]
+    sentenceString = sentenceStringsLength3[i]
     pathProbs = []
     for i in range(len(allPossiblePathsLength3)):
         path = allPossiblePathsLength3[i]
@@ -128,7 +128,7 @@ for i in range(len(allSentencesLength3)):
         pathProbs.append(pathProb)
 
     bestProbIndex = pathProbs.index(max(pathProbs))
-    bestProbPathString = pathStrings[bestProbIndex]
+    bestProbPathString = pathStringsLength3[bestProbIndex]
     bestProb = pathProbs[bestProbIndex]
 
     formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
