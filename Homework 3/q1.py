@@ -84,7 +84,7 @@ for line in brownTagLineByLine:
     wordsUnigrams.append('#')
 
     # splits each word_posTag on underscore '_'. Sometimes there are multiple underscores in the token, so will redo the
-    # split if find second underscore. Append word portion to wordsUnigrams.
+    # split if find second underscore. Make word lowercase for case stuff. Append word portion to wordsUnigrams.
     for token in wordsPOSTags:
         splitWordPOS = token.split('_', 1)
         if len(splitWordPOS) == 2:
@@ -93,6 +93,7 @@ for line in brownTagLineByLine:
             if re.search('_', tag):
                 resplit = tag.split('_', 1)
                 word = '%s%s' % (word, resplit[0])
+                word = word.lower()
                 tag = resplit[1]
             wordsUnigrams.append(word)
             lineWordsUnigramsToMakeBigrams.append(word)
@@ -138,3 +139,6 @@ for sentence in sentsInData:
                        range(len(sentenceUnigramsToMakeBigrams) - 1)]
 
     sentenceProb = doSentenceProbabilityLidstoneSmoothing(sentenceBigrams)
+
+    print('Sentence: %s' % sentence)
+    print('Probability: %s' % sentenceProb)
