@@ -90,6 +90,7 @@ for line in brownTagLineByLine:
         splitWordPOS = token.split('_', 1)
         if len(splitWordPOS) == 2:
             word = splitWordPOS[0]
+            word = word.lower()
             tag = splitWordPOS[1]
             if re.search('_', tag):
                 resplit = tag.split('_', 1)
