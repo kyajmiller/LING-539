@@ -16,10 +16,8 @@ brownTagLineByLine = [line.strip() for line in filein]
 filein.close()
 
 # first just read in browntag stuff and get unique words and unigrams in a list
-wordsUnigrams = []
-posTagsUnigrams = []
-
-wordFrequencyDict = Counter()
+wordsDict = Counter()
+posDict = Counter()
 
 # get unique words and unigrams, establish words dictionary
 for line in brownTagLineByLine:
@@ -35,16 +33,14 @@ for line in brownTagLineByLine:
                 word = '%s%s' % (word, resplit[0])
                 word = word.lower()
                 tag = resplit[1]
-            wordFrequencyDict[word] += 1
-            if word not in wordsUnigrams:
-                wordsUnigrams.append(word)
-            if tag not in posTagsUnigrams:
-                posTagsUnigrams.append(tag)
+            wordsDict[word] += 1
+            posDict[tag] += 1
 
 # now that we have the dictionary of words, clear out the entries to make room for lists of POS tags
-wordsPOSTagsDict = wordFrequencyDict[:]
+wordsPOSTagsDict = wordsDict[:]
 for word in wordsPOSTagsDict:
     wordsPOSTagsDict[word] = []
+print(len(wordsDict))
 
 # then cycle back through the browntag stuff and populate the dictionary with lists of pos tags
 for line in brownTagLineByLine:
@@ -68,6 +64,6 @@ for word in wordsPOSTagsDict:
     if len(wordsPOSTagsDict[word]) > 1:
         wordsMoreThanOnePOS += 1
 
-percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsUnigrams)) * 100
-print(len(wordsUnigrams))
+percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsDict)) * 100
+print(len(wordsDict))
 print(wordsMoreThanOnePOS)
