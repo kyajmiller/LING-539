@@ -129,6 +129,14 @@ def getMostCommonPOSTagPerWord(trainingSet):
                     tagIndex = wordsPOSTagsDict[word][0].index(tag)
                     wordsPOSTagsDict[word][1][tagIndex] += 1
 
+    wordsMostCommonPOSTagList = []
+    for word in wordsPOSTagsDict:
+        mostCommonPOSTagIndex = wordsPOSTagsDict[word][1].index(max(wordsPOSTagsDict[word][1]))
+        mostCommonPOSTag = wordsPOSTagsDict[word][0][mostCommonPOSTagIndex]
+        wordsMostCommonPOSTagList.append([word, mostCommonPOSTag])
+
+    return wordsMostCommonPOSTagList
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagLineByLine = [line.strip() for line in filein]
