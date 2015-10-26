@@ -24,10 +24,30 @@ def makeFrequencyList(tokensList):
     return frequencyDict.most_common()
 
 
+def calculateLidstoneSmoothingProb(bigramCount):
+    # calculates and returns the probability of a bigram after Lidstone smoothing.
+    # lidstone = bigramCount + lambda / numActualBigrams + numPossibleBigrams * lambda
+
+    lamb = 1 / 100000
+
+    lidstone = (bigramCount + lamb) / (totalBigramsCount + (totalPossibleBigrams * lamb))
+
+    return lidstone
+
+
+def doSentenceProbabilityLidstoneSmoothing(sentenceBigrams):
+    pass
+
+
 # open browntag_nolines.txt as input
 filein = open('browntag_nolines.txt', 'r')
 brownTagLineByLine = [line.strip() for line in filein]
 filein.close()
+
+# open sents_in.txt as sentence prob input
+sentenceFileIn = open('sents_in.txt', 'r')
+sentsInData = sentenceFileIn.readlines()
+sentenceFileIn.close()
 
 wordsUnigrams = []
 wordsBigrams = []
@@ -63,3 +83,39 @@ for line in brownTagLineByLine:
 # make frequency lists using previously declared function
 unigramsFrequencyList = makeFrequencyList(wordsUnigrams)
 bigramsFrequencyList = makeFrequencyList(wordsBigrams)
+
+# make dictionary of unigram probabilities
+totalUnigramsCount = 0
+for unigram in unigramsFrequencyList:
+    totalUnigramsCount += unigram[1]
+
+unigramsProbabilitiesDict = {unigram[0]: unigram[1] / totalUnigramsCount for unigram in unigramsFrequencyList}
+
+# calculate total possible bigrams for B value
+totalUniqueUnigrams = len(unigramsFrequencyList)
+totalPossibleBigrams = totalUniqueUnigrams * totalUniqueUnigrams
+
+# calculate the count of seen bigrams for N value
+totalBigramsCount = 0
+for bigram in bigramsFrequencyList:
+    totalBigramsCount += bigram[1]
+
+# create a dictionary for bigram frequency
+bigramsFrequencyDict = {bigram[0]: bigram[1] for bigram in bigramsFrequencyList}
+
+# do sentence probabilities
+for sentence in sentsInData:
+    sentence = sentence.strip()
+
+    sentenceWords = ' '.split(sentence)
+    sentenceUnigramsToMakeBigrams = ['#']
+
+    for word in sentenceWords:
+        sentenceUnigramsToMakeBigrams.append(word)
+
+    sentenceUnigramsToMakeBigrams.append('#')
+
+    sentenceBigrams = ['%s\t%s' % (sentenceUnigramsToMakeBigrams[i], sentenceUnigramsToMakeBigrams[i + 1]) for i in
+                       range(len(sentenceUnigramsToMakeBigrams) - 1)]
+
+    sentenceProb = doSentenceProbabilityLidstoneSmoothing(sentenceBigrams)
