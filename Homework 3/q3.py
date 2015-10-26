@@ -31,13 +31,14 @@ for line in brownTagLineByLine:
             if re.search('_', tag):
                 resplit = tag.split('_', 1)
                 word = '%s%s' % (word, resplit[0])
-                word = word.lower()
                 tag = resplit[1]
+            word = word.lower()
             wordsDict[word] += 1
             posDict[tag] += 1
 
 # now that we have the dictionary of words, clear out the entries to make room for lists of POS tags
-wordsPOSTagsDict = {word: [] for word in wordsDict}
+# each entry has two lists, first list is pos tags, second list is count
+wordsPOSTagsDict = {word: [[], []] for word in wordsDict}
 
 # then cycle back through the browntag stuff and populate the dictionary with lists of pos tags
 for line in brownTagLineByLine:
@@ -51,15 +52,21 @@ for line in brownTagLineByLine:
             if re.search('_', tag):
                 resplit = tag.split('_', 1)
                 word = '%s%s' % (word, resplit[0])
-                word = word.lower()
                 tag = resplit[1]
-            if tag not in wordsPOSTagsDict[word]:
-                wordsPOSTagsDict[word].append(tag)
+            word = word.lower()
+            if tag not in wordsPOSTagsDict[word][0]:
+                wordsPOSTagsDict[word][0].append(tag)
+                wordsPOSTagsDict[word][1].append(1)
+            else:
+                tagIndex = wordsPOSTagsDict[word][0].index(tag)
+                wordsPOSTagsDict[word][1][tagIndex] += 1
+
 
 wordsMoreThanOnePOS = 0
 for word in wordsPOSTagsDict:
-    if len(wordsPOSTagsDict[word]) > 1:
+    if len(wordsPOSTagsDict[word][0]) > 1:
         wordsMoreThanOnePOS += 1
 
 percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsDict)) * 100
 print('Percentage of words with more than one POS tag: %.2f percent' % percentWordsMoreThanOnePOS)
+print(wordsPOSTagsDict)
