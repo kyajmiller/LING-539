@@ -37,10 +37,7 @@ for line in brownTagLineByLine:
             posDict[tag] += 1
 
 # now that we have the dictionary of words, clear out the entries to make room for lists of POS tags
-wordsPOSTagsDict = wordsDict[:]
-for word in wordsPOSTagsDict:
-    wordsPOSTagsDict[word] = []
-print(len(wordsDict))
+wordsPOSTagsDict = {word: [] for word in wordsDict}
 
 # then cycle back through the browntag stuff and populate the dictionary with lists of pos tags
 for line in brownTagLineByLine:
@@ -56,7 +53,7 @@ for line in brownTagLineByLine:
                 word = '%s%s' % (word, resplit[0])
                 word = word.lower()
                 tag = resplit[1]
-            if tag not in wordFrequencyDict[word]:
+            if tag not in wordsPOSTagsDict[word]:
                 wordsPOSTagsDict[word].append(tag)
 
 wordsMoreThanOnePOS = 0
@@ -65,5 +62,4 @@ for word in wordsPOSTagsDict:
         wordsMoreThanOnePOS += 1
 
 percentWordsMoreThanOnePOS = (wordsMoreThanOnePOS / len(wordsDict)) * 100
-print(len(wordsDict))
-print(wordsMoreThanOnePOS)
+print('Percentage of words with more than one POS tag: %.2f percent' % percentWordsMoreThanOnePOS)
