@@ -77,6 +77,44 @@ def calculateAllPathsTransmissionProbabilities(pathsList):
     return allPathTransmissionProbs
 
 
+def calculateBestPathForSentenceGivenLength(length):
+    allSentences = getAllSentencesGivenLength(length)
+    allPaths = getAllPossiblePathsGivenLength(length)
+
+    sentenceStrings = [', '.join(sentence) for sentence in allSentences]
+    pathStrings = [', '.join(path) for path in allPaths]
+
+    allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities(allPaths)
+
+    for i in range(len(allSentences)):
+        sentence = allSentences[i]
+        sentenceString = sentenceStrings[i]
+        pathProbs = []
+        for i in range(len(allPaths)):
+            path = allPaths[i]
+            pathTransmissionProb = allPathTransmissionProbs[i]
+
+            # get emissions probability
+            pathEmissionsProb = 1
+            for j in range(len(path)):
+                currentState = path[j]
+                currentWord = sentence[j]
+                stateIndex = emissionsMappingDictionary[currentState]
+                wordIndex = emissionsMappingDictionary[currentWord]
+                emissionsProb = emissionsMatrix[stateIndex][wordIndex]
+
+                pathEmissionsProb *= emissionsProb
+
+            pathProb = pathTransmissionProb * pathEmissionsProb
+            pathProbs.append(pathProb)
+
+        bestProbIndex = pathProbs.index(max(pathProbs))
+        bestProbPathString = pathStrings[bestProbIndex]
+        bestProb = pathProbs[bestProbIndex]
+
+        formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
+        outputFile.write(formattedString)
+
 outputFile = open('hmm_output.txt', 'w')
 
 transitionsMatrix = [
@@ -94,42 +132,7 @@ emissionsMatrix = [
 transitionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2}
 emissionsMappingDictionary = {'tag1': 0, 'tag2': 1, 'tag3': 2, 'w1': 0, 'w2': 1, 'w3': 2}
 
-allSentencesLength3 = getAllSentencesGivenLength(3)
-allPossiblePathsLength3 = getAllPossiblePathsGivenLength(3)
-
-sentenceStringsLength3 = [', '.join(sentence) for sentence in allSentencesLength3]
-pathStringsLength3 = [', '.join(path) for path in allPossiblePathsLength3]
-
-allPathTransmissionProbs = calculateAllPathsTransmissionProbabilities(allPossiblePathsLength3)
-
 beginningTableString = 'Sentence\t\tWinningTagSequence\t\t\tProduct\n'
 outputFile.write(beginningTableString)
 
-for i in range(len(allSentencesLength3)):
-    sentence = allSentencesLength3[i]
-    sentenceString = sentenceStringsLength3[i]
-    pathProbs = []
-    for i in range(len(allPossiblePathsLength3)):
-        path = allPossiblePathsLength3[i]
-        pathTransmissionProb = allPathTransmissionProbs[i]
 
-        # get emissions probability
-        pathEmissionsProb = 1
-        for j in range(len(path)):
-            currentState = path[j]
-            currentWord = sentence[j]
-            stateIndex = emissionsMappingDictionary[currentState]
-            wordIndex = emissionsMappingDictionary[currentWord]
-            emissionsProb = emissionsMatrix[stateIndex][wordIndex]
-
-            pathEmissionsProb *= emissionsProb
-
-        pathProb = pathTransmissionProb * pathEmissionsProb
-        pathProbs.append(pathProb)
-
-    bestProbIndex = pathProbs.index(max(pathProbs))
-    bestProbPathString = pathStringsLength3[bestProbIndex]
-    bestProb = pathProbs[bestProbIndex]
-
-    formattedString = '%s\t\t%s\t\t\t%s\n' % (sentenceString, bestProbPathString, bestProb)
-    outputFile.write(formattedString)
