@@ -115,12 +115,18 @@ def calculateEfficiency(sentenceLength):
 
     cyclesPerSecond = 2600000000
     secondsInYear = 31536000
-    millisecondsInSecond = 1000
+    microsecondsInSecond = 1000000
 
     exhaustiveCyclesInYears = (cyclesExhaustive / cyclesPerSecond) / secondsInYear
-    forwardCyclesInMilliseconds = (cyclesForward / cyclesPerSecond) * millisecondsInSecond
+    forwardCyclesInMicroseconds = (cyclesForward / cyclesPerSecond) * microsecondsInSecond
 
-    return exhaustiveCyclesInYears, forwardCyclesInMilliseconds
+    efficiencyFormattedString = '%s words\t%s years\t%s microseconds' % (
+    sentenceLength, exhaustiveCyclesInYears, forwardCyclesInMicroseconds)
+    print(efficiencyFormattedString)
+
+
+def doEfficiencyProblem():
+
 
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
