@@ -6,6 +6,17 @@ remaining 10% as testing data. Tests the performance of various nltk taggers usi
 """
 
 from nltk.corpus import treebank
+import math
 
 untaggedSentences = treebank.sents()
 taggedSentences = treebank.tagged_sents()
+
+totalSentences = len(untaggedSentences)
+sizeOfTrainingSet = int(math.ceil(totalSentences * 0.9))
+sizeOfTestingSet = int(totalSentences - sizeOfTrainingSet)
+
+trainingSetUntagged = untaggedSentences[:sizeOfTrainingSet]
+trainingSetTagged = taggedSentences[:sizeOfTrainingSet]
+
+testingSetUntagged = untaggedSentences[-sizeOfTestingSet:]
+testingSetTagged = taggedSentences[-sizeOfTestingSet:]
