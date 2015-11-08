@@ -15,11 +15,11 @@ from nltk.tag import NgramTagger
 
 
 def useDefaultTagger(testingSet):
-    tokens = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
-    posTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
+    untaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
+    goldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
-    nltkTaggedSentences = nltk.pos_tag_sents(tokens)
-    print(nltkTaggedSentences[0])
+    defaultTagger = DefaultTagger('NN')
+    defaultTaggedSentences = defaultTagger.tag_sents(untaggedSentences)
 
 
 untaggedSentences = treebank.sents()
