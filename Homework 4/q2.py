@@ -15,7 +15,7 @@ from nltk.tag import UnigramTagger
 from nltk.tag import NgramTagger
 
 
-def useDefaultTagger(testingSet):
+def getDefaultTaggerAccuracy(testingSet):
     untaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     goldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
@@ -46,4 +46,4 @@ trainingSet = taggedSentences[:sizeOfTrainingSet]
 testingSet = taggedSentences[-sizeOfTestingSet:]
 
 # get default tagger accuracy
-defaultTaggerAccuracy = useDefaultTagger(testingSet)
+defaultTaggerAccuracy = getDefaultTaggerAccuracy(testingSet)
