@@ -33,7 +33,23 @@ t5  0.2     0.3     0.2     0.3
 
 
 def calculateSentenceProbability(sentence):
-    words = sentence.split(' ')
+    words = sentence.strip().split(' ')
+    sentenceLength = len(words)
+
+    currentStateProbabilityMatrix = [0] * 5
+    firstWord = words[0]
+    firstWordEmissionsIndex = emissionsMappingDictionary[firstWord]
+    for i in range(len(currentStateProbabilityMatrix)):
+        firstStateIndex = i
+        startToFirstStateProb = startingProbabilities[firstStateIndex]
+        emissionsProb = emissionsMatrix[firstStateIndex][firstWordEmissionsIndex]
+        currentStateProb = startToFirstStateProb * emissionsProb
+        currentStateProbabilityMatrix[i] = currentStateProb
+
+    print(words)
+    print(currentStateProbabilityMatrix)
+
+
 
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
@@ -63,5 +79,8 @@ fileIn = open('q1_in.txt', 'r')
 sentences = fileIn.readlines()
 fileIn.close()
 
+'''
 for sentence in sentences:
     calculateSentenceProbability(sentence)
+'''
+calculateSentenceProbability(sentences[0])
