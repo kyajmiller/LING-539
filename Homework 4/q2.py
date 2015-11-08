@@ -15,17 +15,27 @@ from nltk.tag import NgramTagger
 
 
 def getDefaultTaggerAccuracy(testingSet):
+    # gets the accuracy of the DefaultTagger
+
+    # get untagged sentences and gold POS tags
     untaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     goldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    # declare tagger; honestly this is unncessary, as every tag is going to be 'NN' so we could really just skip this
+    # altogether
+    # I went with NN as it was the default value shown in the ntlk DefaultTagger documentation, completely arbitrary
     defaultTagger = DefaultTagger('NN')
     defaultTaggedSentences = defaultTagger.tag_sents(untaggedSentences)
 
+    # calculate accuracy
     totalTags = 0
     matches = 0
+    # iterate through sentences
     for sentencePOSTags in goldPOSTags:
+        # iterate through tags
         for individualPOSTag in sentencePOSTags:
             totalTags += 1
+            # if the gold tag is NN, then match
             if individualPOSTag == 'NN':
                 matches += 1
 
@@ -34,6 +44,9 @@ def getDefaultTaggerAccuracy(testingSet):
 
 
 def getRegexpTaggerAccuracy(testingSet):
+    # gets the accuracy of the RegexpTagger
+
+    # get untagged sentences and gold POS tags
     untaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     goldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
@@ -48,43 +61,64 @@ def getRegexpTaggerAccuracy(testingSet):
                (r'.*ed$', 'VBD'),  # past tense verbs
                (r'.*', 'NN')  # nouns (default)
                ]
+
+    # declare tagger
     regexpTagger = RegexpTagger(regexes)
 
+    # test tagger and get predicted POS tags
     regexpTaggedSentences = regexpTagger.tag_sents(untaggedSentences)
     regexpTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in regexpTaggedSentences]
 
+    # calculate and return accuracy
     return calculateAccuracy(goldPOSTags, regexpTaggedSentencesPOSTags)
 
 
 def getUnigramTaggerAccuracy(trainingSet, testingSet):
+    # trains and returns the accuracy of the UnigramTagger
+
+    # get untagged sentences and gold POS tags
     testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    # train tagger
     unigramTagger = UnigramTagger(trainingSet)
+
+    # test tagger and get predicted POS tags
     unigramTaggedSentences = unigramTagger.tag_sents(testingUntaggedSentences)
     unigramTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in unigramTaggedSentences]
 
+    # calculate and return accuracy
     return calculateAccuracy(testingGoldPOSTags, unigramTaggedSentencesPOSTags)
 
 
 def getNgramTaggerAccuracy(n, trainingSet, testingSet):
+    # trains and returns the accuracy of the NgramTagger given a value of n
+
+    # get untagged sentences and gold POS tags
     testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    # train tagger
     ngramTagger = NgramTagger(n, trainingSet)
+
+    # test tagger and get predicted POS tags
     ngramTaggedSentences = ngramTagger.tag_sents(testingUntaggedSentences)
     ngramTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in ngramTaggedSentences]
 
+    # calculate and return accuracy
     return calculateAccuracy(testingGoldPOSTags, ngramTaggedSentencesPOSTags)
 
 
 def calculateAccuracy(goldPOSTags, predictedPOSTags):
+    # calculates the total percentage of matches between the gold and predicted POS tags
     totalTags = 0
     matches = 0
 
+    # iterate through each sentence
     for i in range(len(goldPOSTags)):
         goldSentencePOSTags = goldPOSTags[i]
         predictedSentencePOSTags = predictedPOSTags[i]
+        # iterate through each tag
         for j in range(len(goldSentencePOSTags)):
             totalTags += 1
             individualGoldPOSTag = goldSentencePOSTags[j]
