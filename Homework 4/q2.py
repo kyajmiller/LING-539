@@ -104,20 +104,27 @@ sizeOfTrainingSet = int(math.ceil(totalSentences * 0.9))
 sizeOfTestingSet = int(totalSentences - sizeOfTrainingSet)
 
 trainingSet = taggedSentences[:sizeOfTrainingSet]
-
 testingSet = taggedSentences[-sizeOfTestingSet:]
 
 # get default tagger accuracy
 defaultTaggerAccuracy = getDefaultTaggerAccuracy(testingSet)
+defaultFormattedString = 'DefaultTagger\t%.2f percent' % defaultTaggerAccuracy
 
 # get regexp tagger accuracy
 regexpTaggerAccuracy = getRegexpTaggerAccuracy(testingSet)
+regexpFormattedString = 'RegexpTagger\t%.2f percent' % regexpTaggerAccuracy
 
 # get unigram tagger accuracy
 unigramTaggerAccuracy = getUnigramTaggerAccuracy(trainingSet, testingSet)
+unigramFormattedString = 'UnigramTagger\t%.2f percent' % unigramTaggerAccuracy
 
 # get ngram tagger accuracy where n = 2
 bigramTaggerAccuracy = getNgramTaggerAccuracy(2, trainingSet, testingSet)
+bigramFormattedString = 'NgramTagger(n=2)\t%.2f percent' % bigramTaggerAccuracy
 
 # get ngram tagger accuracy where n = 3
 trigramTaggerAccuracy = getNgramTaggerAccuracy(3, trainingSet, testingSet)
+trigramFormattedString = 'NgramTagger(n=3)\t%.2f percent' % trigramTaggerAccuracy
+
+# print output to console
+print('POS Tagger\t% Correct on Penn Treebank Test Set')
