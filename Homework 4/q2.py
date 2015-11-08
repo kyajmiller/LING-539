@@ -8,7 +8,6 @@ remaining 10% as testing data. Tests the performance of various nltk taggers usi
 from __future__ import division
 from nltk.corpus import treebank
 import math
-import nltk
 from nltk.tag import DefaultTagger
 from nltk.tag import RegexpTagger
 from nltk.tag import UnigramTagger
@@ -119,3 +118,11 @@ print(regexpTaggerAccuracy)
 # get unigram tagger accuracy
 unigramTaggerAccuracy = getUnigramTaggerAccuracy(trainingSet, testingSet)
 print(unigramTaggerAccuracy)
+
+# get ngram tagger accuracy where n = 2
+bigramTaggerAccuracy = getNgramTaggerAccuracy(2, trainingSet, testingSet)
+print(bigramTaggerAccuracy)
+
+# get ngram tagger accuracy where n = 3
+trigramTaggerAccuracy = getNgramTaggerAccuracy(3, trainingSet, testingSet)
+print(trigramTaggerAccuracy)
