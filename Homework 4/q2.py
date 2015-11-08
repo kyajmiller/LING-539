@@ -74,6 +74,27 @@ def getUnigramTaggerAccuracy(trainingSet, testingSet):
     testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    unigramTagger = UnigramTagger(trainingSet)
+    unigramTaggedSentences = unigramTagger.tag_sents(testingUntaggedSentences)
+
+
+def calculateAccuracy(goldPOSTags, predictedPOSTags):
+    totalTags = 0
+    matches = 0
+
+    for i in range(len(goldPOSTags)):
+        goldSentencePOSTags = goldPOSTags[i]
+        predictedSentencePOSTags = predictedPOSTags[i]
+        for j in range(len(goldSentencePOSTags)):
+            totalTags += 1
+            individualGoldPOSTag = goldSentencePOSTags[j]
+            individualPredictedPOSTag = predictedSentencePOSTags[j]
+            if individualGoldPOSTag == individualPredictedPOSTag:
+                matches += 1
+
+    accuracy = (matches / totalTags) * 100
+    return accuracy
+
 
 # create training and testing sets of tagged sentences
 taggedSentences = treebank.tagged_sents()
