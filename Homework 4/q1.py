@@ -31,6 +31,10 @@ t4  0.1     0.2     0.3     0.4
 t5  0.2     0.3     0.2     0.3
 """
 
+
+def calculateSentenceProbability(sentence):
+    words = sentence.split(' ')
+
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
 
@@ -53,3 +57,11 @@ emissionsMatrix = [
 # dictionaries for matrix indices
 transitionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 't4': 3, 't5': 4}
 emissionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 't4': 3, 't5': 4, 'w1': 0, 'w2': 1, 'w3': 2, 'w4': 3}
+
+# read in q1_in.txt, get sentences, close file
+fileIn = open('q1_in.txt', 'r')
+sentences = fileIn.readlines()
+fileIn.close()
+
+for sentence in sentences:
+    calculateSentenceProbability(sentence)
