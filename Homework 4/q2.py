@@ -14,7 +14,9 @@ def useDefaultTagger(testingSet):
     tokens = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     posTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
-    # nltk.pos_tag()
+    nltkTaggedSentences = nltk.pos_tag_sents(tokens)
+    print(nltkTaggedSentences[0])
+
 
 untaggedSentences = treebank.sents()
 taggedSentences = treebank.tagged_sents()
