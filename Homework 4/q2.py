@@ -127,7 +127,7 @@ trigramTaggerAccuracy = getNgramTaggerAccuracy(3, trainingSet, testingSet)
 trigramFormattedString = 'NgramTagger(n=3)\t%.2f percent' % trigramTaggerAccuracy
 
 # print output to console
-print('POS Tagger\t\t% Correct on Penn Treebank Test Set')
+print('POS Tagger\t\t\t% Correct on Penn Treebank Test Set')
 print(defaultFormattedString)
 print(regexpFormattedString)
 print(unigramFormattedString)
