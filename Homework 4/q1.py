@@ -101,6 +101,18 @@ def calculateRunTime(sentence):
 
     return cyclesExhaustive, cyclesForward, timeDifference
 
+
+def calculateEfficiency(sentenceLength):
+    # calculates the efficiency of a potential HMM with 36 states, assuming compy can handle 2.6 billion cycles per
+    # second. Pretty much unrelated to the rest of the program, but important for assignment!
+    numStates = 36
+
+    # the exhaustive number of cycles is numStates^sentenceLength
+    cyclesExhaustive = math.pow(numStates, sentenceLength)
+
+    # the number of cycles for the forward algorithm is 2 * numStates^2 * sentenceLength
+    cyclesForward = 2 * math.pow(numStates, 2) * sentenceLength
+
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
 
