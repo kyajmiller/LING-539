@@ -173,3 +173,5 @@ for sentence in sentences:
     formattedString = '%s\t%s\t\t\t\t%s\t\t\t\t%.2f\t\t\t\t%s' % (
         sentenceProb, int(cyclesExhaustive), int(cyclesForward), timeDifference, sentence)
     print(formattedString)
+
+doEfficiencyProblem()
