@@ -113,6 +113,15 @@ def calculateEfficiency(sentenceLength):
     # the number of cycles for the forward algorithm is 2 * numStates^2 * sentenceLength
     cyclesForward = 2 * math.pow(numStates, 2) * sentenceLength
 
+    cyclesPerSecond = 2600000000
+    secondsInYear = 31536000
+    millisecondsInSecond = 1000
+
+    exhaustiveCyclesInYears = (cyclesExhaustive / cyclesPerSecond) / secondsInYear
+    forwardCyclesInMilliseconds = (cyclesForward / cyclesPerSecond) * millisecondsInSecond
+
+    return exhaustiveCyclesInYears, forwardCyclesInMilliseconds
+
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
 
