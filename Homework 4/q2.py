@@ -68,6 +68,17 @@ def getUnigramTaggerAccuracy(trainingSet, testingSet):
     return calculateAccuracy(testingGoldPOSTags, unigramTaggedSentencesPOSTags)
 
 
+def getNgramTaggerAccuracy(n, trainingSet, testingSet):
+    testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
+    testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
+
+    ngramTagger = NgramTagger(n, trainingSet)
+    ngramTaggedSentences = ngramTagger.tag_sents(testingUntaggedSentences)
+    ngramTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in ngramTaggedSentences]
+
+    return calculateAccuracy(testingGoldPOSTags, ngramTaggedSentencesPOSTags)
+
+
 def calculateAccuracy(goldPOSTags, predictedPOSTags):
     totalTags = 0
     matches = 0
