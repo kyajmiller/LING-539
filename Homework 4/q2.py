@@ -34,18 +34,16 @@ def useDefaultTagger(testingSet):
     return accuracy
 
 
-
-untaggedSentences = treebank.sents()
+# create training and testing sets of tagged sentences
 taggedSentences = treebank.tagged_sents()
 
-totalSentences = len(untaggedSentences)
+totalSentences = len(taggedSentences)
 sizeOfTrainingSet = int(math.ceil(totalSentences * 0.9))
 sizeOfTestingSet = int(totalSentences - sizeOfTrainingSet)
 
-trainingSetUntagged = untaggedSentences[:sizeOfTrainingSet]
-trainingSetTagged = taggedSentences[:sizeOfTrainingSet]
+trainingSet = taggedSentences[:sizeOfTrainingSet]
 
-testingSetUntagged = untaggedSentences[-sizeOfTestingSet:]
-testingSetTagged = taggedSentences[-sizeOfTestingSet:]
+testingSet = taggedSentences[-sizeOfTestingSet:]
 
-useDefaultTagger(testingSetTagged)
+# get default tagger accuracy
+defaultTaggerAccuracy = useDefaultTagger(testingSet)
