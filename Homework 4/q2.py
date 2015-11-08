@@ -128,3 +128,8 @@ trigramFormattedString = 'NgramTagger(n=3)\t%.2f percent' % trigramTaggerAccurac
 
 # print output to console
 print('POS Tagger\t% Correct on Penn Treebank Test Set')
+print(defaultFormattedString)
+print(regexpFormattedString)
+print(unigramFormattedString)
+print(bigramFormattedString)
+print(trigramFormattedString)
