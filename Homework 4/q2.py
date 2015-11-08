@@ -30,7 +30,7 @@ def getDefaultTaggerAccuracy(testingSet):
             if individualPOSTag == 'NN':
                 matches += 1
 
-    accuracy = matches / totalTags
+    accuracy = (matches / totalTags) * 100
     return accuracy
 
 
@@ -66,7 +66,7 @@ def getRegexpTaggerAccuracy(testingSet):
             if individualGoldPOSTag == individualRegexpPOSTag:
                 matches += 1
 
-    accuracy = matches / totalTags
+    accuracy = (matches / totalTags) * 100
     return accuracy
 
 
@@ -83,3 +83,8 @@ testingSet = taggedSentences[-sizeOfTestingSet:]
 
 # get default tagger accuracy
 defaultTaggerAccuracy = getDefaultTaggerAccuracy(testingSet)
+print(defaultTaggerAccuracy)
+
+# get regexp tagger accuracy
+regexpTaggerAccuracy = getRegexpTaggerAccuracy(testingSet)
+print(regexpTaggerAccuracy)
