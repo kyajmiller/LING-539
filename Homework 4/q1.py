@@ -38,7 +38,7 @@ def calculateSentenceProbabilityForwardAlgorithm(sentence):
     # uses the forward algorithm to calculate sentence probabilities
 
     # get sentence words
-    words = sentence.strip().split(' ')
+    words = sentence.split(' ')
 
     # declare array of totalStateProbabilities, which is the probability of the sentence up to the current word
     totalStateProbabilities = []
@@ -83,7 +83,7 @@ def calculateRunTime(sentence):
     # cycles that the forward algorith does
 
     # get sentence words in order to get sentence length
-    words = sentence.strip().split(' ')
+    words = sentence.split(' ')
     sentenceLength = len(words)
 
     # get the number of states in the HMM
@@ -134,6 +134,7 @@ tablesTitleString = 'prob\tcyclesExhaustive\tcyclesForward\ttimeDifference\tsent
 print(tablesTitleString)
 
 for sentence in sentences:
+    sentence = sentence.strip()
     sentenceProb = calculateSentenceProbabilityForwardAlgorithm(sentence)
     cyclesExhaustive, cyclesForward, timeDifference = calculateRunTime(sentence)
     formattedString = '%s\t%s\t%s\t%sX\t%s\n' % (
