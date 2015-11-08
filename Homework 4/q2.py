@@ -49,7 +49,26 @@ def getRegexpTaggerAccuracy(testingSet):
                (r'.*ed$', 'VBD'),  # past tense verbs
                (r'.*', 'NN')  # nouns (default)
                ]
-    regexpTagger = RegexpTagger()
+    regexpTagger = RegexpTagger(regexes)
+
+    regexepTaggedSentences = regexpTagger.tag_sents(untaggedSentences)
+    regexpTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in regexepTaggedSentences]
+
+    totalTags = 0
+    matches = 0
+    for i in range(len(goldPOSTags)):
+        goldSentencePOSTags = goldPOSTags[i]
+        regexepPOSTags = regexpTaggedSentencesPOSTags[i]
+        for j in range(len(goldSentencePOSTags)):
+            totalTags += 1
+            individualGoldPOSTag = goldSentencePOSTags[j]
+            individualRegexpPOSTag = regexepPOSTags[j]
+            if individualGoldPOSTag == individualRegexpPOSTag:
+                matches += 1
+
+    accuracy = matches / totalTags
+    return accuracy
+
 
 # create training and testing sets of tagged sentences
 taggedSentences = treebank.tagged_sents()
