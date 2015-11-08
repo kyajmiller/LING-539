@@ -36,6 +36,13 @@ def calculateSentenceProbability(sentence):
     words = sentence.strip().split(' ')
     sentenceLength = len(words)
 
+    previousStateProbabilities = []
+    for i in range(len(words)):
+        currentStateProbabilities = []
+        if i == 0:
+
+
+
     currentStateProbabilityMatrix = [0] * 5
     firstWord = words[0]
     firstWordEmissionsIndex = emissionsMappingDictionary[firstWord]
@@ -46,13 +53,18 @@ def calculateSentenceProbability(sentence):
         currentStateProb = startToFirstStateProb * emissionsProb
         currentStateProbabilityMatrix[i] = currentStateProb
 
+    sentenceProb = sum(currentStateProbabilityMatrix)
+
     print(words)
     print(currentStateProbabilityMatrix)
+    print(sentenceProb)
 
 
 
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
+
+states = ['t1', 't2', 't3', 't4', 't5']
 
 transitionsMatrix = [
     [0.2, 0.2, 0.2, 0.2, 0.2],
