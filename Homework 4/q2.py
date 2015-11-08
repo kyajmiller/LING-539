@@ -109,20 +109,15 @@ testingSet = taggedSentences[-sizeOfTestingSet:]
 
 # get default tagger accuracy
 defaultTaggerAccuracy = getDefaultTaggerAccuracy(testingSet)
-print(defaultTaggerAccuracy)
 
 # get regexp tagger accuracy
 regexpTaggerAccuracy = getRegexpTaggerAccuracy(testingSet)
-print(regexpTaggerAccuracy)
 
 # get unigram tagger accuracy
 unigramTaggerAccuracy = getUnigramTaggerAccuracy(trainingSet, testingSet)
-print(unigramTaggerAccuracy)
 
 # get ngram tagger accuracy where n = 2
 bigramTaggerAccuracy = getNgramTaggerAccuracy(2, trainingSet, testingSet)
-print(bigramTaggerAccuracy)
 
 # get ngram tagger accuracy where n = 3
 trigramTaggerAccuracy = getNgramTaggerAccuracy(3, trainingSet, testingSet)
-print(trigramTaggerAccuracy)
