@@ -5,6 +5,7 @@ Q2 - Imports a portion of the Penn Treebank as available through nltk and uses t
 remaining 10% as testing data. Tests the performance of various nltk taggers using the training and testing data.
 """
 
+from __future__ import division
 from nltk.corpus import treebank
 import math
 import nltk
@@ -20,6 +21,18 @@ def useDefaultTagger(testingSet):
 
     defaultTagger = DefaultTagger('NN')
     defaultTaggedSentences = defaultTagger.tag_sents(untaggedSentences)
+
+    totalTags = 0
+    matches = 0
+    for sentencePOSTags in goldPOSTags:
+        for individualPOSTag in sentencePOSTags:
+            totalTags += 1
+            if individualPOSTag == 'NN':
+                matches += 1
+
+    accuracy = matches / totalTags
+    return accuracy
+
 
 
 untaggedSentences = treebank.sents()
