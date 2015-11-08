@@ -7,4 +7,5 @@ remaining 10% as testing data. Tests the performance of various nltk taggers usi
 
 from nltk.corpus import treebank
 
-treebankSentences = treebank.sents()
+untaggedSentences = treebank.sents()
+taggedSentences = treebank.tagged_sents()
