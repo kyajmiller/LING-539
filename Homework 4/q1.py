@@ -30,6 +30,8 @@ t3  0.3     0.1     0.3     0.3
 t4  0.1     0.2     0.3     0.4
 t5  0.2     0.3     0.2     0.3
 """
+from __future__ import division
+import math
 
 
 def calculateSentenceProbabilityForwardAlgorithm(sentence):
@@ -75,6 +77,30 @@ def calculateSentenceProbabilityForwardAlgorithm(sentence):
     sentenceProb = sum(totalStateProbabilities)
     return sentenceProb
 
+
+def calculateRunTime(sentence):
+    # calculates the runtime of the HMM forward algorithm, returning the exhaustive number of cycles and the number of
+    # cycles that the forward algorith does
+
+    # get sentence words in order to get sentence length
+    words = sentence.strip().split(' ')
+    sentenceLength = len(words)
+
+    # get the number of states in the HMM
+    numStates = len(states)
+
+    # the exhaustive number of cycles is numStates^sentenceLength
+    cyclesExhaustive = math.pow(numStates, sentenceLength)
+
+    # the number of cycles for the forward algorithm is 2 * numStates^2 * sentenceLength
+    cyclesForward = 2 * math.pow(numStates, 2) * sentenceLength
+
+    # the time difference is the multiplicative difference between the cyclesExhaustive and the cyclesForward;
+    # calculated as cylesExhaustive / cyclesForward
+    timeDifference = cyclesExhaustive / cyclesForward
+
+    return cyclesExhaustive, cyclesForward, timeDifference
+
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
 
@@ -104,8 +130,5 @@ fileIn = open('q1_in.txt', 'r')
 sentences = fileIn.readlines()
 fileIn.close()
 
-'''
 for sentence in sentences:
-    calculateSentenceProbabilityForwardAlgorithm(sentence)
-'''
-calculateSentenceProbabilityForwardAlgorithm(sentences[0])
+    sentenceProb = calculateSentenceProbabilityForwardAlgorithm(sentence)
