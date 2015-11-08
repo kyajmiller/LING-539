@@ -70,6 +70,11 @@ def getRegexpTaggerAccuracy(testingSet):
     return accuracy
 
 
+def getUnigramTaggerAccuracy(trainingSet, testingSet):
+    testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
+    testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
+
+
 # create training and testing sets of tagged sentences
 taggedSentences = treebank.tagged_sents()
 
