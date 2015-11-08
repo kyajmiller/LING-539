@@ -137,5 +137,5 @@ for sentence in sentences:
     sentenceProb = calculateSentenceProbabilityForwardAlgorithm(sentence)
     cyclesExhaustive, cyclesForward, timeDifference = calculateRunTime(sentence)
     formattedString = '%s\t%s\t%s\t%sX\t%s\n' % (
-    sentenceProb, cyclesExhaustive, cyclesForward, timeDifference, sentence)
+        sentenceProb, cyclesExhaustive, cyclesForward, timeDifference, sentence)
     print(formattedString)
