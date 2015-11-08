@@ -7,6 +7,14 @@ remaining 10% as testing data. Tests the performance of various nltk taggers usi
 
 from nltk.corpus import treebank
 import math
+import nltk
+
+
+def useDefaultTagger(testingSet):
+    tokens = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
+    posTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
+
+    # nltk.pos_tag()
 
 untaggedSentences = treebank.sents()
 taggedSentences = treebank.tagged_sents()
@@ -20,3 +28,5 @@ trainingSetTagged = taggedSentences[:sizeOfTrainingSet]
 
 testingSetUntagged = untaggedSentences[-sizeOfTestingSet:]
 testingSetTagged = taggedSentences[-sizeOfTestingSet:]
+
+useDefaultTagger(testingSetTagged)
