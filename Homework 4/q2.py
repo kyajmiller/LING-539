@@ -108,15 +108,15 @@ testingSet = taggedSentences[-sizeOfTestingSet:]
 
 # get default tagger accuracy
 defaultTaggerAccuracy = getDefaultTaggerAccuracy(testingSet)
-defaultFormattedString = 'DefaultTagger\t%.2f percent' % defaultTaggerAccuracy
+defaultFormattedString = 'DefaultTagger\t\t%.2f percent' % defaultTaggerAccuracy
 
 # get regexp tagger accuracy
 regexpTaggerAccuracy = getRegexpTaggerAccuracy(testingSet)
-regexpFormattedString = 'RegexpTagger\t%.2f percent' % regexpTaggerAccuracy
+regexpFormattedString = 'RegexpTagger\t\t%.2f percent' % regexpTaggerAccuracy
 
 # get unigram tagger accuracy
 unigramTaggerAccuracy = getUnigramTaggerAccuracy(trainingSet, testingSet)
-unigramFormattedString = 'UnigramTagger\t%.2f percent' % unigramTaggerAccuracy
+unigramFormattedString = 'UnigramTagger\t\t%.2f percent' % unigramTaggerAccuracy
 
 # get ngram tagger accuracy where n = 2
 bigramTaggerAccuracy = getNgramTaggerAccuracy(2, trainingSet, testingSet)
@@ -127,7 +127,7 @@ trigramTaggerAccuracy = getNgramTaggerAccuracy(3, trainingSet, testingSet)
 trigramFormattedString = 'NgramTagger(n=3)\t%.2f percent' % trigramTaggerAccuracy
 
 # print output to console
-print('POS Tagger\t% Correct on Penn Treebank Test Set')
+print('POS Tagger\t\t% Correct on Penn Treebank Test Set')
 print(defaultFormattedString)
 print(regexpFormattedString)
 print(unigramFormattedString)
