@@ -120,14 +120,14 @@ def calculateEfficiency(sentenceLength):
     exhaustiveCyclesInYears = (cyclesExhaustive / cyclesPerSecond) / secondsInYear
     forwardCyclesInMicroseconds = (cyclesForward / cyclesPerSecond) * microsecondsInSecond
 
-    efficiencyFormattedString = '%s words\t%s years\t%s microseconds' % (
+    efficiencyFormattedString = '%s words\t%s years\t\t%s microseconds' % (
     sentenceLength, exhaustiveCyclesInYears, forwardCyclesInMicroseconds)
     print(efficiencyFormattedString)
 
 
 def doEfficiencyProblem():
     # just calls the calculateEfficiency function for given sentence lengths
-    efficiencyProblemTitlesString = 'length\texhaustiveCyclesInYears\tforwardCyclesInMicroseconds'
+    efficiencyProblemTitlesString = 'length\t\texhaustiveCyclesInYears\t\tforwardCyclesInMicroseconds'
     print(efficiencyProblemTitlesString)
     calculateEfficiency(10)
     calculateEfficiency(20)
@@ -174,4 +174,5 @@ for sentence in sentences:
         sentenceProb, int(cyclesExhaustive), int(cyclesForward), timeDifference, sentence)
     print(formattedString)
 
+print('\n')
 doEfficiencyProblem()
