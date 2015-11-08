@@ -32,26 +32,48 @@ t5  0.2     0.3     0.2     0.3
 """
 
 
-def calculateSentenceProbability(sentence):
+def calculateSentenceProbabilityForwardAlgorithm(sentence):
+    # uses the forward algorithm to calculate sentence probabilities
+
+    # get sentence words
     words = sentence.strip().split(' ')
 
+    # declare array of totalStateProbabilities, which is the probability of the sentence up to the current word
     totalStateProbabilities = []
+
+    # iterate through the words
     for i in range(len(words)):
+        # array of current state probabilities
         currentStateProbabilities = []
+
+        # get emissions matrix index for current word
         currentWord = words[i]
         currentWordEmissionsIndex = emissionsMappingDictionary[currentWord]
+
+        # iterate through each state to get the probability of transitioning to that state and the emissions prob for
+        # the current word in that state
         for j in range(len(states)):
+
+            # if on the first word, the probability to the current state is the starting probability
             if i == 0:
-                sumOfProbsToCurrentState = startingProbabilities[j]
+                probabilityToBeInCurrentState = startingProbabilities[j]
+
+            # otherwise, the probability to be in the current state is the sum of the products of the probabilities to
+            # be in a given previous state times the probability of transitioning from that state to the current one
             else:
-                sumOfProbsToCurrentState = sum(
+                probabilityToBeInCurrentState = sum(
                     totalStateProbabilities[k] * transitionsMatrix[k][j] for k in range(len(states)))
 
-            currentStateProbabilities.append(emissionsMatrix[j][currentWordEmissionsIndex] * sumOfProbsToCurrentState)
+            # the current state probability is the probability to be in the current state times the emissions
+            # probability for the current word
+            currentStateProbabilities.append(
+                emissionsMatrix[j][currentWordEmissionsIndex] * probabilityToBeInCurrentState)
 
         totalStateProbabilities = currentStateProbabilities
 
+    # the sentence probability is the sum of the probabilities to be in the most recent state
     sentenceProb = sum(totalStateProbabilities)
+    return sentenceProb
 
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
@@ -74,9 +96,8 @@ emissionsMatrix = [
     [0.2, 0.3, 0.2, 0.3]
 ]
 
-# dictionaries for matrix indices
-transitionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 't4': 3, 't5': 4}
-emissionsMappingDictionary = {'t1': 0, 't2': 1, 't3': 2, 't4': 3, 't5': 4, 'w1': 0, 'w2': 1, 'w3': 2, 'w4': 3}
+# mapping dictionary from words to emissions matrix indices
+emissionsMappingDictionary = {'w1': 0, 'w2': 1, 'w3': 2, 'w4': 3}
 
 # read in q1_in.txt, get sentences, close file
 fileIn = open('q1_in.txt', 'r')
@@ -85,6 +106,6 @@ fileIn.close()
 
 '''
 for sentence in sentences:
-    calculateSentenceProbability(sentence)
+    calculateSentenceProbabilityForwardAlgorithm(sentence)
 '''
-calculateSentenceProbability(sentences[0])
+calculateSentenceProbabilityForwardAlgorithm(sentences[0])
