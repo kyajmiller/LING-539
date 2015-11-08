@@ -51,8 +51,8 @@ def getRegexpTaggerAccuracy(testingSet):
                ]
     regexpTagger = RegexpTagger(regexes)
 
-    regexepTaggedSentences = regexpTagger.tag_sents(untaggedSentences)
-    regexpTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in regexepTaggedSentences]
+    regexpTaggedSentences = regexpTagger.tag_sents(untaggedSentences)
+    regexpTaggedSentencesPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in regexpTaggedSentences]
 
     return calculateAccuracy(goldPOSTags, regexpTaggedSentencesPOSTags)
 
@@ -63,6 +63,7 @@ def getUnigramTaggerAccuracy(trainingSet, testingSet):
 
     unigramTagger = UnigramTagger(trainingSet)
     unigramTaggedSentences = unigramTagger.tag_sents(testingUntaggedSentences)
+    unigramTaggedS
 
 
 def calculateAccuracy(goldPOSTags, predictedPOSTags):
