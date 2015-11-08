@@ -130,13 +130,13 @@ fileIn = open('q1_in.txt', 'r')
 sentences = fileIn.readlines()
 fileIn.close()
 
-tablesTitleString = 'prob\tcyclesExhaustive\tcyclesForward\ttimeDifference\tsentence\n\n'
+tablesTitleString = 'prob\t\t\t\tcyclesExhaustive\tcyclesForward\ttimeDifference\t\tsentence\n'
 print(tablesTitleString)
 
 for sentence in sentences:
     sentence = sentence.strip()
     sentenceProb = calculateSentenceProbabilityForwardAlgorithm(sentence)
     cyclesExhaustive, cyclesForward, timeDifference = calculateRunTime(sentence)
-    formattedString = '%s\t%s\t%s\t%sX\t%s\n' % (
+    formattedString = '%s\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n' % (
         sentenceProb, cyclesExhaustive, cyclesForward, timeDifference, sentence)
     print(formattedString)
