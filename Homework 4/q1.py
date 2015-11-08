@@ -158,13 +158,20 @@ fileIn.close()
 tablesTitleString = 'prob\t\t\t\tcyclesExhaustive\tcyclesForward\ttimeDifference\t\tsentence'
 print(tablesTitleString)
 
+# iterate through sentences
 for sentence in sentences:
     sentence = sentence.strip()
+
+    # get sentence probability using forward algorithm
     sentenceProb = calculateSentenceProbabilityForwardAlgorithm(sentence)
+
+    # get runtime information and print output to console
     cyclesExhaustive, cyclesForward, timeDifference = calculateRunTime(sentence)
     formattedString = '%s\t%s\t\t\t\t%s\t\t\t\t%.2f\t\t\t\t%s' % (
         sentenceProb, int(cyclesExhaustive), int(cyclesForward), timeDifference, sentence)
     print(formattedString)
 
 print('\n')
+
+# run the efficiency problem
 doEfficiencyProblem()
