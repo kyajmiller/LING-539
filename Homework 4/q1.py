@@ -126,7 +126,13 @@ def calculateEfficiency(sentenceLength):
 
 
 def doEfficiencyProblem():
-
+    # just calls the calculateEfficiency function for given sentence lengths
+    efficiencyProblemTitlesString = 'length\texhaustiveCyclesInYears\tforwardCyclesInMicroseconds'
+    print(efficiencyProblemTitlesString)
+    calculateEfficiency(10)
+    calculateEfficiency(20)
+    calculateEfficiency(30)
+    calculateEfficiency(40)
 
 # declare starting probabilities, transitions and emissions matrices
 startingProbabilities = [0.15, 0.25, 0.2, 0.25, 0.15]
