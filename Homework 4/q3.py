@@ -52,6 +52,14 @@ def createTrainingSet(percentage):
     return trainingSet
 
 
+def plotPerformanceVsTrainingSize():
+    x = [1, 2, 3, 4, 5, 10, 25, 50, 75, 90]
+    y = [hmmAccuracy1, hmmAccuracy2, hmmAccuracy3, hmmAccuracy4, hmmAccuracy5, hmmAccuracy10, hmmAccuracy25,
+         hmmAccuracy50, hmmAccuracy75, hmmAccuracy90]
+    plt.scatter(x, y)
+    plt.show()
+
+
 # create testing set from last 10% of tagged sentences
 taggedSentences = treebank.tagged_sents()
 
@@ -70,3 +78,5 @@ hmmAccuracy25 = trainAndTestHiddenMarkovModelTagger(0.25)
 hmmAccuracy50 = trainAndTestHiddenMarkovModelTagger(0.50)
 hmmAccuracy75 = trainAndTestHiddenMarkovModelTagger(0.75)
 hmmAccuracy90 = trainAndTestHiddenMarkovModelTagger(0.90)
+
+plotPerformanceVsTrainingSize()
