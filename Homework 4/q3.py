@@ -13,7 +13,14 @@ import math
 
 
 def trainAndTestHiddenMarkovModelTagger(trainingSet):
+    testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
+    testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    hmmTrainer = HiddenMarkovModelTrainer()
+    trainedHMMTagger = hmmTrainer.train_supervised(trainingSet)
+
+    hmmPredictedPaths = [trainedHMMTagger.best_path(sentence) for sentence in testingUntaggedSentences]
+    print(hmmPredictedPaths[0])
 
 
 def createTrainingSet(percentage):
@@ -40,3 +47,7 @@ trainingSet25 = createTrainingSet(0.25)
 trainingSet50 = createTrainingSet(0.50)
 trainingSet75 = createTrainingSet(0.75)
 trainingSet90 = createTrainingSet(0.90)
+
+trainAndTestHiddenMarkovModelTagger(trainingSet1)
+trainAndTestHiddenMarkovModelTagger(trainingSet25)
+trainAndTestHiddenMarkovModelTagger(trainingSet90)
