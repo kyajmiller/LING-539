@@ -7,12 +7,13 @@ through nltk and uses the last 10% as testing data with various sized portions o
 
 from __future__ import division
 from nltk.corpus import treebank
-from nltk.tag import HiddenMarkovModelTagger
 from nltk.tag import HiddenMarkovModelTrainer
 import math
+import matplotlib.pyplot as plt
 
 
-def trainAndTestHiddenMarkovModelTagger(trainingSet):
+def trainAndTestHiddenMarkovModelTagger(trainingSetPercentage):
+    trainingSet = createTrainingSet(trainingSetPercentage)
     testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
@@ -20,7 +21,8 @@ def trainAndTestHiddenMarkovModelTagger(trainingSet):
     trainedHMMTagger = hmmTrainer.train_supervised(trainingSet)
 
     hmmPredictedPaths = [trainedHMMTagger.best_path(sentence) for sentence in testingUntaggedSentences]
-    print(hmmPredictedPaths[0])
+
+    return calculateAccuracy(testingGoldPOSTags, hmmPredictedPaths)
 
 
 def calculateAccuracy(goldPOSTags, predictedPOSTags):
@@ -57,18 +59,14 @@ totalSentences = len(taggedSentences)
 sizeOfTestingSet = int(math.ceil(totalSentences * 0.1))
 testingSet = taggedSentences[-sizeOfTestingSet:]
 
-# create training sets of various sizes
-trainingSet1 = createTrainingSet(0.01)
-trainingSet2 = createTrainingSet(0.02)
-trainingSet3 = createTrainingSet(0.03)
-trainingSet4 = createTrainingSet(0.04)
-trainingSet5 = createTrainingSet(0.05)
-trainingSet10 = createTrainingSet(0.10)
-trainingSet25 = createTrainingSet(0.25)
-trainingSet50 = createTrainingSet(0.50)
-trainingSet75 = createTrainingSet(0.75)
-trainingSet90 = createTrainingSet(0.90)
-
-trainAndTestHiddenMarkovModelTagger(trainingSet1)
-trainAndTestHiddenMarkovModelTagger(trainingSet25)
-trainAndTestHiddenMarkovModelTagger(trainingSet90)
+# get accuracy of HMM tagger given training sets of various sizes
+hmmAccuracy1 = trainAndTestHiddenMarkovModelTagger(0.01)
+hmmAccuracy2 = trainAndTestHiddenMarkovModelTagger(0.02)
+hmmAccuracy3 = trainAndTestHiddenMarkovModelTagger(0.03)
+hmmAccuracy4 = trainAndTestHiddenMarkovModelTagger(0.04)
+hmmAccuracy5 = trainAndTestHiddenMarkovModelTagger(0.05)
+hmmAccuracy10 = trainAndTestHiddenMarkovModelTagger(0.10)
+hmmAccuracy25 = trainAndTestHiddenMarkovModelTagger(0.25)
+hmmAccuracy50 = trainAndTestHiddenMarkovModelTagger(0.50)
+hmmAccuracy75 = trainAndTestHiddenMarkovModelTagger(0.75)
+hmmAccuracy90 = trainAndTestHiddenMarkovModelTagger(0.90)
