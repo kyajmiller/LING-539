@@ -23,6 +23,27 @@ def trainAndTestHiddenMarkovModelTagger(trainingSet):
     print(hmmPredictedPaths[0])
 
 
+def calculateAccuracy(goldPOSTags, predictedPOSTags):
+    # calculates the total percentage of matches between the gold and predicted POS tags
+    totalTags = 0
+    matches = 0
+
+    # iterate through each sentence
+    for i in range(len(goldPOSTags)):
+        goldSentencePOSTags = goldPOSTags[i]
+        predictedSentencePOSTags = predictedPOSTags[i]
+        # iterate through each tag
+        for j in range(len(goldSentencePOSTags)):
+            totalTags += 1
+            individualGoldPOSTag = goldSentencePOSTags[j]
+            individualPredictedPOSTag = predictedSentencePOSTags[j]
+            if individualGoldPOSTag == individualPredictedPOSTag:
+                matches += 1
+
+    accuracy = (matches / totalTags) * 100
+    return accuracy
+
+
 def createTrainingSet(percentage):
     sizeOfTrainingSet = int(math.ceil(totalSentences * percentage))
     trainingSet = taggedSentences[:sizeOfTrainingSet]
