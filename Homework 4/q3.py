@@ -57,6 +57,9 @@ def plotPerformanceVsTrainingSize():
     y = [hmmAccuracy1, hmmAccuracy2, hmmAccuracy3, hmmAccuracy4, hmmAccuracy5, hmmAccuracy10, hmmAccuracy25,
          hmmAccuracy50, hmmAccuracy75, hmmAccuracy90]
     plt.scatter(x, y)
+    plt.xlabel("training percentage")
+    plt.ylabel("performance - % correct")
+    plt.title("Performance Vs Training Data Size for HMM Tagger")
     plt.show()
 
 
