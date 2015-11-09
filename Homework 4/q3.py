@@ -13,15 +13,22 @@ import matplotlib.pyplot as plt
 
 
 def trainAndTestHiddenMarkovModelTagger(trainingSetPercentage):
+    # trains, tests, and returns the accuracy of a trained HMM tagger. Takes an argument for the percentage of the
+    # corpus to use as training data
+
+    # create training set, get testing untagged sentences and gold POS tags
     trainingSet = createTrainingSet(trainingSetPercentage)
     testingUntaggedSentences = [[taggedWord[0] for taggedWord in sentence] for sentence in testingSet]
     testingGoldPOSTags = [[taggedWord[1] for taggedWord in sentence] for sentence in testingSet]
 
+    # train and create an HMM tagger instance
     hmmTrainer = HiddenMarkovModelTrainer()
     trainedHMMTagger = hmmTrainer.train_supervised(trainingSet)
 
+    # get predicted POS tags per sentence
     hmmPredictedPaths = [trainedHMMTagger.best_path(sentence) for sentence in testingUntaggedSentences]
 
+    # calculate and return accuracy
     return calculateAccuracy(testingGoldPOSTags, hmmPredictedPaths)
 
 
@@ -47,12 +54,14 @@ def calculateAccuracy(goldPOSTags, predictedPOSTags):
 
 
 def createTrainingSet(percentage):
+    # takes a percentage (between 0 and 1) and creates a training set of that size
     sizeOfTrainingSet = int(math.ceil(totalSentences * percentage))
     trainingSet = taggedSentences[:sizeOfTrainingSet]
     return trainingSet
 
 
 def plotPerformanceVsTrainingSize():
+    # plots the percentage of the training data used versus the performance of the HMM tagger trained on that data
     x = [1, 2, 3, 4, 5, 10, 25, 50, 75, 90]
     y = [hmmAccuracy1, hmmAccuracy2, hmmAccuracy3, hmmAccuracy4, hmmAccuracy5, hmmAccuracy10, hmmAccuracy25,
          hmmAccuracy50, hmmAccuracy75, hmmAccuracy90]
