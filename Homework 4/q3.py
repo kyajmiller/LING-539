@@ -12,6 +12,10 @@ from nltk.tag import HiddenMarkovModelTrainer
 import math
 
 
+def trainAndTestHiddenMarkovModelTagger(trainingSet):
+
+
+
 def createTrainingSet(percentage):
     sizeOfTrainingSet = int(math.ceil(totalSentences * percentage))
     trainingSet = taggedSentences[:sizeOfTrainingSet]
