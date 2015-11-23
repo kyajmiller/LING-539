@@ -4,7 +4,6 @@ LING 539 Assignment 5
 Q1 - Reads in sents_source.txt and sents_target.txt as input files, prints the number of words in each sentence to
 output.txt. Calculates sentence alignment between sents_source and sents_target, and prints the output to console.
 """
-import numpy
 
 
 def getSentenceWordCount(sentence):
@@ -27,12 +26,20 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
 
 
 def getMinimumAlignment(i, j, sentenceAlignmentTable):
+    # calculates the minimum alignment cost and the possible alignment types for that cost, returns the cost and the
+    # strings
+
+    # list of possible alignments, needed list so can have indices for later
     alignmentPossibilities = ['0:1', '1:0', '1:1', '1:2', '2:1', '2:2']
 
+    # initialize alignment values to empty string, necessary to have some value here even if null for later
     alignment01, alignment10, alignment11, alignment12, alignment21, alignment22 = '', '', '', '', '', ''
 
+    # declare an empty list of valid alignments, if the current i and j values are legal for the alignment possibility,
+    # the calculated cost is appended here so can later get minimum cost value
     validAlignments = []
 
+    # calculate possible costs of alignment
     if j - 1 >= 0:
         alignment01 = sentenceAlignmentTable[j - 1][i] + abs(targetSentencesLengths[j - 1] - 0)
         validAlignments.append(alignment01)
@@ -57,9 +64,15 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable):
                 targetSentencesLengths[(j - 1) - 1] + targetSentencesLengths[j - 1]))
         validAlignments.append(alignment22)
 
+    # get minimum value of valid alignment costs
     minimumAlignmentCost = min(validAlignments)
+
+    # make a list of all the values, both valid and empty - this lets you get the index of the minimum value so you can
+    # get the index of the alignment string
     allAlignmentCosts = [alignment01, alignment10, alignment11, alignment12, alignment21, alignment22]
 
+    # if the alignment value is the same as the minimum alignment cost, get the index of that value, then grab the
+    # alignment string with the same index and append it to the list
     minimumAlignmentStrings = []
     for k in range(len(allAlignmentCosts)):
         if allAlignmentCosts[k] == minimumAlignmentCost:
@@ -73,28 +86,33 @@ def calculateSentenceAlignment():
     # decided to set it up so that i is along the columns and j is down the rows
     # initialize sentenceAlignmentTable, set everything to empty string
     sentenceAlignmentTable = [[0 for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
+
+    # initialize the alignment string table, this is where the strings will live
     sentenceAlignmentStringsTable = [['' for i in range(len(sourceSentences) + 1)] for j in
                                      range(len(targetSentences) + 1)]
 
+    # iterate through rows
     for j in range(len(sentenceAlignmentTable)):
         currentRow = sentenceAlignmentTable[j]
+        # iterate through columns
         for i in range(len(currentRow)):
+            # set 0,0 to 0
             if j == 0 and i == 0:
                 sentenceAlignmentTable[j][i] = 0
                 sentenceAlignmentStringsTable[j][i] = None
+            # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
             else:
                 minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable)
+                # set table values to appropriate values so can feed back into the function
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
                 sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
 
-    for row in sentenceAlignmentTable: print(row)
+    # flip the tables so that the i values are columns and the j values are rows, will allow to iterate through the
+    # j rows and find the minimum alignment, couldn't do that before
+    flippedAlignmentTable = [z for z in zip(*sentenceAlignmentTable)]
+    flippedAlignmentStringsTable = [z for z in zip(*sentenceAlignmentStringsTable)]
 
-    flippedAlignmentTable = numpy.transpose(sentenceAlignmentTable)
-    flippedAlignmentStringsTable = numpy.transpose(sentenceAlignmentStringsTable)
-    print(flippedAlignmentTable)
-    print(flippedAlignmentStringsTable)
-
-    return sentenceAlignmentTable, sentenceAlignmentStringsTable
+    return flippedAlignmentTable, flippedAlignmentStringsTable
 
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
