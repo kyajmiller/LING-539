@@ -297,15 +297,15 @@ goldAlignmentTypes = []
 # iterate through the unpacked alignments
 for unpackedAlignment in goldSentenceAlignmentsUnpacked:
     # split line into alignment groups and alignment type, append alignment type to goldAlignmentTypes list
-    separateGroupsAlignmentType = unpackedAlignment.split('; ', 1)
-    groups = separateGroupsAlignmentType[0]
-    alignmentType = separateGroupsAlignmentType[1]
+    separateGroupsAlignmentType = unpackedAlignment.split(';', 1)
+    groups = separateGroupsAlignmentType[0].strip()
+    alignmentType = separateGroupsAlignmentType[1].strip()
     goldAlignmentTypes.append(alignmentType)
 
     # split alignment groups into source and target group string
-    separateAlignmentGroups = groups.split(' - ', 1)
-    sourceAlignmentGroups = separateAlignmentGroups[0]
-    targetAlignmentGroups = separateAlignmentGroups[1]
+    separateAlignmentGroups = groups.split('-', 1)
+    sourceAlignmentGroups = separateAlignmentGroups[0].strip()
+    targetAlignmentGroups = separateAlignmentGroups[1].strip()
 
     # split source group string into list of sentences, append list to goldSourceSentencesAlignmentGroups
     sourceAlignmentGroupsList = sourceAlignmentGroups.split(', ')
