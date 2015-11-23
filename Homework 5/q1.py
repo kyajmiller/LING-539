@@ -11,14 +11,14 @@ def getSentenceWordCount(sentence):
     return len(words)
 
 
-def doWordCountsForSourceSentencesAndPrintToOutput(sourceSentences):
+def doWordCountsForSourceSentencesAndPrintToOutputFile(sourceSentences):
     for i in range(len(sourceSentences)):
         numWords = getSentenceWordCount(sourceSentences[i])
         outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
         outputFile.write(outputString)
 
 
-def doWordCountsForTargetSentencesAndPrintToOutput(targetSentences):
+def doWordCountsForTargetSentencesAndPrintToOutputFile(targetSentences):
     for i in range(len(targetSentences)):
         numWords = getSentenceWordCount(targetSentences[i])
         outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
@@ -242,12 +242,15 @@ headerString = 'Sentence\tNumber Of Words\n'
 outputFile.write(headerString)
 
 # get num words for each source sentence and target sentence, print to output file
-doWordCountsForSourceSentencesAndPrintToOutput(sourceSentencesFile)
+doWordCountsForSourceSentencesAndPrintToOutputFile(sourceSentencesFile)
 outputFile.write('---------------------------\n')
-doWordCountsForTargetSentencesAndPrintToOutput(targetSentencesFile)
+doWordCountsForTargetSentencesAndPrintToOutputFile(targetSentencesFile)
 
 # do the sentence alignment experiment with the sents_source and sents_target info as input
 doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
+
+sourceSentencesLecture = ['I call for two statements.', 'First, as the Minister will be aware, last month the Welsh Senate of Older People e-mailed all Assembly Members concerning the P is for People campaign to raise awareness of the lack of public toilet provision in Wales, and it attached its latest research urging all Assembly Members to bring this to the attention of the Welsh Government.', 'It would therefore be appreciated if we could have a statement from the Welsh Government accordingly.']
+targetSentencesLecture = ['Galwaf am ddau ddatganiad.', "Yn gyntaf, fel y bydd y Gweinidog yn gwybod, y mis diwethaf anfonodd Senedd Pobl H^yn Cymru e-bost at holl Aelodau'r Cynulliad ynghylch yr ymgyrch P am 'Pobl' i godi ymwybyddiaeth o'r diffyg darpariaeth toiledau cyhoeddus yng Nghymru.", "Atodwyd eu hymchwil ddiweddaraf er mwyn annog holl Aelodau'r Cynulliad i dynnu sylw Llywodraeth Cymru at y mater.", "Byddwn yn ddiolchgar felly pe gallem gael datganiad gan Lywodraeth Cymru yn unol ^a hynny."]
 
 
 
