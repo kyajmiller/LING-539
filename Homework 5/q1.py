@@ -116,6 +116,7 @@ def calculateSentenceAlignment():
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
+    print('SourceSentences\tTargetSentences')
     sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
         if i > 0:
@@ -159,6 +160,14 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
                     targetSentencesIndexList.append(targetSentencesCounter)
                     targetSentencesCounter += 1
             targetSentenceAlignmentGroups.append(targetSentencesIndexList)
+
+    sourceGroupAlignmentStrings = [['s%s' % (index + 1) for index in sourceGroup] for sourceGroup in
+                                   sourceSentenceAlignmentGroups]
+    targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
+                                   targetSentenceAlignmentGroups]
+    for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
+        print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
+
 
 
 
