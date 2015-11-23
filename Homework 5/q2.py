@@ -106,7 +106,7 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, ta
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSentences, targetSentences):
-    print('SourceSentences\tTargetSentences')
+    # print('SourceSentences\tTargetSentences')
     sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
         if i > 0:
@@ -155,7 +155,7 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                                    sourceSentenceAlignmentGroups]
     targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
                                    targetSentenceAlignmentGroups]
-    # for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
+    #for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
     #    print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
     return sourceGroupAlignmentStrings, targetGroupAlignmentStrings
