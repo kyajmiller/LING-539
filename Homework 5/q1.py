@@ -32,17 +32,17 @@ def doWordCountsExerciseAndPrintToOutputFile(sourceSentences, targetSentences):
     outputFile.close()
 
 
-def doWordCountsForSourceSentencesAndPrintToConsole(sourceSentences):
+def doWordCountsExerciseAndPrintToConsole(sourceSentences, targetSentences):
+    headerString = 'Sentence\tNumber Of Words'
+    print(headerString)
     for i in range(len(sourceSentences)):
         numWords = getSentenceWordCount(sourceSentences[i])
-        outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
+        outputString = 's%s\t\t\t%s' % (i + 1, numWords)
         print(outputString)
-
-
-def doWordCountsForTargetSentencesAndPrintToConsole(targetSentences):
+    print('---------------------------')
     for i in range(len(targetSentences)):
         numWords = getSentenceWordCount(targetSentences[i])
-        outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
+        outputString = 't%s\t\t\t%s' % (i + 1, numWords)
         print(outputString)
 
 
@@ -258,7 +258,9 @@ targetSentencesFileIn.close()
 # do word counts exercise for sents_source.txt and sents_target.txt
 doWordCountsExerciseAndPrintToOutputFile(sourceSentencesFile, targetSentencesFile)
 
-
+# do the same thing but print it to console instead
+doWordCountsExerciseAndPrintToConsole(sourceSentencesFile, targetSentencesFile)
+print('\n')
 
 # do the sentence alignment experiment with the sents_source and sents_target info as input
 doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
