@@ -28,5 +28,5 @@ targetSentencesFileIn.close()
 
 # open output file
 outputFile = open('output.txt', 'w')
-headerString = 'Sentence\tNumberOfWords'
+headerString = 'Sentence\tNumber Of Words'
 outputFile.write(headerString)
