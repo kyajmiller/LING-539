@@ -55,8 +55,8 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
     sentenceAlignmentTable = [[0 for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
 
     # initialize the alignment string table, this is where the strings will live
-    sentenceAlignmentStringsTable = [['' for i in range(len(sourceSentences) + 1)] for j in
-                                     range(len(targetSentences) + 1)]
+    sentenceAlignmentTypesTable = [['' for i in range(len(sourceSentences) + 1)] for j in
+                                   range(len(targetSentences) + 1)]
 
     # iterate through rows
     for j in range(len(sentenceAlignmentTable)):
@@ -66,7 +66,7 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
             # set 0,0 to 0
             if j == 0 and i == 0:
                 sentenceAlignmentTable[j][i] = 0
-                sentenceAlignmentStringsTable[j][i] = '0'
+                sentenceAlignmentTypesTable[j][i] = '0'
             # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
             else:
                 minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable,
@@ -74,14 +74,14 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
                                                                                     targetSentencesLengths)
                 # set table values to appropriate values so can feed back into the function
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
-                sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
+                sentenceAlignmentTypesTable[j][i] = minimumAlignmentStrings
 
     # flip the tables so that the i values are columns and the j values are rows, will allow to iterate through the
     # j rows and find the minimum alignment, couldn't do that before
     flippedAlignmentTable = [z for z in zip(*sentenceAlignmentTable)]
-    flippedAlignmentStringsTable = [z for z in zip(*sentenceAlignmentStringsTable)]
+    flippedAlignmentTypesTable = [z for z in zip(*sentenceAlignmentTypesTable)]
 
-    return flippedAlignmentTable, flippedAlignmentStringsTable
+    return flippedAlignmentTable, flippedAlignmentTypesTable
 
 
 def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths):
