@@ -73,13 +73,19 @@ def doSentenceAlignment():
     # decided to set it up so that i is along the columns and j is down the rows
     # initialize sentenceAlignmentTable, set everything to empty string
     sentenceAlignmentTable = [['' for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
+    sentenceAlignmentStringsTable = [['' for i in range(len(sourceSentences) + 1)] for j in
+                                     range(len(targetSentences) + 1)]
 
     for j in range(len(sentenceAlignmentTable)):
         currentRow = sentenceAlignmentTable[j]
         for i in range(len(currentRow)):
-            currentItem = currentRow[i]
             if j == 0 and i == 0:
                 sentenceAlignmentTable[j][i] = 0
+                sentenceAlignmentStringsTable[j][i] = None
+            else:
+                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable)
+                sentenceAlignmentTable[j][i] = minimumAlignmentCost
+                sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
 
     return sentenceAlignmentTable
 
