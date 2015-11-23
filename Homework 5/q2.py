@@ -5,6 +5,7 @@ Q2 - Adapts the sentence alignment experiment from q1.py to find the sentence al
 and part2_french_sents_target.txt sentences. Consults with the gold alignments described in part2_alignment_key.txt in
 order to gauge accuracy.
 """
+from __future__ import division
 
 
 def getSentenceWordCount(sentence):
@@ -154,8 +155,8 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                                    sourceSentenceAlignmentGroups]
     targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
                                    targetSentenceAlignmentGroups]
-    for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
-        print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
+    # for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
+    #    print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
     return sourceGroupAlignmentStrings, targetGroupAlignmentStrings
 
@@ -239,6 +240,40 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     sourceGroupAlignments, targetGroupAlignments = getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable,
                                                                        sourceSentences, targetSentences)
 
+    totalSourceGroups = len(sourceGroupAlignments)
+    numSourceGroupMatches = 0
+    for predictedSourceSentencesGroup, goldSourceSentencesGroup in zip(sourceGroupAlignments,
+                                                                       goldSourceSentencesAlignmentGroups):
+        if sorted(predictedSourceSentencesGroup) == sorted(goldSourceSentencesGroup):
+            numSourceGroupMatches += 1
+
+    sourceGroupAccuracy = (numSourceGroupMatches / totalSourceGroups) * 100
+
+    totalTargetGroups = len(targetGroupAlignments)
+    numTargetGroupMatches = 0
+    for predictedTargetSentencesGroup, goldTargetSentencesGroup in zip(targetGroupAlignments,
+                                                                       goldTargetSentencesAlignmentGroups):
+        if sorted(predictedTargetSentencesGroup) == sorted(goldTargetSentencesGroup):
+            numTargetGroupMatches += 1
+
+    targetGroupAccuracy = (numTargetGroupMatches / totalTargetGroups) * 100
+
+    numAlignmentGroups = 0
+    numTotalMatches = 0
+    for predictedSourceSentencesGroup, predictedTargetSentencesGroup, goldSourceSentencesGroup, goldTargetSentencesGroup in zip(
+            sourceGroupAlignments, targetGroupAlignments, goldSourceSentencesAlignmentGroups,
+            goldTargetSentencesAlignmentGroups):
+        numAlignmentGroups += 1
+        if sorted(predictedSourceSentencesGroup) == sorted(goldSourceSentencesGroup) and sorted(
+                predictedTargetSentencesGroup) == sorted(goldTargetSentencesGroup):
+            numTotalMatches += 1
+
+    totalMatchAccuracy = (numTotalMatches / numAlignmentGroups) * 100
+
+    print(sourceGroupAccuracy)
+    print(targetGroupAccuracy)
+    print(totalMatchAccuracy)
+
 
 # open source sentences file
 sourceSentencesFileIn = open('part2_english_sents_source.txt', 'r')
@@ -279,3 +314,5 @@ for unpackedAlignment in goldSentenceAlignmentsUnpacked:
     # do the same for target group, append to appropriate list
     targetAlignmentGroupsList = targetAlignmentGroups.split(', ')
     goldTargetSentencesAlignmentGroups.append(targetAlignmentGroupsList)
+
+doSentenceAlignmentExperiment(sourceSentences, targetSentences)
