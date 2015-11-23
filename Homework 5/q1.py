@@ -25,6 +25,14 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
         outputFile.write(outputString)
 
 
+def doSentenceAlignment():
+    # initialize sentenceAlignmentTable, set everything to empty string
+    sentenceAlignmentTable = [['' for j in range(len(targetSentences) + 1)] for i in range(len(sourceSentences) + 1)]
+    sentenceAlignmentTable[0][0] = 0
+
+    return sentenceAlignmentTable
+
+
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
 sourceSentences = [line.strip() for line in sourceSentencesFileIn.readlines()]
@@ -45,5 +53,6 @@ doWordCountsForSourceSentencesAndPrintToOutput()
 outputFile.write('---------------------------\n')
 doWordCountsForTargetSentencesAndPrintToOutput()
 
-# initialize sentenceAlignmentTable, set everything to empty string
-sentenceAlignmentTable = [['' for j in range(len(targetSentences) + 1)] for i in range(len(sourceSentences) + 1)]
+# calculate sentence alignment
+calculatedSentenceAlignmentTable = doSentenceAlignment()
+for row in calculatedSentenceAlignmentTable: print(row)
