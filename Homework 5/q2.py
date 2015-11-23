@@ -155,10 +155,10 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                                    sourceSentenceAlignmentGroups]
     targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
                                    targetSentenceAlignmentGroups]
-    #for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
-    #    print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
+    for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
+        print('%s ---> %s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
-    return sourceGroupAlignmentStrings, targetGroupAlignmentStrings
+    return sourceGroupAlignmentStrings, targetGroupAlignmentStrings, sentenceAlignmentStrings
 
 
 def processAlignmentStrings(alignmentString):
@@ -198,65 +198,11 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment(sourceSentences, targetSentences,
                                                                                 sourceSentencesLengths,
                                                                                 targetSentencesLengths)
-    '''
-    # print the sentenceAlignmentTable to console
-    targetRowHeaderList = []
-    targetRowHeaderList.append('0')
-    for i in range(len(targetSentences)):
-        targetRowHeaderList.append('t%s' % (i + 1))
 
-    print('Sentence Alignment Table')
-    print('\t%s' % '\t'.join(targetRowHeaderList))
+    sourceGroupAlignments, targetGroupAlignments, alignmentTypes = getAlignedSentences(calculatedSentenceAlignmentTable,
+                                                                                       stringsTable,
+                                                                                       sourceSentences, targetSentences)
 
-    for i in range(len(calculatedSentenceAlignmentTable)):
-        if i == 0:
-            sentenceTag = '0'
-        else:
-            sentenceTag = 's%s' % i
-        currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
-        formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
-        print(formattedCurrentRow)
-
-    # print the alignment cost and strings, displays only the first item in each alingment strings list for the sake of
-    # clarity and prettiness, not an accurate representation of the possibilities
-    print('\n')
-    print('Sentence Alignment Table With First Alignment Possibility')
-    print('\t%s' % '\t\t'.join(targetRowHeaderList))
-
-    for i in range(len(calculatedSentenceAlignmentTable)):
-        if i == 0:
-            sentenceTag = '0'
-        else:
-            sentenceTag = 's%s' % i
-        currentRowCosts = [str(item) for item in calculatedSentenceAlignmentTable[i]]
-        currentRowStrings = [stringList[0] for stringList in stringsTable[i]]
-        costAndStrings = ['%s/%s' % (cost, string) for cost, string in zip(currentRowCosts, currentRowStrings)]
-        currentRowString = '\t'.join(costAndStrings)
-        formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
-        print(formattedCurrentRow)
-
-    print('\n')
-    '''
-    sourceGroupAlignments, targetGroupAlignments = getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable,
-                                                                       sourceSentences, targetSentences)
-
-    totalSourceGroups = len(sourceGroupAlignments)
-    numSourceGroupMatches = 0
-    for predictedSourceSentencesGroup, goldSourceSentencesGroup in zip(sourceGroupAlignments,
-                                                                       goldSourceSentencesAlignmentGroups):
-        if sorted(predictedSourceSentencesGroup) == sorted(goldSourceSentencesGroup):
-            numSourceGroupMatches += 1
-
-    sourceGroupAccuracy = (numSourceGroupMatches / totalSourceGroups) * 100
-
-    totalTargetGroups = len(targetGroupAlignments)
-    numTargetGroupMatches = 0
-    for predictedTargetSentencesGroup, goldTargetSentencesGroup in zip(targetGroupAlignments,
-                                                                       goldTargetSentencesAlignmentGroups):
-        if sorted(predictedTargetSentencesGroup) == sorted(goldTargetSentencesGroup):
-            numTargetGroupMatches += 1
-
-    targetGroupAccuracy = (numTargetGroupMatches / totalTargetGroups) * 100
 
     numAlignmentGroups = 0
     numTotalMatches = 0
@@ -270,9 +216,7 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
 
     totalMatchAccuracy = (numTotalMatches / numAlignmentGroups) * 100
 
-    print(sourceGroupAccuracy)
-    print(targetGroupAccuracy)
-    print(totalMatchAccuracy)
+    print('\nPercentage of matched alignment groups: %s' % totalMatchAccuracy)
 
 
 # open source sentences file
