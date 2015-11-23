@@ -7,6 +7,7 @@ output.txt. Calculates sentence alignment between sents_source and sents_target,
 
 
 def getSentenceWordCount(sentence):
+    # return number of words in sentence
     words = sentence.split(' ')
     return len(words)
 
@@ -33,6 +34,7 @@ def doWordCountsExerciseAndPrintToOutputFile(sourceSentences, targetSentences):
 
 
 def doWordCountsExerciseAndPrintToConsole(sourceSentences, targetSentences):
+    # basically do same thing as previous function, but print output to console instead
     headerString = 'Sentence\tNumber Of Words'
     print(headerString)
     for i in range(len(sourceSentences)):
@@ -139,35 +141,48 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSentences, targetSentences):
-    print('SourceSentences\tTargetSentences')
+    # calculates and returns which sentences align with which other sentences
+
+    # iterate through the rows/sentences of the sentenceAlignmentTable to find the minimum alignment cost for that
+    # sentence in order to get the proper alignment type, which is then used to match up the sentences
     sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
         if i > 0:
+            # ignore the first row since that's the i = 0 row, doesn't give any real alignment information
             currentSentenceAlignments = sentenceAlignmentTable[i]
-            currentSentenceAlignmentStrings = alignmentStringsTable[i]
+            currentSentenceAlignmentTypes = alignmentStringsTable[i]
+            # get the minimum cost value
             minimumAlignment = min(currentSentenceAlignments)
             minimumAlignmentString = ''
+            # get the alignment type associated with the minimum cost by matching indices, there can be multiple
             for j in range(len(currentSentenceAlignments)):
                 if currentSentenceAlignments[j] == minimumAlignment:
                     minimumIndex = j
-                    minimumAlignmentString = currentSentenceAlignmentStrings[minimumIndex]
+                    minimumAlignmentString = currentSentenceAlignmentTypes[minimumIndex]
 
             sentenceAlignmentStrings.append(minimumAlignmentString)
 
+    # keep track of how many source sentences matched up, keep going until run out of source sentences
     targetSentencesCounter = 0
     sourceSentencesCounter = 0
 
     sourceSentenceAlignmentGroups = []
     targetSentenceAlignmentGroups = []
 
+    # iterate through the source sentences
     for k in range(len(sourceSentences)):
+        # check that it's not working on a sentence that's already been matched
         if k == sourceSentencesCounter:
             alignmentString = sentenceAlignmentStrings[k]
+            # calculate how many source sentences match with how many target sentences
             numSourceSents, numTargetSents = processAlignmentStrings(alignmentString[0])
 
+            # initialize list of which source sentences go with which target sentences
             alignedSourceSentencesList = []
             sourceSentencesIndexList = []
 
+            # append appropriate number of source sentences to the list, increment sourceSentencesCounter so don't reuse
+            # source sentences
             for l in range(numSourceSents):
                 if sourceSentencesCounter < len(sourceSentences):
                     alignedSourceSentencesList.append(sourceSentences[sourceSentencesCounter])
@@ -175,6 +190,7 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                     sourceSentencesCounter += 1
             sourceSentenceAlignmentGroups.append(sourceSentencesIndexList)
 
+            # do the same thing for target sentences
             alignedTargetSentencesList = []
             targetSentencesIndexList = []
             for m in range(numTargetSents):
@@ -184,10 +200,14 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                     targetSentencesCounter += 1
             targetSentenceAlignmentGroups.append(targetSentencesIndexList)
 
+    # turn sentence indexes into sentence numbers, add s or t to denote if source or target
     sourceGroupAlignmentStrings = [['s%s' % (index + 1) for index in sourceGroup] for sourceGroup in
                                    sourceSentenceAlignmentGroups]
     targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
                                    targetSentenceAlignmentGroups]
+
+    # print the aligned sentences
+    print('SourceSentences\tTargetSentences')
     for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
         print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
