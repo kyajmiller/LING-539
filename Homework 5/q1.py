@@ -120,7 +120,7 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
             # set 0,0 to 0
             if j == 0 and i == 0:
                 sentenceAlignmentTable[j][i] = 0
-                sentenceAlignmentStringsTable[j][i] = None
+                sentenceAlignmentStringsTable[j][i] = '0'
             # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
             else:
                 minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths)
@@ -247,6 +247,19 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
         currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
         formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
         print(formattedCurrentRow)
+
+    print('\n')
+    print('Alignment Strings Table')
+    print('\t%s' % '\t'.join(targetRowHeaderList))
+    for i in range(len(stringsTable)):
+        if i == 0:
+            sentenceTag = '0'
+        else:
+            sentenceTag = 's%s' % i
+        print(', '.join(stringsTable[i]))
+        #currentRowString = '\t'.join([', '.join(stringList) for stringList in stringsTable[i]])
+        #formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
+        #print(formattedCurrentRow)
 
     # get sentence alignment strings
     print('\n')
