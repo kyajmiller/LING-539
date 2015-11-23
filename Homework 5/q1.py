@@ -67,28 +67,14 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable):
 
     return minimumAlignmentCost, minimumAlignmentStrings
 
-
 def doSentenceAlignment():
     # the j=0 row and i=0 column are the first row and first column, makes sense for indices
     # decided to set it up so that i is along the columns and j is down the rows
     # initialize sentenceAlignmentTable, set everything to empty string
-    sentenceAlignmentTable = [['' for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
+    sentenceAlignmentTable = [[0 for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
     sentenceAlignmentStringsTable = [['' for i in range(len(sourceSentences) + 1)] for j in
                                      range(len(targetSentences) + 1)]
-
-    for j in range(len(sentenceAlignmentTable)):
-        currentRow = sentenceAlignmentTable[j]
-        for i in range(len(currentRow)):
-            if j == 0 and i == 0:
-                sentenceAlignmentTable[j][i] = 0
-                sentenceAlignmentStringsTable[j][i] = None
-            else:
-                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable)
-                sentenceAlignmentTable[j][i] = minimumAlignmentCost
-                sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
-
     return sentenceAlignmentTable
-
 
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
@@ -110,6 +96,12 @@ doWordCountsForSourceSentencesAndPrintToOutput()
 outputFile.write('---------------------------\n')
 doWordCountsForTargetSentencesAndPrintToOutput()
 
+# get source and target sentences lengths so won't have to keep calling the functions later
+sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
+targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
+
 # calculate sentence alignment
 calculatedSentenceAlignmentTable = doSentenceAlignment()
 for row in calculatedSentenceAlignmentTable: print(row)
+print(len(calculatedSentenceAlignmentTable))
+print(len(calculatedSentenceAlignmentTable[0]))
