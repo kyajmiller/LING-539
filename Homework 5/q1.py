@@ -216,6 +216,13 @@ def processAlignmentStrings(alignmentString):
 
 
 def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
+    # do the three parts of the sentence alignment experiment for the given input and print three tables with
+    # calculated data to the console
+
+    # basically do what the function says
+    doWordCountsExerciseAndPrintToConsole(sourceSentences, targetSentences)
+    print('\n')
+
     # get source and target sentences lengths so won't have to keep calling the functions later
     sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
     targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
@@ -226,7 +233,7 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     # print the sentenceAlignmentTable to console
     targetRowHeaderList = []
     targetRowHeaderList.append('0')
-    for i in range(len(targetSentencesFile)):
+    for i in range(len(targetSentences)):
         targetRowHeaderList.append('t%s' % (i + 1))
 
     print('Sentence Alignment Table')
@@ -258,18 +265,15 @@ targetSentencesFileIn.close()
 # do word counts exercise for sents_source.txt and sents_target.txt
 doWordCountsExerciseAndPrintToOutputFile(sourceSentencesFile, targetSentencesFile)
 
-# do the same thing but print it to console instead
-doWordCountsExerciseAndPrintToConsole(sourceSentencesFile, targetSentencesFile)
-print('\n')
-
 # do the sentence alignment experiment with the sents_source and sents_target info as input
 doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
 
+print('\n')
+
+# source sentences and target sentences from the lecture
 sourceSentencesLecture = ['I call for two statements.', 'First, as the Minister will be aware, last month the Welsh Senate of Older People e-mailed all Assembly Members concerning the P is for People campaign to raise awareness of the lack of public toilet provision in Wales, and it attached its latest research urging all Assembly Members to bring this to the attention of the Welsh Government.', 'It would therefore be appreciated if we could have a statement from the Welsh Government accordingly.']
-targetSentencesLecture = ['Galwaf am ddau ddatganiad.', "Yn gyntaf, fel y bydd y Gweinidog yn gwybod, y mis diwethaf anfonodd Senedd Pobl H^yn Cymru e-bost at holl Aelodau'r Cynulliad ynghylch yr ymgyrch P am 'Pobl' i godi ymwybyddiaeth o'r diffyg darpariaeth toiledau cyhoeddus yng Nghymru.", "Atodwyd eu hymchwil ddiweddaraf er mwyn annog holl Aelodau'r Cynulliad i dynnu sylw Llywodraeth Cymru at y mater.", "Byddwn yn ddiolchgar felly pe gallem gael datganiad gan Lywodraeth Cymru yn unol ^a hynny."]
+targetSentencesLecture = ['Galwaf am ddau ddatganiad.', "Yn gyntaf, fel y bydd y Gweinidog yn gwybod, y mis diwethaf anfonodd Senedd Pobl H^yn Cymru e-bost at holl Aelodau'r Cynulliad ynghylch yr ymgyrch P am 'Pobl' i godi ymwybyddiaeth o'r diffyg darpariaeth toiledau cyhoeddus yng Nghymru.", "Atodwyd eu hymchwil ddiweddaraf er mwyn annog holl Aelodau'r Cynulliad i dynnu sylw Llywodraeth Cymru at y mater.", 'Byddwn yn ddiolchgar felly pe gallem gael datganiad gan Lywodraeth Cymru yn unol ^a hynny.']
 
-
-
-
-
+# do the alignment experiment with the lecture sentences
+doSentenceAlignmentExperiment(sourceSentencesLecture, targetSentencesLecture)
 
