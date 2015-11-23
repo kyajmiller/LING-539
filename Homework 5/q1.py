@@ -25,17 +25,22 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
         outputFile.write(outputString)
 
 
-def doSentenceAlignment():
-    # the i=0 row and j=0 column are the first row and first column, makes sense for indices
-    # initialize sentenceAlignmentTable, set everything to empty string
-    sentenceAlignmentTable = [['' for j in range(len(targetSentences) + 1)] for i in range(len(sourceSentences) + 1)]
+def getMinimumAlignment(i, j):
+    pass
 
-    for i in range(len(sentenceAlignmentTable)):
-        currentRow = sentenceAlignmentTable[i]
-        for j in range(len(currentRow)):
-            currentItem = currentRow[j]
-            if i == 0 and j == 0:
-                sentenceAlignmentTable[i][j] = 0
+
+def doSentenceAlignment():
+    # the j=0 row and i=0 column are the first row and first column, makes sense for indices
+    # decided to set it up so that i is along the columns and j is down the rows
+    # initialize sentenceAlignmentTable, set everything to empty string
+    sentenceAlignmentTable = [['' for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
+
+    for j in range(len(sentenceAlignmentTable)):
+        currentRow = sentenceAlignmentTable[j]
+        for i in range(len(currentRow)):
+            currentItem = currentRow[i]
+            if j == 0 and i == 0:
+                sentenceAlignmentTable[j][i] = 0
 
     return sentenceAlignmentTable
 
