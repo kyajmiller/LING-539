@@ -25,8 +25,35 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
         outputFile.write(outputString)
 
 
-def getMinimumAlignment(i, j):
-    pass
+def getMinimumAlignment(i, j, sentenceAlignmentTable):
+    alignmentPossibilities = ['0:1', '1:0', '1:1', '1:2', '2:1', '2:2']
+
+    validAlignments = []
+
+    if j - 1 >= 0:
+        alignment01 = sentenceAlignmentTable[j - 1][i] + abs(getSentenceWordCount(targetSentences[j + 1]) - 0)
+        validAlignments.append(alignment01)
+    if i - 1 >= 0:
+        alignment10 = sentenceAlignmentTable[j][i - 1] + abs(getSentenceWordCount(sourceSentences[i + 1]) - 0)
+        validAlignments.append(alignment10)
+    if i - 1 >= 0 and j - 1 >= 0:
+        alignment11 = sentenceAlignmentTable[j - 1][i - 1] + abs(
+            getSentenceWordCount(sourceSentences[i + 1]) - getSentenceWordCount(targetSentences[j + 1]))
+        validAlignments.append(alignment11)
+    if i - 1 >= 0 and j - 2 >= 0:
+        alignment12 = sentenceAlignmentTable[j - 2][i - 1] + abs(getSentenceWordCount(sourceSentences[i + 1]) - (
+        getSentenceWordCount(targetSentences[(j - 1) + 1]) + getSentenceWordCount(targetSentences[j + 1])))
+        validAlignments.append(alignment12)
+    if i - 2 >= 0 and j - 1 >= 0:
+        alignment21 = sentenceAlignmentTable[j - 1][i - 2] + abs((getSentenceWordCount(
+            sourceSentences[(i - 1) + 1]) + getSentenceWordCount(sourceSentences[i + 1])) - getSentenceWordCount(
+            targetSentences[j + 1]))
+        validAlignments.append(alignment21)
+    if i - 2 >= 0 and j - 2 >= 0:
+        alignment22 = sentenceAlignmentTable[j - 2][i - 2] + abs(
+            (getSentenceWordCount(sourceSentences[(i - 1) + 1]) + getSentenceWordCount(sourceSentences[i + 1])) - (
+            getSentenceWordCount(targetSentences[(j - 1) + 1]) + getSentenceWordCount(targetSentences[j + 1])))
+        validAlignments.append(alignment22)
 
 
 def doSentenceAlignment():
