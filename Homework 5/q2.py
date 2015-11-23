@@ -52,7 +52,7 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
 
 def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths):
     # calculates the minimum alignment cost and the possible alignment types for that cost, returns the cost and the
-    # strings
+    # alignment strings
 
     # list of possible alignments, needed list so can have indices for later
     alignmentPossibilities = ['0:1', '1:0', '1:1', '1:2', '2:1', '2:2']
@@ -93,17 +93,17 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, ta
     minimumAlignmentCost = min(validAlignments)
 
     # make a list of all the values, both valid and empty - this lets you get the index of the minimum value so you can
-    # get the index of the alignment string
+    # get the index of the alignment type
     allAlignmentCosts = [alignment01, alignment10, alignment11, alignment12, alignment21, alignment22]
 
     # if the alignment value is the same as the minimum alignment cost, get the index of that value, then grab the
-    # alignment string with the same index and append it to the list
-    minimumAlignmentStrings = []
+    # alignment type with the same index and append it to the list
+    minimumAlignmentTypes = []
     for k in range(len(allAlignmentCosts)):
         if allAlignmentCosts[k] == minimumAlignmentCost:
-            minimumAlignmentStrings.append(alignmentPossibilities[k])
+            minimumAlignmentTypes.append(alignmentPossibilities[k])
 
-    return minimumAlignmentCost, minimumAlignmentStrings
+    return minimumAlignmentCost, minimumAlignmentTypes
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentTypesTable, sourceSentences, targetSentences):
@@ -182,7 +182,7 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentTypesTable, sourceSente
 
 
 def processAlignmentTypes(alignmentType):
-    # convert alignment strings into numSourceSents and numTargetSents
+    # convert alignment types into numSourceSents and numTargetSents
     numSourceSents = 0
     numTargetSents = 0
     if alignmentType == '0:1':
