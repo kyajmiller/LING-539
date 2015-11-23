@@ -248,20 +248,25 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
         formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
         print(formattedCurrentRow)
 
+
+    # print the alignment cost and strings, displays only the first item in each alingment strings list for the sake of
+    # clarity and prettiness, not an accurate representation of the possibilities
     print('\n')
-    print('Alignment Strings Table')
-    print('\t%s' % '\t'.join(targetRowHeaderList))
-    for i in range(len(stringsTable)):
+    print('Sentence Alignment Table')
+    print('\t%s' % '\t\t'.join(targetRowHeaderList))
+
+    for i in range(len(calculatedSentenceAlignmentTable)):
         if i == 0:
             sentenceTag = '0'
         else:
             sentenceTag = 's%s' % i
-        print(', '.join(stringsTable[i]))
-        #currentRowString = '\t'.join([', '.join(stringList) for stringList in stringsTable[i]])
-        #formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
-        #print(formattedCurrentRow)
+        currentRowCosts = [str(item) for item in calculatedSentenceAlignmentTable[i]]
+        currentRowStrings = [stringList[0] for stringList in stringsTable[i]]
+        costAndStrings = ['%s/%s' % (cost, string) for cost, string in zip(currentRowCosts, currentRowStrings)]
+        currentRowString = '\t'.join(costAndStrings)
+        formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
+        print(formattedCurrentRow)
 
-    # get sentence alignment strings
     print('\n')
     getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable, sourceSentences, targetSentences)
 
