@@ -116,6 +116,7 @@ def calculateSentenceAlignment():
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
+    sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
         if i > 0:
             currentSentenceAlignments = sentenceAlignmentTable[i]
@@ -127,9 +128,44 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
                     minimumIndex = j
                     minimumAlignmentString = currentSentenceAlignmentStrings[minimumIndex]
 
-            currentSourceSentence = sourceSentences[i - 1]
-            print(currentSourceSentence)
-            print(minimumAlignmentString)
+            sentenceAlignmentStrings.append(minimumAlignmentString)
+
+    targetSentencesCounter = 0
+    sourceSentencesCounter = 0
+    print(sentenceAlignmentStrings)
+
+    for k in range(len(sourceSentences)):
+        currentSourceSentence = sourceSentences[k]
+        sourceSentencesCounter += 1
+
+        alignmentString = sentenceAlignmentStrings[k]
+        numSourceSents, numTargetSents = processAlignmentStrings(alignmentString[0])
+
+        alignedSourceSentencesList = []
+        sourceSentencesIndexList = []
+
+        alignedTargetSentencesList = []
+        targetSentencesIndexList = []
+        for l in range(numTargetSents):
+            if targetSentencesCounter < len(targetSentences):
+                alignedTargetSentencesList.append(targetSentences[targetSentencesCounter])
+                targetSentencesIndexList.append(targetSentencesCounter)
+                targetSentencesCounter += 1
+        print(targetSentencesIndexList)
+
+    '''
+    while sourceSentencesCounter <= len(sourceSentences):
+        currentSourceSentence = sourceSentences[sourceSentencesCounter]
+        alignmentString = sentenceAlignmentStrings[sourceSentencesCounter]
+        numSourceSents, numTargetSents = processAlignmentStrings(alignmentString)
+        alignedTargetSentencesList = []
+        alignedSourceSentencesList = [currentSourceSentence]
+        for i in range(numSourceSents-1):
+            alignedSourceSentencesList.append(sourceSentences[sourceSentencesCounter+i])
+        print(alignedSourceSentencesList)
+        sourceSentencesCounter += numSourceSents
+    '''
+
 
 
 def processAlignmentStrings(alignmentString):
@@ -181,8 +217,6 @@ doWordCountsForTargetSentencesAndPrintToOutput()
 # get source and target sentences lengths so won't have to keep calling the functions later
 sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
 targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
-print(sourceSentencesLengths)
-print(targetSentencesLengths)
 
 # calculate sentence alignment
 calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment()
