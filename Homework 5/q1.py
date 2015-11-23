@@ -123,7 +123,9 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
                 sentenceAlignmentStringsTable[j][i] = '0'
             # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
             else:
-                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths)
+                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable,
+                                                                                    sourceSentencesLengths,
+                                                                                    targetSentencesLengths)
                 # set table values to appropriate values so can feed back into the function
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
                 sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
@@ -228,7 +230,9 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
 
     # calculate sentence alignment
-    calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentencesLengths, targetSentencesLengths)
+    calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment(sourceSentences, targetSentences,
+                                                                                sourceSentencesLengths,
+                                                                                targetSentencesLengths)
 
     # print the sentenceAlignmentTable to console
     targetRowHeaderList = []
@@ -247,7 +251,6 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
         currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
         formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
         print(formattedCurrentRow)
-
 
     # print the alignment cost and strings, displays only the first item in each alingment strings list for the sake of
     # clarity and prettiness, not an accurate representation of the possibilities
@@ -269,6 +272,7 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
 
     print('\n')
     getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable, sourceSentences, targetSentences)
+
 
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
