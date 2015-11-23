@@ -252,7 +252,7 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     # print the alignment cost and strings, displays only the first item in each alingment strings list for the sake of
     # clarity and prettiness, not an accurate representation of the possibilities
     print('\n')
-    print('Sentence Alignment Table')
+    print('Sentence Alignment Table With First Alignment Possibility')
     print('\t%s' % '\t\t'.join(targetRowHeaderList))
 
     for i in range(len(calculatedSentenceAlignmentTable)):
@@ -283,15 +283,22 @@ targetSentencesFileIn.close()
 # do word counts exercise for sents_source.txt and sents_target.txt
 doWordCountsExerciseAndPrintToOutputFile(sourceSentencesFile, targetSentencesFile)
 
-# do the sentence alignment experiment with the sents_source and sents_target info as input
-doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
-
-print('\n')
-
 # source sentences and target sentences from the lecture
-sourceSentencesLecture = ['I call for two statements.', 'First, as the Minister will be aware, last month the Welsh Senate of Older People e-mailed all Assembly Members concerning the P is for People campaign to raise awareness of the lack of public toilet provision in Wales, and it attached its latest research urging all Assembly Members to bring this to the attention of the Welsh Government.', 'It would therefore be appreciated if we could have a statement from the Welsh Government accordingly.']
-targetSentencesLecture = ['Galwaf am ddau ddatganiad.', "Yn gyntaf, fel y bydd y Gweinidog yn gwybod, y mis diwethaf anfonodd Senedd Pobl H^yn Cymru e-bost at holl Aelodau'r Cynulliad ynghylch yr ymgyrch P am 'Pobl' i godi ymwybyddiaeth o'r diffyg darpariaeth toiledau cyhoeddus yng Nghymru.", "Atodwyd eu hymchwil ddiweddaraf er mwyn annog holl Aelodau'r Cynulliad i dynnu sylw Llywodraeth Cymru at y mater.", 'Byddwn yn ddiolchgar felly pe gallem gael datganiad gan Lywodraeth Cymru yn unol ^a hynny.']
+sourceSentencesLecture = ['I call for two statements.',
+                          'First, as the Minister will be aware, last month the Welsh Senate of Older People e-mailed all Assembly Members concerning the P is for People campaign to raise awareness of the lack of public toilet provision in Wales, and it attached its latest research urging all Assembly Members to bring this to the attention of the Welsh Government.',
+                          'It would therefore be appreciated if we could have a statement from the Welsh Government accordingly.']
+targetSentencesLecture = ['Galwaf am ddau ddatganiad.',
+                          "Yn gyntaf, fel y bydd y Gweinidog yn gwybod, y mis diwethaf anfonodd Senedd Pobl H^yn Cymru e-bost at holl Aelodau'r Cynulliad ynghylch yr ymgyrch P am 'Pobl' i godi ymwybyddiaeth o'r diffyg darpariaeth toiledau cyhoeddus yng Nghymru.",
+                          "Atodwyd eu hymchwil ddiweddaraf er mwyn annog holl Aelodau'r Cynulliad i dynnu sylw Llywodraeth Cymru at y mater.",
+                          'Byddwn yn ddiolchgar felly pe gallem gael datganiad gan Lywodraeth Cymru yn unol ^a hynny.']
 
 # do the alignment experiment with the lecture sentences
+print('Sentence Alignment Experiment Using Sentences From Lecture\n')
 doSentenceAlignmentExperiment(sourceSentencesLecture, targetSentencesLecture)
 
+print('\n')
+print('-------------------------')
+
+# do the sentence alignment experiment with the sents_source and sents_target info as input
+print('Sentence Alignment Experiment Using sents_source.txta and sents_target.txt\n')
+doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
