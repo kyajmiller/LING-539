@@ -26,6 +26,7 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
 
 
 def doSentenceAlignment():
+    # the i=0 row and j=0 column are the first row and first column, makes sense for indices
     # initialize sentenceAlignmentTable, set everything to empty string
     sentenceAlignmentTable = [['' for j in range(len(targetSentences) + 1)] for i in range(len(sourceSentences) + 1)]
     sentenceAlignmentTable[0][0] = 0
