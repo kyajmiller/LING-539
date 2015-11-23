@@ -158,7 +158,7 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
                     alignedTargetSentencesList.append(targetSentences[targetSentencesCounter])
                     targetSentencesIndexList.append(targetSentencesCounter)
                     targetSentencesCounter += 1
-
+            targetSentenceAlignmentGroups.append(targetSentencesIndexList)
 
 
 
