@@ -28,6 +28,8 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
 def getMinimumAlignment(i, j, sentenceAlignmentTable):
     alignmentPossibilities = ['0:1', '1:0', '1:1', '1:2', '2:1', '2:2']
 
+    alignment01, alignment10, alignment11, alignment12, alignment21, alignment22 = 0, 0, 0, 0, 0, 0
+
     validAlignments = []
 
     if j - 1 >= 0:
@@ -54,6 +56,16 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable):
             (getSentenceWordCount(sourceSentences[(i - 1) + 1]) + getSentenceWordCount(sourceSentences[i + 1])) - (
             getSentenceWordCount(targetSentences[(j - 1) + 1]) + getSentenceWordCount(targetSentences[j + 1])))
         validAlignments.append(alignment22)
+
+    minimumAlignmentCost = min(validAlignments)
+    allAlignmentCosts = [alignment01, alignment10, alignment11, alignment12, alignment21, alignment22]
+
+    minimumAlignmentStrings = []
+    for k in range(len(allAlignmentCosts)):
+        if allAlignmentCosts[k] == minimumAlignmentCost:
+            minimumAlignmentStrings.append(alignmentPossibilities[k])
+
+    return minimumAlignmentCost, minimumAlignmentStrings
 
 
 def doSentenceAlignment():
