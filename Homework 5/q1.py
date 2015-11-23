@@ -5,6 +5,11 @@ Q1 - Reads in sents_source.txt and sents_target.txt as input files, prints the n
 output.txt. Calculates sentence alignment between sents_source and sents_target, and prints the output to console.
 """
 
+
+def getSentenceWordCount(sentence):
+    words = sentence.split(' ')
+    return len(words)
+
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
 sourceSentences = [line.strip() for line in sourceSentencesFileIn.readlines()]
