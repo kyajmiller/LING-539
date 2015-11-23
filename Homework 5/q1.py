@@ -132,39 +132,35 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
 
     targetSentencesCounter = 0
     sourceSentencesCounter = 0
-    print(sentenceAlignmentStrings)
+
+    sourceSentenceAlignmentGroups = []
+    targetSentenceAlignmentGroups = []
 
     for k in range(len(sourceSentences)):
-        currentSourceSentence = sourceSentences[k]
-        sourceSentencesCounter += 1
+        if k == sourceSentencesCounter:
+            alignmentString = sentenceAlignmentStrings[k]
+            numSourceSents, numTargetSents = processAlignmentStrings(alignmentString[0])
 
-        alignmentString = sentenceAlignmentStrings[k]
-        numSourceSents, numTargetSents = processAlignmentStrings(alignmentString[0])
+            alignedSourceSentencesList = []
+            sourceSentencesIndexList = []
 
-        alignedSourceSentencesList = []
-        sourceSentencesIndexList = []
+            for l in range(numSourceSents):
+                if sourceSentencesCounter < len(sourceSentences):
+                    alignedSourceSentencesList.append(sourceSentences[sourceSentencesCounter])
+                    sourceSentencesIndexList.append(sourceSentencesCounter)
+                    sourceSentencesCounter += 1
+            sourceSentenceAlignmentGroups.append(sourceSentencesIndexList)
 
-        alignedTargetSentencesList = []
-        targetSentencesIndexList = []
-        for l in range(numTargetSents):
-            if targetSentencesCounter < len(targetSentences):
-                alignedTargetSentencesList.append(targetSentences[targetSentencesCounter])
-                targetSentencesIndexList.append(targetSentencesCounter)
-                targetSentencesCounter += 1
-        print(targetSentencesIndexList)
+            alignedTargetSentencesList = []
+            targetSentencesIndexList = []
+            for m in range(numTargetSents):
+                if targetSentencesCounter < len(targetSentences):
+                    alignedTargetSentencesList.append(targetSentences[targetSentencesCounter])
+                    targetSentencesIndexList.append(targetSentencesCounter)
+                    targetSentencesCounter += 1
 
-    '''
-    while sourceSentencesCounter <= len(sourceSentences):
-        currentSourceSentence = sourceSentences[sourceSentencesCounter]
-        alignmentString = sentenceAlignmentStrings[sourceSentencesCounter]
-        numSourceSents, numTargetSents = processAlignmentStrings(alignmentString)
-        alignedTargetSentencesList = []
-        alignedSourceSentencesList = [currentSourceSentence]
-        for i in range(numSourceSents-1):
-            alignedSourceSentencesList.append(sourceSentences[sourceSentencesCounter+i])
-        print(alignedSourceSentencesList)
-        sourceSentencesCounter += numSourceSents
-    '''
+
+
 
 
 
