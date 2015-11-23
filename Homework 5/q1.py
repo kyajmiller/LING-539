@@ -18,11 +18,25 @@ def doWordCountsForSourceSentencesAndPrintToOutputFile(sourceSentences):
         outputFile.write(outputString)
 
 
+def doWordCountsForSourceSentencesAndPrintToConsole(sourceSentences):
+    for i in range(len(sourceSentences)):
+        numWords = getSentenceWordCount(sourceSentences[i])
+        outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
+        print(outputString)
+
+
 def doWordCountsForTargetSentencesAndPrintToOutputFile(targetSentences):
     for i in range(len(targetSentences)):
         numWords = getSentenceWordCount(targetSentences[i])
         outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
         outputFile.write(outputString)
+
+
+def doWordCountsForTargetSentencesAndPrintToConsole(targetSentences):
+    for i in range(len(targetSentences)):
+        numWords = getSentenceWordCount(targetSentences[i])
+        outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
+        print(outputString)
 
 
 def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths):
