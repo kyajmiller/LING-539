@@ -68,7 +68,7 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable):
     return minimumAlignmentCost, minimumAlignmentStrings
 
 
-def doSentenceAlignment():
+def calculateSentenceAlignment():
     # the j=0 row and i=0 column are the first row and first column, makes sense for indices
     # decided to set it up so that i is along the columns and j is down the rows
     # initialize sentenceAlignmentTable, set everything to empty string
@@ -123,6 +123,6 @@ print(sourceSentencesLengths)
 print(targetSentencesLengths)
 
 # calculate sentence alignment
-calculatedSentenceAlignmentTable, stringsTable = doSentenceAlignment()
+calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment()
 # for row in calculatedSentenceAlignmentTable: print(row)
 # for row in stringsTable: print(row)
