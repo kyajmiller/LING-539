@@ -18,6 +18,13 @@ def doWordCountsForSourceSentencesAndPrintToOutput():
         outputFile.write(outputString)
 
 
+def doWordCountsForTargetSentencesAndPrintToOutput():
+    for i in range(len(targetSentences)):
+        numWords = getSentenceWordCount(targetSentences[i])
+        outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
+        outputFile.write(outputString)
+
+
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
 sourceSentences = [line.strip() for line in sourceSentencesFileIn.readlines()]
@@ -33,5 +40,7 @@ outputFile = open('output.txt', 'w')
 headerString = 'Sentence\tNumber Of Words\n'
 outputFile.write(headerString)
 
-# get num words for each source sentence, print to output file
+# get num words for each source sentence and target sentence, print to output file
 doWordCountsForSourceSentencesAndPrintToOutput()
+outputFile.write('---------------------------\n')
+doWordCountsForTargetSentencesAndPrintToOutput()
