@@ -44,3 +44,6 @@ outputFile.write(headerString)
 doWordCountsForSourceSentencesAndPrintToOutput()
 outputFile.write('---------------------------\n')
 doWordCountsForTargetSentencesAndPrintToOutput()
+
+# initialize sentenceAlignmentTable, set everything to 0
+sentenceAlignmentTable = [[0 for j in range(len(targetSentences) + 1)] for i in range(len(sourceSentences) + 1)]
