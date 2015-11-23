@@ -114,6 +114,50 @@ def calculateSentenceAlignment():
 
     return flippedAlignmentTable, flippedAlignmentStringsTable
 
+
+def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
+    for i in range(len(sentenceAlignmentTable)):
+        if i > 0:
+            currentSentenceAlignments = sentenceAlignmentTable[i]
+            currentSentenceAlignmentStrings = alignmentStringsTable[i]
+            minimumAlignment = min(currentSentenceAlignments)
+            minimumAlignmentString = ''
+            for j in range(len(currentSentenceAlignments)):
+                if currentSentenceAlignments[j] == minimumAlignment:
+                    minimumIndex = j
+                    minimumAlignmentString = currentSentenceAlignmentStrings[minimumIndex]
+
+            currentSourceSentence = sourceSentences[i - 1]
+            print(currentSourceSentence)
+            print(minimumAlignmentString)
+
+
+def processAlignmentStrings(alignmentString):
+    # convert alignment strings into numSourceSents and numTargetSents
+    numSourceSents = 0
+    numTargetSents = 0
+    if alignmentString == '0:1':
+        numSourceSents = 0
+        numTargetSents = 1
+    elif alignmentString == '1:0':
+        numSourceSents = 1
+        numTargetSents = 0
+    elif alignmentString == '1:1':
+        numSourceSents = 1
+        numTargetSents = 1
+    elif alignmentString == '1:2':
+        numSourceSents = 1
+        numTargetSents = 2
+    elif alignmentString == '2:1':
+        numSourceSents = 2
+        numTargetSents = 1
+    elif alignmentString == '2:2':
+        numSourceSents = 2
+        numTargetSents = 2
+    return numSourceSents, numTargetSents
+
+
+
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
 sourceSentences = [line.strip() for line in sourceSentencesFileIn.readlines()]
@@ -142,5 +186,6 @@ print(targetSentencesLengths)
 
 # calculate sentence alignment
 calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment()
-# for row in calculatedSentenceAlignmentTable: print(row)
-# for row in stringsTable: print(row)
+
+# get sentence alignment strings
+getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable)
