@@ -9,6 +9,7 @@ from __future__ import division
 
 
 def getSentenceWordCount(sentence):
+    # return how many words are in the sentence
     words = sentence.split(' ')
     return len(words)
 
@@ -106,7 +107,8 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, ta
 
 
 def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSentences, targetSentences):
-    # print('SourceSentences\tTargetSentences')
+    # calculates and returns which sentences align with which other sentences
+
     sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
         if i > 0:
@@ -155,6 +157,7 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
                                    sourceSentenceAlignmentGroups]
     targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
                                    targetSentenceAlignmentGroups]
+    print('SourceSentences ---> TargetSentences')
     for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
         print('%s ---> %s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
