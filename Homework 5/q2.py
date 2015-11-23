@@ -20,8 +20,8 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
     # initialize sentenceAlignmentTable, set everything to empty string
     sentenceAlignmentTable = [[0 for i in range(len(sourceSentences) + 1)] for j in range(len(targetSentences) + 1)]
 
-    # initialize the alignment string table, this is where the strings will live
-    sentenceAlignmentStringsTable = [['' for i in range(len(sourceSentences) + 1)] for j in
+    # initialize the alignment types table, this is where the alignment types will live
+    sentenceAlignmentTypesTable = [['' for i in range(len(sourceSentences) + 1)] for j in
                                      range(len(targetSentences) + 1)]
 
     # iterate through rows
@@ -32,22 +32,22 @@ def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentences
             # set 0,0 to 0
             if j == 0 and i == 0:
                 sentenceAlignmentTable[j][i] = 0
-                sentenceAlignmentStringsTable[j][i] = '0'
-            # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
+                sentenceAlignmentTypesTable[j][i] = '0'
+            # everything else, calculate the minimum alignment cost and alignment types using the getMinimumAlignment function
             else:
-                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable,
-                                                                                    sourceSentencesLengths,
-                                                                                    targetSentencesLengths)
+                minimumAlignmentCost, minimumAlignmentTypes = getMinimumAlignment(i, j, sentenceAlignmentTable,
+                                                                                  sourceSentencesLengths,
+                                                                                  targetSentencesLengths)
                 # set table values to appropriate values so can feed back into the function
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
-                sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
+                sentenceAlignmentTypesTable[j][i] = minimumAlignmentTypes
 
     # flip the tables so that the i values are columns and the j values are rows, will allow to iterate through the
     # j rows and find the minimum alignment, couldn't do that before
     flippedAlignmentTable = [z for z in zip(*sentenceAlignmentTable)]
-    flippedAlignmentStringsTable = [z for z in zip(*sentenceAlignmentStringsTable)]
+    flippedAlignmentTypesTable = [z for z in zip(*sentenceAlignmentTypesTable)]
 
-    return flippedAlignmentTable, flippedAlignmentStringsTable
+    return flippedAlignmentTable, flippedAlignmentTypesTable
 
 
 def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths):
@@ -106,28 +106,28 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, ta
     return minimumAlignmentCost, minimumAlignmentStrings
 
 
-def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSentences, targetSentences):
+def getAlignedSentences(sentenceAlignmentTable, alignmentTypesTable, sourceSentences, targetSentences):
     # calculates and returns which sentences align with which other sentences
 
     # iterate through the rows/sentences of the sentenceAlignmentTable to find the minimum alignment cost for that
     # sentence in order to get the proper alignment type, which is then used to match up the sentences
-    sentenceAlignmentStrings = []
+    sentenceAlignmentTypes = []
     for i in range(len(sentenceAlignmentTable)):
         # ignore the first row since that's the i = 0 row, doesn't give any real alignment information
         if i > 0:
             # get the alignment costs and the alignment types associated with those costs
             currentSentenceAlignments = sentenceAlignmentTable[i]
-            currentSentenceAlignmentTypes = alignmentStringsTable[i]
+            currentSentenceAlignmentTypes = alignmentTypesTable[i]
             # get the minimum cost value
             minimumAlignment = min(currentSentenceAlignments)
-            minimumAlignmentString = ''
+            minimumAlignmentType = ''
             # get the alignment type associated with the minimum cost by matching indices, there can be multiple
             for j in range(len(currentSentenceAlignments)):
                 if currentSentenceAlignments[j] == minimumAlignment:
                     minimumIndex = j
-                    minimumAlignmentString = currentSentenceAlignmentTypes[minimumIndex]
+                    minimumAlignmentType = currentSentenceAlignmentTypes[minimumIndex]
 
-            sentenceAlignmentStrings.append(minimumAlignmentString)
+            sentenceAlignmentTypes.append(minimumAlignmentType)
 
     # keep track of how many source sentences matched up, keep going until run out of source sentences
     targetSentencesCounter = 0
@@ -140,9 +140,9 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
     for k in range(len(sourceSentences)):
         # check that it's not working on a sentence that's already been matched
         if k == sourceSentencesCounter:
-            alignmentString = sentenceAlignmentStrings[k]
+            alignmentType = sentenceAlignmentTypes[k]
             # calculate how many source sentences match with how many target sentences
-            numSourceSents, numTargetSents = processAlignmentStrings(alignmentString[0])
+            numSourceSents, numTargetSents = processAlignmentTypes(alignmentType[0])
 
             # initialize list of which source sentences go with which target sentences
             alignedSourceSentencesList = []
@@ -168,39 +168,39 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSen
             targetSentenceAlignmentGroups.append(targetSentencesIndexList)
 
     # turn sentence indexes into sentence numbers, add s or t to denote if source or target
-    sourceGroupAlignmentStrings = [['s%s' % (index + 1) for index in sourceGroup] for sourceGroup in
-                                   sourceSentenceAlignmentGroups]
-    targetGroupAlignmentStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
-                                   targetSentenceAlignmentGroups]
+    sourceGroupAlignmentConvertToStrings = [['s%s' % (index + 1) for index in sourceGroup] for sourceGroup in
+                                            sourceSentenceAlignmentGroups]
+    targetGroupAlignmentConvertToStrings = [['t%s' % (index + 1) for index in targetGroup] for targetGroup in
+                                            targetSentenceAlignmentGroups]
 
     # print the aligned sentences
     print('SourceSentences ---> TargetSentences')
-    for sourceGroup, targetGroup in zip(sourceGroupAlignmentStrings, targetGroupAlignmentStrings):
+    for sourceGroup, targetGroup in zip(sourceGroupAlignmentConvertToStrings, targetGroupAlignmentConvertToStrings):
         print('%s ---> %s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
-    return sourceGroupAlignmentStrings, targetGroupAlignmentStrings
+    return sourceGroupAlignmentConvertToStrings, targetGroupAlignmentConvertToStrings
 
 
-def processAlignmentStrings(alignmentString):
+def processAlignmentTypes(alignmentType):
     # convert alignment strings into numSourceSents and numTargetSents
     numSourceSents = 0
     numTargetSents = 0
-    if alignmentString == '0:1':
+    if alignmentType == '0:1':
         numSourceSents = 0
         numTargetSents = 1
-    elif alignmentString == '1:0':
+    elif alignmentType == '1:0':
         numSourceSents = 1
         numTargetSents = 0
-    elif alignmentString == '1:1':
+    elif alignmentType == '1:1':
         numSourceSents = 1
         numTargetSents = 1
-    elif alignmentString == '1:2':
+    elif alignmentType == '1:2':
         numSourceSents = 1
         numTargetSents = 2
-    elif alignmentString == '2:1':
+    elif alignmentType == '2:1':
         numSourceSents = 2
         numTargetSents = 1
-    elif alignmentString == '2:2':
+    elif alignmentType == '2:2':
         numSourceSents = 2
         numTargetSents = 2
     return numSourceSents, numTargetSents
@@ -215,14 +215,14 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
 
     # calculate sentence alignment
-    calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment(sourceSentences, targetSentences,
-                                                                                sourceSentencesLengths,
-                                                                                targetSentencesLengths)
+    calculatedSentenceAlignmentTable, alignmentTypesTable = calculateSentenceAlignment(sourceSentences, targetSentences,
+                                                                                       sourceSentencesLengths,
+                                                                                       targetSentencesLengths)
 
     # calculate which source sentences match with which target sentences
     sourceGroupAlignments, targetGroupAlignments = getAlignedSentences(calculatedSentenceAlignmentTable,
-                                                                                       stringsTable,
-                                                                                       sourceSentences, targetSentences)
+                                                                       alignmentTypesTable,
+                                                                       sourceSentences, targetSentences)
 
     # calculate accuracy - how many matches / total
     numAlignmentGroups = 0
