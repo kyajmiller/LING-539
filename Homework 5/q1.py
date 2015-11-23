@@ -11,21 +11,21 @@ def getSentenceWordCount(sentence):
     return len(words)
 
 
-def doWordCountsForSourceSentencesAndPrintToOutput():
+def doWordCountsForSourceSentencesAndPrintToOutput(sourceSentences):
     for i in range(len(sourceSentences)):
         numWords = getSentenceWordCount(sourceSentences[i])
         outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
         outputFile.write(outputString)
 
 
-def doWordCountsForTargetSentencesAndPrintToOutput():
+def doWordCountsForTargetSentencesAndPrintToOutput(targetSentences):
     for i in range(len(targetSentences)):
         numWords = getSentenceWordCount(targetSentences[i])
         outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
         outputFile.write(outputString)
 
 
-def getMinimumAlignment(i, j, sentenceAlignmentTable):
+def getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths):
     # calculates the minimum alignment cost and the possible alignment types for that cost, returns the cost and the
     # strings
 
@@ -81,7 +81,7 @@ def getMinimumAlignment(i, j, sentenceAlignmentTable):
     return minimumAlignmentCost, minimumAlignmentStrings
 
 
-def calculateSentenceAlignment():
+def calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentencesLengths, targetSentencesLengths):
     # the j=0 row and i=0 column are the first row and first column, makes sense for indices
     # decided to set it up so that i is along the columns and j is down the rows
     # initialize sentenceAlignmentTable, set everything to empty string
@@ -102,7 +102,7 @@ def calculateSentenceAlignment():
                 sentenceAlignmentStringsTable[j][i] = None
             # everything else, calculate the minimum alignment cost and strings using the getMinimumAlignment function
             else:
-                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable)
+                minimumAlignmentCost, minimumAlignmentStrings = getMinimumAlignment(i, j, sentenceAlignmentTable, sourceSentencesLengths, targetSentencesLengths)
                 # set table values to appropriate values so can feed back into the function
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
                 sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
@@ -115,7 +115,7 @@ def calculateSentenceAlignment():
     return flippedAlignmentTable, flippedAlignmentStringsTable
 
 
-def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
+def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable, sourceSentences, targetSentences):
     print('SourceSentences\tTargetSentences')
     sentenceAlignmentStrings = []
     for i in range(len(sentenceAlignmentTable)):
@@ -169,10 +169,6 @@ def getAlignedSentences(sentenceAlignmentTable, alignmentStringsTable):
         print('%s\t\t\t\t%s' % (' '.join(sourceGroup), ' '.join(targetGroup)))
 
 
-
-
-
-
 def processAlignmentStrings(alignmentString):
     # convert alignment strings into numSourceSents and numTargetSents
     numSourceSents = 0
@@ -198,15 +194,46 @@ def processAlignmentStrings(alignmentString):
     return numSourceSents, numTargetSents
 
 
+def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
+    # get source and target sentences lengths so won't have to keep calling the functions later
+    sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
+    targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
+
+    # calculate sentence alignment
+    calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment(sourceSentences, targetSentences, sourceSentencesLengths, targetSentencesLengths)
+
+    # print the sentenceAlignmentTable to console
+    targetRowHeaderList = []
+    targetRowHeaderList.append('0')
+    for i in range(len(targetSentencesFile)):
+        targetRowHeaderList.append('t%s' % (i + 1))
+
+    print('Sentence Alignment Table')
+    print('\t%s' % '\t'.join(targetRowHeaderList))
+
+    for i in range(len(calculatedSentenceAlignmentTable)):
+        if i == 0:
+            sentenceTag = '0'
+        else:
+            sentenceTag = 's%s' % i
+        currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
+        formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
+        print(formattedCurrentRow)
+
+    # get sentence alignment strings
+    print('\n')
+    getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable, sourceSentences, targetSentences)
+
+
 
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
-sourceSentences = [line.strip() for line in sourceSentencesFileIn.readlines()]
+sourceSentencesFile = [line.strip() for line in sourceSentencesFileIn.readlines()]
 sourceSentencesFileIn.close()
 
 # read in sents_target.txt, store sentences in array
 targetSentencesFileIn = open('sents_target.txt', 'r')
-targetSentences = [line.strip() for line in targetSentencesFileIn.readlines()]
+targetSentencesFile = [line.strip() for line in targetSentencesFileIn.readlines()]
 targetSentencesFileIn.close()
 
 # open output file
@@ -215,35 +242,15 @@ headerString = 'Sentence\tNumber Of Words\n'
 outputFile.write(headerString)
 
 # get num words for each source sentence and target sentence, print to output file
-doWordCountsForSourceSentencesAndPrintToOutput()
+doWordCountsForSourceSentencesAndPrintToOutput(sourceSentencesFile)
 outputFile.write('---------------------------\n')
-doWordCountsForTargetSentencesAndPrintToOutput()
+doWordCountsForTargetSentencesAndPrintToOutput(targetSentencesFile)
 
-# get source and target sentences lengths so won't have to keep calling the functions later
-sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
-targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
+# do the sentence alignment experiment with the sents_source and sents_target info as input
+doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
 
-# calculate sentence alignment
-calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment()
 
-# print the sentenceAlignmentTable to console
-targetRowHeaderList = []
-targetRowHeaderList.append('0')
-for i in range(len(targetSentences)):
-    targetRowHeaderList.append('t%s' % (i + 1))
 
-print('Sentence Alignment Table')
-print('\t%s' % '\t'.join(targetRowHeaderList))
 
-for i in range(len(calculatedSentenceAlignmentTable)):
-    if i == 0:
-        sentenceTag = '0'
-    else:
-        sentenceTag = 's%s' % i
-    currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
-    formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
-    print(formattedCurrentRow)
 
-# get sentence alignment strings
-print('\n')
-getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable)
+
