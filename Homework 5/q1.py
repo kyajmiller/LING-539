@@ -4,6 +4,7 @@ LING 539 Assignment 5
 Q1 - Reads in sents_source.txt and sents_target.txt as input files, prints the number of words in each sentence to
 output.txt. Calculates sentence alignment between sents_source and sents_target, and prints the output to console.
 """
+import numpy
 
 
 def getSentenceWordCount(sentence):
@@ -28,7 +29,7 @@ def doWordCountsForTargetSentencesAndPrintToOutput():
 def getMinimumAlignment(i, j, sentenceAlignmentTable):
     alignmentPossibilities = ['0:1', '1:0', '1:1', '1:2', '2:1', '2:2']
 
-    alignment01, alignment10, alignment11, alignment12, alignment21, alignment22 = 0, 0, 0, 0, 0, 0
+    alignment01, alignment10, alignment11, alignment12, alignment21, alignment22 = '', '', '', '', '', ''
 
     validAlignments = []
 
@@ -86,6 +87,13 @@ def doSentenceAlignment():
                 sentenceAlignmentTable[j][i] = minimumAlignmentCost
                 sentenceAlignmentStringsTable[j][i] = minimumAlignmentStrings
 
+    for row in sentenceAlignmentTable: print(row)
+
+    flippedAlignmentTable = numpy.transpose(sentenceAlignmentTable)
+    flippedAlignmentStringsTable = numpy.transpose(sentenceAlignmentStringsTable)
+    print(flippedAlignmentTable)
+    print(flippedAlignmentStringsTable)
+
     return sentenceAlignmentTable, sentenceAlignmentStringsTable
 
 # read in sents_source.txt, store sentences in array
@@ -111,10 +119,10 @@ doWordCountsForTargetSentencesAndPrintToOutput()
 # get source and target sentences lengths so won't have to keep calling the functions later
 sourceSentencesLengths = [getSentenceWordCount(sentence) for sentence in sourceSentences]
 targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetSentences]
-# print(sourceSentencesLengths)
-# print(targetSentencesLengths)
+print(sourceSentencesLengths)
+print(targetSentencesLengths)
 
 # calculate sentence alignment
 calculatedSentenceAlignmentTable, stringsTable = doSentenceAlignment()
-for row in calculatedSentenceAlignmentTable: print(row)
-for row in stringsTable: print(row)
+# for row in calculatedSentenceAlignmentTable: print(row)
+# for row in stringsTable: print(row)
