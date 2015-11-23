@@ -11,11 +11,25 @@ def getSentenceWordCount(sentence):
     return len(words)
 
 
-def doWordCountsForSourceSentencesAndPrintToOutputFile(sourceSentences):
+def doWordCountsExerciseAndPrintToOutputFile(sourceSentences, targetSentences):
+    # open output file
+    outputFile = open('output.txt', 'w')
+
+    headerString = 'Sentence\tNumber Of Words\n'
+    outputFile.write(headerString)
+
+    # get num words for each source sentence and target sentence, print to output file
     for i in range(len(sourceSentences)):
         numWords = getSentenceWordCount(sourceSentences[i])
         outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
         outputFile.write(outputString)
+    outputFile.write('---------------------------\n')
+    for i in range(len(targetSentences)):
+        numWords = getSentenceWordCount(targetSentences[i])
+        outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
+        outputFile.write(outputString)
+
+    outputFile.close()
 
 
 def doWordCountsForSourceSentencesAndPrintToConsole(sourceSentences):
@@ -23,13 +37,6 @@ def doWordCountsForSourceSentencesAndPrintToConsole(sourceSentences):
         numWords = getSentenceWordCount(sourceSentences[i])
         outputString = 's%s\t\t\t%s\n' % (i + 1, numWords)
         print(outputString)
-
-
-def doWordCountsForTargetSentencesAndPrintToOutputFile(targetSentences):
-    for i in range(len(targetSentences)):
-        numWords = getSentenceWordCount(targetSentences[i])
-        outputString = 't%s\t\t\t%s\n' % (i + 1, numWords)
-        outputFile.write(outputString)
 
 
 def doWordCountsForTargetSentencesAndPrintToConsole(targetSentences):
@@ -238,8 +245,6 @@ def doSentenceAlignmentExperiment(sourceSentences, targetSentences):
     print('\n')
     getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable, sourceSentences, targetSentences)
 
-
-
 # read in sents_source.txt, store sentences in array
 sourceSentencesFileIn = open('sents_source.txt', 'r')
 sourceSentencesFile = [line.strip() for line in sourceSentencesFileIn.readlines()]
@@ -250,15 +255,10 @@ targetSentencesFileIn = open('sents_target.txt', 'r')
 targetSentencesFile = [line.strip() for line in targetSentencesFileIn.readlines()]
 targetSentencesFileIn.close()
 
-# open output file
-outputFile = open('output.txt', 'w')
-headerString = 'Sentence\tNumber Of Words\n'
-outputFile.write(headerString)
+# do word counts exercise for sents_source.txt and sents_target.txt
+doWordCountsExerciseAndPrintToOutputFile(sourceSentencesFile, targetSentencesFile)
 
-# get num words for each source sentence and target sentence, print to output file
-doWordCountsForSourceSentencesAndPrintToOutputFile(sourceSentencesFile)
-outputFile.write('---------------------------\n')
-doWordCountsForTargetSentencesAndPrintToOutputFile(targetSentencesFile)
+
 
 # do the sentence alignment experiment with the sents_source and sents_target info as input
 doSentenceAlignmentExperiment(sourceSentencesFile, targetSentencesFile)
