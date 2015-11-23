@@ -226,5 +226,24 @@ targetSentencesLengths = [getSentenceWordCount(sentence) for sentence in targetS
 # calculate sentence alignment
 calculatedSentenceAlignmentTable, stringsTable = calculateSentenceAlignment()
 
+# print the sentenceAlignmentTable to console
+targetRowHeaderList = []
+targetRowHeaderList.append('0')
+for i in range(len(targetSentences)):
+    targetRowHeaderList.append('t%s' % (i + 1))
+
+print('Sentence Alignment Table')
+print('\t%s' % '\t'.join(targetRowHeaderList))
+
+for i in range(len(calculatedSentenceAlignmentTable)):
+    if i == 0:
+        sentenceTag = '0'
+    else:
+        sentenceTag = 's%s' % i
+    currentRowString = '\t'.join([str(item) for item in calculatedSentenceAlignmentTable[i]])
+    formattedCurrentRow = '%s\t%s' % (sentenceTag, currentRowString)
+    print(formattedCurrentRow)
+
 # get sentence alignment strings
+print('\n')
 getAlignedSentences(calculatedSentenceAlignmentTable, stringsTable)
