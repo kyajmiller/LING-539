@@ -75,7 +75,7 @@ def doesHTMLExist(emailText):
         return False
 
 
-def hasTooLongSequences(emailText):
+def areThereReallyLongSequences(emailText):
     # checks for emails that have super long sequences of jumbled text. Simply checks for the existence of 'words' with
     # a length longer than 50 characters
     words = ' '.split(emailText)
@@ -86,10 +86,13 @@ def hasTooLongSequences(emailText):
     return tooLong
 
 
+def
+
+
 def createFeatureSet(emailText):
     features = {}
     features['has_HTML'] = doesHTMLExist(emailText)
-    features['has_tooLongSequences'] = hasTooLongSequences(emailText)
+    features['has_tooLongSequences'] = areThereReallyLongSequences(emailText)
     return features
 
 
