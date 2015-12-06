@@ -35,5 +35,5 @@ def getTrainingData():
         while not done:
             for j in range(len(trainingEmailLines)):
                 if trainingEmailLines[j].startswith('Lines:'):
-                    emailTextLines = trainingEmailLines[j:]
+                    emailTextLines = trainingEmailLines[j + 1:]
                     done = True
