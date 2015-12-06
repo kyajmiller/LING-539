@@ -3,6 +3,8 @@ Kya Miller
 LING 539 Assignment 6 - Final Project
 Q1 -
 """
+import nltk
+import re
 
 
 def getGoldLabels():
@@ -24,14 +26,14 @@ def getGoldLabels():
 
 
 def getEmailText(emailLines):
-    emailTextLines = ''
+    emailText = ''
     done = False
     while not done:
         for i in range(len(emailLines)):
             if emailLines[i].startswith('Lines:'):
-                emailTextLines = emailLines[i + 1:]
+                emailText = ''.join(emailLines[i + 1:])
                 done = True
-    return emailTextLines
+    return emailText
 
 
 def getTrainingData(trainingLabels):
@@ -64,6 +66,15 @@ def getTestingData(testingLabels):
         testingEmailFileIn.close()
         testingData.append([getEmailText(testingEmailLines), testingLabels[i]])
     return testingData
+
+
+def doesHTMLExist(emailText):
+    return re.search('<HTML>', emailText)
+
+
+def createFeatureSet(emailText):
+    features = {}
+    features['has_HTML'] = doesHTMLExist(emailText)
 
 
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
