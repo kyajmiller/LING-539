@@ -31,7 +31,7 @@ def getEmailText(emailLines):
     while not done:
         for i in range(len(emailLines)):
             if emailLines[i].startswith('Lines:'):
-                emailText = ''.join(emailLines[i + 1:])
+                emailText = ' '.join(emailLines[i + 1:])
                 done = True
     return emailText
 
