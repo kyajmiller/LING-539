@@ -15,7 +15,7 @@ def getGoldLabels():
     goldDataLabels = []
     for line in goldDataLines[:3000]:
         splitLine = line.split(' ', 1)
-        label = splitLine[0]
+        label = splitLine[0].lower()
         goldDataLabels.append(label)
 
     trainingGoldLabels = goldDataLabels[:1000]
@@ -69,15 +69,22 @@ def getTestingData(testingLabels):
 
 
 def doesHTMLExist(emailText):
-    return re.search('<HTML>', emailText)
+    if re.search('<HTML>', emailText):
+        return True
+    else:
+        return False
 
 
 def createFeatureSet(emailText):
     features = {}
     features['has_HTML'] = doesHTMLExist(emailText)
+    return features
 
 
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
+trainingData = [[createFeatureSet(emailText), label] for [emailText, label] in trainingData]
+for features, label in trainingData:
+    print features, label
 developmentData = getDevelopmentData(developmentLabels)
 testingData = getTestingData(testingLabels)
