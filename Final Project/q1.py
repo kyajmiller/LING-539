@@ -27,5 +27,5 @@ def getTrainingData():
     trainingData = []
     for i in range(1000):
         trainingEmailFileIn = open('trainingData/inmail.%s' % (i + 1), 'r')
-        trainingEmailData = trainingEmailFileIn.read()
+        trainingEmailLines = trainingEmailFileIn.readlines()
         trainingEmailFileIn.close()
