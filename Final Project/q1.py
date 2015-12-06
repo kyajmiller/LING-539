@@ -29,3 +29,11 @@ def getTrainingData():
         trainingEmailFileIn = open('trainingData/inmail.%s' % (i + 1), 'r')
         trainingEmailLines = trainingEmailFileIn.readlines()
         trainingEmailFileIn.close()
+
+        emailTextLines = ''
+        done = False
+        while not done:
+            for j in range(len(trainingEmailLines)):
+                if trainingEmailLines[j].startswith('Lines:'):
+                    emailTextLines = trainingEmailLines[j:]
+                    done = True
