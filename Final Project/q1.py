@@ -40,11 +40,7 @@ def getTrainingData():
         trainingEmailFileIn = open('trainingData/inmail.%s' % (i + 1), 'r')
         trainingEmailLines = trainingEmailFileIn.readlines()
         trainingEmailFileIn.close()
-
-        emailText = getEmailText(trainingEmailLines)
-
-        trainingData.append(emailText)
-
+        trainingData.append(getEmailText(trainingEmailLines))
     return trainingData
 
 
@@ -55,3 +51,5 @@ def getDevelopmentData():
         developmentEmailFileIn = open('developmentData/inmail.%s' % (startNumber + i + 1), 'r')
         developmentEmailLines = developmentEmailFileIn.readlines()
         developmentEmailFileIn.close()
+        developmentData.append(getEmailText(developmentEmailLines))
+    return developmentData
