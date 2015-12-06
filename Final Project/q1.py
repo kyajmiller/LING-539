@@ -34,33 +34,39 @@ def getEmailText(emailLines):
     return emailTextLines
 
 
-def getTrainingData():
+def getTrainingData(trainingLabels):
     trainingData = []
     for i in range(1000):
         trainingEmailFileIn = open('trainingData/inmail.%s' % (i + 1), 'r')
         trainingEmailLines = trainingEmailFileIn.readlines()
         trainingEmailFileIn.close()
-        trainingData.append(getEmailText(trainingEmailLines))
+        trainingData.append([getEmailText(trainingEmailLines), trainingLabels[i]])
     return trainingData
 
 
-def getDevelopmentData():
+def getDevelopmentData(developmentLabels):
     developmentData = []
     startNumber = 1000
     for i in range(1000):
         developmentEmailFileIn = open('developmentData/inmail.%s' % (startNumber + i + 1), 'r')
         developmentEmailLines = developmentEmailFileIn.readlines()
         developmentEmailFileIn.close()
-        developmentData.append(getEmailText(developmentEmailLines))
+        developmentData.append([getEmailText(developmentEmailLines), developmentLabels[i]])
     return developmentData
 
 
-def getTestingData():
+def getTestingData(testingLabels):
     testingData = []
     startNumber = 2000
     for i in range(1000):
         testingEmailFileIn = open('testingData/inmail.%s' % (startNumber + i + 1), 'r')
         testingEmailLines = testingEmailFileIn.readlines()
         testingEmailFileIn.close()
-        testingData.append(getEmailText(testingEmailLines))
+        testingData.append([getEmailText(testingEmailLines), testingLabels[i]])
     return testingData
+
+
+trainingLabels, developmentLabels, testingLabels = getGoldLabels()
+trainingData = getTrainingData(trainingLabels)
+developmentData = getDevelopmentData(developmentLabels)
+testingData = getTestingData(testingLabels)
