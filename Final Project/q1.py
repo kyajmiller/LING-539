@@ -89,8 +89,26 @@ def areThereReallyLongSequences(emailText):
 
 def checkForErectileDysfunction(emailText):
     # check for words involving erectile dysfunction
-    definitelyEDWords = ['viagra', 'cialis', 'levitra']
-    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', ]
+    erectileDysfunctionMessage = False
+    definitelyEDWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a']
+    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big']
+    definiteCounter = 0
+    maybeCounter = 0
+    for word in definitelyEDWords:
+        if re.findall(word, emailText.lower()):
+            definiteCounter += len(re.findall(word, emailText.lower()))
+    for word in wordsRelatingToED:
+        if re.findall(word, emailText.lower()):
+            maybeCounter += len(re.findall(word, emailText.lower()))
+
+    if definiteCounter >= 2:
+        erectileDysfunctionMessage = True
+    if maybeCounter >= 3:
+        erectileDysfunctionMessage = True
+
+    return erectileDysfunctionMessage
+
+
 
 def createFeatureSet(emailText):
     features = {}
