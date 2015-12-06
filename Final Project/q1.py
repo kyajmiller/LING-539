@@ -112,8 +112,9 @@ def checkForErectileDysfunction(emailText):
 
 def createFeatureSet(emailText):
     features = {}
-    features['has_HTML'] = doesHTMLExist(emailText)
-    features['has_tooLongSequences'] = areThereReallyLongSequences(emailText)
+    features['HTML'] = doesHTMLExist(emailText)
+    features['tooLongSequences'] = areThereReallyLongSequences(emailText)
+    features['isAboutED'] = checkForErectileDysfunction(emailText)
     return features
 
 
