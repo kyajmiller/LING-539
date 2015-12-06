@@ -13,3 +13,7 @@ for line in goldDataLines[:3000]:
     splitLine = line.split(' ', 1)
     label = splitLine[0]
     goldDataLabels.append(label)
+
+trainingGoldLabels = goldDataLabels[:1000]
+developmentGoldLabels = goldDataLabels[1000:2000]
+testingGoldLabels = goldDataLabels[2000:3000]
