@@ -53,3 +53,14 @@ def getDevelopmentData():
         developmentEmailFileIn.close()
         developmentData.append(getEmailText(developmentEmailLines))
     return developmentData
+
+
+def getTestingData():
+    testingData = []
+    startNumber = 2000
+    for i in range(1000):
+        testingEmailFileIn = open('testingData/inmail.%s' % (startNumber + i + 1), 'r')
+        testingEmailLines = testingEmailFileIn.readlines()
+        testingEmailFileIn.close()
+        testingData.append(getEmailText(testingEmailLines))
+    return testingData
