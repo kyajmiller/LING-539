@@ -37,3 +37,7 @@ def getTrainingData():
                 if trainingEmailLines[j].startswith('Lines:'):
                     emailTextLines = trainingEmailLines[j + 1:]
                     done = True
+
+        trainingData.append(emailTextLines)
+
+    return trainingData
