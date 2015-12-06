@@ -23,6 +23,17 @@ def getGoldLabels():
     return trainingGoldLabels, developmentGoldLabels, testingGoldLabels
 
 
+def getEmailText(emailLines):
+    emailTextLines = ''
+    done = False
+    while not done:
+        for i in range(len(emailLines)):
+            if emailLines[i].startswith('Lines:'):
+                emailTextLines = emailLines[i + 1:]
+                done = True
+    return emailTextLines
+
+
 def getTrainingData():
     trainingData = []
     for i in range(1000):
@@ -30,14 +41,17 @@ def getTrainingData():
         trainingEmailLines = trainingEmailFileIn.readlines()
         trainingEmailFileIn.close()
 
-        emailTextLines = ''
-        done = False
-        while not done:
-            for j in range(len(trainingEmailLines)):
-                if trainingEmailLines[j].startswith('Lines:'):
-                    emailTextLines = trainingEmailLines[j + 1:]
-                    done = True
+        emailText = getEmailText(trainingEmailLines)
 
-        trainingData.append(emailTextLines)
+        trainingData.append(emailText)
 
     return trainingData
+
+
+def getDevelopmentData():
+    developmentData = []
+    startNumber = 1000
+    for i in range(1000):
+        developmentEmailFileIn = open('developmentData/inmail.%s' % (startNumber + i + 1), 'r')
+        developmentEmailLines = developmentEmailFileIn.readlines()
+        developmentEmailFileIn.close()
