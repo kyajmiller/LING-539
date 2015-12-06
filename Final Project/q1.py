@@ -91,7 +91,7 @@ def checkForErectileDysfunction(emailText):
     # check for words involving erectile dysfunction
     erectileDysfunctionMessage = False
     definitelyEDWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a']
-    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big']
+    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big', 'libido']
     definiteCounter = 0
     maybeCounter = 0
     for word in definitelyEDWords:
@@ -107,6 +107,21 @@ def checkForErectileDysfunction(emailText):
         erectileDysfunctionMessage = True
 
     return erectileDysfunctionMessage
+
+
+def checkForHealth(emailText):
+    # check for words involving weight loss
+    weightLossOrHealthMessage = False
+    weightLossOrHealthWords = ['fat', 'fit', 'weight', 'food', 'loss', 'growing', 'pound', 'kilo', 'health', 'eat',
+                               'ate', 'overweight', 'slender', 'energy', 'lose', 'pill', 'anti-aging', 'youth']
+    healthCounter = 0
+    for word in weightLossOrHealthWords:
+        if re.findall(word, emailText.lower()):
+            healthCounter += len(re.findall(word, emailText.lower()))
+
+    if healthCounter >= 3:
+        weightLossOrHealthMessage = True
+    return weightLossOrHealthMessage
 
 
 
