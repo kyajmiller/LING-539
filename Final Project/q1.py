@@ -21,3 +21,11 @@ def getGoldLabels():
     testingGoldLabels = goldDataLabels[2000:3000]
 
     return trainingGoldLabels, developmentGoldLabels, testingGoldLabels
+
+
+def getTrainingData():
+    trainingData = []
+    for i in range(1000):
+        trainingEmailFileIn = open('trainingData/inmail.%s' % (i + 1), 'r')
+        trainingEmailData = trainingEmailFileIn.read()
+        trainingEmailFileIn.close()
