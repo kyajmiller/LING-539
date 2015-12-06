@@ -82,12 +82,15 @@ def areThereReallyLongSequences(emailText):
     tooLong = False
     for word in words:
         if len(word) > 50:
-            tooLong = True
+            if 'http' not in word:
+                tooLong = True
     return tooLong
 
 
-def
-
+def checkForErectileDysfunction(emailText):
+    # check for words involving erectile dysfunction
+    definitelyEDWords = ['viagra', 'cialis', 'levitra']
+    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', ]
 
 def createFeatureSet(emailText):
     features = {}
