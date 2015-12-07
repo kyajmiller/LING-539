@@ -10,7 +10,22 @@ import loadTrec
 
 
 def getData():
-    pass
+    filenameMessagePrefix = 'data\inmail.'
+    emailTexts, vectors = loadTrec.loadMessages(filenameMessagePrefix, 3000)
+
+    trainingEmails = emailTexts[:1000]
+    trainingVectors = vectors[:1000]
+    trainingData = [trainingEmails, trainingVectors]
+
+    developmentEmails = emailTexts[1000:2000]
+    developmentVectors = vectors[1000:2000]
+    developmentData = [developmentEmails, developmentVectors]
+
+    testingEmails = emailTexts[2000:]
+    testingVectors = vectors[2000:]
+    testingData = [testingEmails, testingVectors]
+
+    return trainingData, developmentData, testingData
 
 
 def getGoldLabels():
@@ -41,7 +56,7 @@ def getGoldLabels():
     return trainingGoldLabels, developmentGoldLabels, testingGoldLabels
 '''
 
-
+'''
 def getEmailText(emailLines):
     emailText = ''
     done = False
@@ -83,7 +98,7 @@ def getTestingData(testingLabels):
         testingEmailFileIn.close()
         testingData.append([getEmailText(testingEmailLines), testingLabels[i]])
     return testingData
-
+'''
 
 def doesHTMLExist(emailText):
     if re.search('<html>', emailText.lower()):
@@ -175,6 +190,7 @@ def testNBClassifier(evaluationData):
 
 # trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
+trainingData, developmentData, testingData = getData()
 '''
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
