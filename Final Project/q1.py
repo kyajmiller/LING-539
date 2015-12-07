@@ -105,7 +105,7 @@ def areThereReallyLongSequences(emailText):
     tooLong = False
     for word in words:
         if len(word) > 50:
-            if 'http' not in word:
+            if 'http' not in word and '.com' not in word and '.org' not in word:
                 tooLong = True
     return tooLong
 
