@@ -5,6 +5,7 @@ Q1 -
 """
 import nltk
 import re
+import pickle
 
 
 def getGoldLabels():
@@ -153,10 +154,18 @@ def createFeatureSet(emailText):
     return features
 
 
+def trainNaiveBayesClassifier(trainingData):
+    nbClassifier = nltk.NaiveBayesClassifier.train(trainingData)
+    classifierSaveFile = open('trainedNBClassifier', 'wb')
+    pickle.dump(nbClassifier, classifierSaveFile)
+
+
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
-trainingData = [[createFeatureSet(emailText), label] for [emailText, label] in trainingData]
+trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
 developmentData = getDevelopmentData(developmentLabels)
-developmentData = [[createFeatureSet(emailText), label] for [emailText, label] in developmentData]
+developmentData = [(createFeatureSet(emailText), label) for [emailText, label] in developmentData]
 testingData = getTestingData(testingLabels)
-testingData = [[createFeatureSet(emailText), label] for [emailText, label] in testingData]
+testingData = [(createFeatureSet(emailText), label) for [emailText, label] in testingData]
+
+trainNaiveBayesClassifier(trainingData)
