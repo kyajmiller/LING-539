@@ -73,7 +73,7 @@ def loadMessage(filename):
         # Check to see if the header has ended
         if (isHeader == 1) and (len(line) < 2):
             isHeader = 0
-
+    '''
     # Make it easier to segment or filter HTML tags
     stringIn = stringIn.replace("<", " <")
     stringIn = stringIn.replace(">", "> ")
@@ -86,6 +86,7 @@ def loadMessage(filename):
 
     # Optional Add more preprocessing / filtering...
     # ...
+    '''
 
     # print ("stringIn: " + stringIn)
     fp.close()
