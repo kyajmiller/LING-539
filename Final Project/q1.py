@@ -111,6 +111,27 @@ def collectTrainingSpam(trainingEmails, trainingVectors, trainingLabels):
     return spamEmails, spamVectors
 
 
+def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels):
+    spamEmails = []
+    spamVectors = []
+
+    hamEmails = []
+    hamVectors = []
+
+    for i in range(len(trainingEmails)):
+        if trainingLabels[i] == loadTrec.SPAM_MESSAGE:
+            spamEmails.append(trainingEmails[i])
+            spamVectors.append(trainingVectors[i])
+        else:
+            hamEmails.append(trainingEmails[i])
+            hamVectors.append(trainingVectors[i])
+
+    spam = [spamEmails, spamVectors]
+    ham = [hamEmails, hamVectors]
+
+    return spam, ham
+
+
 def cosineSimilarityToSpamMessages(emailVector):
     trainingEmails = trainingData[0]
     trainingVectors = trainingData[1]
