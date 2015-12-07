@@ -90,34 +90,18 @@ def areThereReallyLongSequences(emailText):
 
 def checkForErectileDysfunction(emailText):
     # check for words involving erectile dysfunction
-    erectileDysfunctionMessage = False
-    definitelyEDWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a']
-    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big', 'libido', 'orgasm',
-                         'fix', 'drug']
-    definiteCounter = 0
-    maybeCounter = 0
+    edWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a', 'manhood', 'small', 'area',
+               'perform', 'inches', 'pill', 'length', 'big', 'libido', 'orgasm', 'fix', 'drug']
     edCounter = 0
-    for word in definitelyEDWords:
+    for word in edWords:
         if re.findall(word, emailText.lower()):
-            definiteCounter += len(re.findall(word, emailText.lower()))
-            edCounter += len(re.findall(word, emailText.lower()))
-    for word in wordsRelatingToED:
-        if re.findall(word, emailText.lower()):
-            maybeCounter += len(re.findall(word, emailText.lower()))
             edCounter += len(re.findall(word, emailText.lower()))
 
-    if definiteCounter >= 2:
-        erectileDysfunctionMessage = True
-    if maybeCounter >= 3:
-        erectileDysfunctionMessage = True
-
-    return erectileDysfunctionMessage
-    # return edCounter
+    return edCounter
 
 
 def checkForHealth(emailText):
     # check for words involving weight loss
-    weightLossOrHealthMessage = False
     weightLossOrHealthWords = ['fat', 'fit', 'weight', 'food', 'loss', 'growing', 'pound', 'kilo', 'health', 'eat',
                                'ate', 'overweight', 'slender', 'energy', 'lose', 'pill', 'anti-aging', 'youth',
                                'prescription', 'drug', 'quality', 'stimulate', 'hormone', 'appetite', 'natural',
@@ -127,15 +111,11 @@ def checkForHealth(emailText):
         if re.findall(word, emailText.lower()):
             healthCounter += len(re.findall(word, emailText.lower()))
 
-    if healthCounter >= 3:
-        weightLossOrHealthMessage = True
-    return weightLossOrHealthMessage
-    #return healthCounter
+    return healthCounter
 
 
 def checkForMoney(emailText):
     # check for words involving money or ordering things or money scams
-    moneyMessage = False
     moneyWords = ['money', 'order', 'buy', 'dollar', 'today', 'transaction', 'commission', 'earn', 'cash', 'payment',
                   'bank', 'receipt', 'work', 'work from home', 'capital', 'pay', 'ship', 'cheap', 'discount', 'price',
                   'delivery', 'refinance', 'property', 'finance']
@@ -144,10 +124,7 @@ def checkForMoney(emailText):
         if re.findall(word, emailText.lower()):
             moneyCounter += len(re.findall(word, emailText.lower()))
 
-    if moneyCounter >= 2:
-        moneyMessage = True
-    return moneyMessage
-    #return moneyCounter
+    return moneyCounter
 
 
 def createFeatureSet(emailText):
