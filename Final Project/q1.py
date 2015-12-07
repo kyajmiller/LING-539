@@ -164,6 +164,7 @@ def trainNaiveBayesClassifier(trainingData):
 def loadSavedClassifier():
     classifierSaveFile = open('trainedNBClassifier', 'rb')
     nbClassifier = pickle.load(classifierSaveFile)
+    classifierSaveFile.close()
     return nbClassifier
 
 
