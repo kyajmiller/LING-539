@@ -152,8 +152,10 @@ def checkForMoney(emailText):
 def createFeatureSet(emailText, vector):
     # make the feature set by calling the things
     features = {'tooLongSequences': areThereReallyLongSequences(emailText),
-                'isAboutED': checkForErectileDysfunction(emailText), 'isAboutHealth': checkForHealth(emailText),
-                'isAboutMoney': checkForMoney(emailText), 'hasHTML': doesHTMLExist(emailText),
+                'isAboutED': checkForErectileDysfunction(emailText),
+                'isAboutHealth': checkForHealth(emailText),
+                'isAboutMoney': checkForMoney(emailText),
+                'hasHTML': doesHTMLExist(emailText),
                 'cosineSimilarityToSpam': cosineSimilarityToSpamMessages(vector),
                 'cosineSimilarityToHam': cosineSimilarityToHamMessages(vector)}
     return features
