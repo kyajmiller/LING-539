@@ -158,6 +158,7 @@ def trainNaiveBayesClassifier(trainingData):
     nbClassifier = nltk.NaiveBayesClassifier.train(trainingData)
     classifierSaveFile = open('trainedNBClassifier', 'wb')
     pickle.dump(nbClassifier, classifierSaveFile)
+    classifierSaveFile.close()
 
 
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
