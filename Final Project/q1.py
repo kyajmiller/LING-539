@@ -210,8 +210,13 @@ def createFeatureSet(emailText, vector):
     return features
 
 
-def trainNaiveBayesClassifier(trainingData):
-    nbClassifier = nltk.NaiveBayesClassifier.train(trainingData)
+def trainNaiveBayesClassifier():
+    trainingFeatures = [createFeatureSet(emailText, vector) for [emailText, vector] in
+                        zip(trainingEmails, trainingVectors)]
+    trainingSet = [(features, label) for features, label in zip(trainingFeatures, trainingLabels)]
+
+    nbClassifier = nltk.NaiveBayesClassifier.train(trainingSet)
+
     classifierSaveFile = open('trainedNBClassifier', 'wb')
     pickle.dump(nbClassifier, classifierSaveFile)
     classifierSaveFile.close()
@@ -236,8 +241,8 @@ trainingData, developmentData, testingData = getData()
 trainingEmails, trainingVectors = trainingData
 trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
 
-trainingFeatures = [createFeatureSet(emailText, vector) for [emailText, vector] in zip(trainingEmails, trainingVectors)]
-trainingSet = [(features, label) for features, label in zip(trainingFeatures, trainingLabels)]
+trainNaiveBayesClassifier()
+
 
 '''
 trainingData = getTrainingData(trainingLabels)
