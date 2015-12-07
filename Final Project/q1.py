@@ -297,6 +297,9 @@ trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainin
 trainNaiveBayesClassifier()
 '''
 
+# if you want to see the most informative features, use this
+# displayMostInformativeFeatures(20)
+
 # evaluate performance on dev, print
 print '\n\n'
 print 'Performance on dev.\tTrue Spam\tTrue Normal\tTotal'
