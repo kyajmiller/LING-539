@@ -100,6 +100,29 @@ def getTestingData(testingLabels):
     return testingData
 '''
 
+
+def collectTrainingSpam(trainingEmails, trainingVectors, trainingLabels):
+    spamEmails = []
+    spamVectors = []
+    for i in range(len(trainingEmails)):
+        if trainingLabels[i] == loadTrec.SPAM_MESSAGE:
+            spamEmails.append(trainingEmails[i])
+            spamVectors.append(trainingVectors[i])
+    return spamEmails, spamVectors
+
+
+def cosineSimilarityToSpamMessages(emailVector):
+    trainingEmails = trainingData[0]
+    trainingVectors = trainingData[1]
+    spamEmails, spamVectors = collectTrainingSpam(trainingEmails, trainingVectors, trainingLabels)
+    cosineSimilarities = []
+    for i in range(len(spamVectors)):
+        cs = loadTrec.cosine(emailVector, spamVectors[i])
+        cosineSimilarities.append(cs)
+    maxCosineSimilarity = max(cosineSimilarities)
+    return maxCosineSimilarity
+
+
 def doesHTMLExist(emailText):
     if re.search('<html>', emailText.lower()):
         return True
