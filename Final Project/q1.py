@@ -6,8 +6,23 @@ Q1 -
 import nltk
 import re
 import pickle
+import loadTrec
 
 
+def getData():
+    pass
+
+
+def getGoldLabels():
+    filenameIndex = 'index.txt'
+    goldLabels = loadTrec.loadGoldIndex(filenameIndex, 3000)
+    trainingLabels = goldLabels[:1000]
+    developmentLabels = goldLabels[1000:2000]
+    testingLabels = goldLabels[2000:]
+    return trainingLabels, developmentLabels, testingLabels
+
+
+'''
 def getGoldLabels():
     goldDataFileIn = open('goldData/index.txt', 'r')
     goldDataLines = goldDataFileIn.readlines()
@@ -24,6 +39,7 @@ def getGoldLabels():
     testingGoldLabels = goldDataLabels[2000:3000]
 
     return trainingGoldLabels, developmentGoldLabels, testingGoldLabels
+'''
 
 
 def getEmailText(emailLines):
@@ -157,8 +173,9 @@ def testNBClassifier(evaluationData):
     return classifierAccuracy
 
 
-
+# trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
+'''
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
 developmentData = getDevelopmentData(developmentLabels)
@@ -169,3 +186,4 @@ testingData = [(createFeatureSet(emailText), label) for [emailText, label] in te
 trainNaiveBayesClassifier(trainingData)
 classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
 print classifierAccuracyOnDevelopmentData
+'''
