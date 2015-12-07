@@ -101,16 +101,6 @@ def getTestingData(testingLabels):
 '''
 
 
-def collectTrainingSpam(trainingEmails, trainingVectors, trainingLabels):
-    spamEmails = []
-    spamVectors = []
-    for i in range(len(trainingEmails)):
-        if trainingLabels[i] == loadTrec.SPAM_MESSAGE:
-            spamEmails.append(trainingEmails[i])
-            spamVectors.append(trainingVectors[i])
-    return spamEmails, spamVectors
-
-
 def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels):
     spamEmails = []
     spamVectors = []
@@ -132,16 +122,22 @@ def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels)
     return spam, ham
 
 
-def cosineSimilarityToSpamMessages(emailVector):
-    trainingEmails = trainingData[0]
-    trainingVectors = trainingData[1]
-    spamEmails, spamVectors = collectTrainingSpam(trainingEmails, trainingVectors, trainingLabels)
+def calculateMaxCosineSimilarity(emailVector, spamHamVectors):
     cosineSimilarities = []
-    for i in range(len(spamVectors)):
-        cs = loadTrec.cosine(emailVector, spamVectors[i])
+    for i in range(len(spamHamVectors)):
+        cs = loadTrec.cosine(emailVector, spamHamVectors[i])
         cosineSimilarities.append(cs)
-    maxCosineSimilarity = max(cosineSimilarities)
-    return maxCosineSimilarity
+    return max(cosineSimilarities)
+
+
+def cosineSimilarityToSpamMessages(emailVector):
+    spamEmails, spamVectors = trainingSpam
+    return calculateMaxCosineSimilarity(emailVector, spamVectors)
+
+
+def cosineSimilarityToHamMessages(emailVector):
+    hamEmails, hamVectors = trainingHam
+    return calculateMaxCosineSimilarity(emailVector, hamVectors)
 
 
 def doesHTMLExist(emailText):
@@ -235,6 +231,7 @@ def testNBClassifier(evaluationData):
 # trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData, developmentData, testingData = getData()
+trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
 '''
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
