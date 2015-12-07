@@ -267,9 +267,9 @@ def testNBClassifier(evaluationData, evaluationLabels):
     trueHamPercentage = hamAsHam / totalPredictedHam * 100
 
     # print to console
-    print 'Classified as Spam\t%s (%.2f)\t%s (%.2f)\t%s' % (
+    print 'Classified as Spam\t\t%s (%.2f)\t\t%s (%.2f)\t\t%s' % (
     spamAsSpam, trueSpamPercentage, hamAsSpam, falseSpamPercentage, totalPredictedSpam)
-    print 'Classified as Ham\t%s (%.2f)\t%s (%.2f)\t%s' % (
+    print 'Classified as Ham\t\t%s (%.2f)\t\t%s (%.2f)\t\t%s' % (
     spamAsSpam, falseHamPercentage, hamAsHam, trueHamPercentage, totalPredictedHam)
     print 'Total accuracy: %.2f' % classifierAccuracy
 
@@ -302,10 +302,10 @@ trainNaiveBayesClassifier()
 
 # evaluate performance on dev, print
 print '\n\n'
-print 'Performance on dev.\tTrue Spam\tTrue Normal\tTotal'
+print 'Performance on dev.\t\tTrue Spam\t\tTrue Normal\t\tTotal'
 testNBClassifier(developmentData, developmentLabels)
 
 # evaluate performance on test, print
 print '\n\n'
-print 'Performance on test\tTrue Spam\tTrue Normal\tTotal'
+print 'Performance on test\t\tTrue Spam\t\tTrue Normal\t\tTotal'
 testNBClassifier(testingData, testingLabels)
