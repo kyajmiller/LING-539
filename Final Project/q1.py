@@ -3,6 +3,7 @@ Kya Miller
 LING 539 Assignment 6 - Final Project
 Q1 -
 """
+from __future__ import division
 import nltk
 import re
 import pickle
@@ -229,6 +230,14 @@ def loadSavedClassifier():
     return nbClassifier
 
 
+def displayMostInformativeFeatures(howmany=None):
+    nbClassifier = loadSavedClassifier()
+    if howmany:
+        nbClassifier.show_most_informative_features(howmany)
+    else:
+        nbClassifier.show_most_informative_features()
+
+
 def testNBClassifier(evaluationData, evaluationLabels):
     emails, vectors = evaluationData
     evaluationFeaturesLists = [createFeatureSet(emailText, vector) for [emailText, vector] in zip(emails, vectors)]
@@ -236,7 +245,52 @@ def testNBClassifier(evaluationData, evaluationLabels):
 
     nbClassifier = loadSavedClassifier()
     classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationSet)
-    return classifierAccuracy
+    predictedLabels = [nbClassifier.classify(featureSet) for featureSet in evaluationFeaturesLists]
+
+    totalGoldSpam = 0
+    totalGoldHam = 0
+    totalPredictedSpam = 0
+    totalPredictedHam = 0
+    spamAsSpam = 0
+    spamAsHam = 0
+    hamAsHam = 0
+    hamAsSpam = 0
+
+    for predicted, gold in zip(predictedLabels, evaluationLabels):
+        # check if things that should have been labeled spam...
+        if gold == loadTrec.SPAM_MESSAGE:
+            totalGoldSpam += 1
+            # are correctly labeled spam
+            if predicted == loadTrec.SPAM_MESSAGE == gold:
+                spamAsSpam += 1
+                totalPredictedSpam += 1
+            # or incorrectly labeled ham
+            elif predicted == loadTrec.NORMAL_MESSAGE:
+                spamAsHam += 1
+                totalPredictedHam += 1
+        # check if things that should have been labeled ham...
+        elif gold == loadTrec.NORMAL_MESSAGE:
+            totalGoldHam += 1
+            # are correctly labeled ham
+            if predicted == loadTrec.NORMAL_MESSAGE == gold:
+                hamAsHam += 1
+                totalPredictedHam += 1
+            # or incorrectly labeled spam
+            elif predicted == loadTrec.SPAM_MESSAGE:
+                hamAsSpam += 1
+                totalPredictedSpam += 1
+
+    trueSpamPercentage = spamAsSpam / totalPredictedSpam * 100
+    falseSpamPercentage = hamAsSpam / totalPredictedSpam * 100
+    falseHamPercentage = spamAsHam / totalPredictedHam * 100
+    trueHamPercentage = hamAsHam / totalPredictedHam * 100
+
+    print 'Classified as Spam\t%s (%.2f)\t%s (%.2f)\t%s' % (
+    spamAsSpam, trueSpamPercentage, hamAsSpam, falseSpamPercentage, totalPredictedSpam)
+    print 'Classified as Ham\t%s (%.2f)\t%s (%.2f)\t%s' % (
+    spamAsSpam, falseHamPercentage, hamAsHam, trueHamPercentage, totalPredictedHam)
+    print 'Total accuracy: %.2f' % classifierAccuracy
+
 
 
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
@@ -244,6 +298,11 @@ trainingData, developmentData, testingData = getData()
 trainingEmails, trainingVectors = trainingData
 trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
 
-trainNaiveBayesClassifier()
-classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData, developmentLabels)
-print(classifierAccuracyOnDevelopmentData)
+# trainNaiveBayesClassifier()
+
+print('\n')
+print('Performance on dev.\tTrue Spam\tTrue Normal\tTotal')
+testNBClassifier(developmentData, developmentLabels)
+
+print('Performance on test\tTrue Spam\tTrue Normal\tTotal')
+testNBClassifier(testingData, testingLabels)
