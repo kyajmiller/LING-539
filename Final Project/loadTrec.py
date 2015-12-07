@@ -199,14 +199,14 @@ messageGold = loadGoldIndex(filenameIndex, MAX_MESSAGES)
 print ("\n\n")
 
 for i in range(0, 10):
-    print ("Message " + str(i))
+    print ("Message " + str(i + 1))
     print ("Class: " + str(messageGold[i]))
     print ("Text: " + messageText[i])
     print ("Vector: " + str(messageVecs[i]))
 
     print ("Cosine Similarities with other messages: ")
     for j in range(0, 10):
-        print(str(j) + ": %.4f  " % cosine(messageVecs[i], messageVecs[j])),
+        print(str(j + 1) + ": %.4f  " % cosine(messageVecs[i], messageVecs[j])),
 
     print ("")
     print ("")
