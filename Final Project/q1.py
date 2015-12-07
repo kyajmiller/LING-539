@@ -300,9 +300,10 @@ trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainin
 
 # trainNaiveBayesClassifier()
 
-print('\n')
-print('Performance on dev.\tTrue Spam\tTrue Normal\tTotal')
+print '\n\n'
+print 'Performance on dev.\tTrue Spam\tTrue Normal\tTotal'
 testNBClassifier(developmentData, developmentLabels)
 
-print('Performance on test\tTrue Spam\tTrue Normal\tTotal')
+print '\n\n'
+print 'Performance on test\tTrue Spam\tTrue Normal\tTotal'
 testNBClassifier(testingData, testingLabels)
