@@ -235,7 +235,6 @@ def testNBClassifier(evaluationData):
     return classifierAccuracy
 
 
-# trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData, developmentData, testingData = getData()
 trainingEmails, trainingVectors = trainingData
