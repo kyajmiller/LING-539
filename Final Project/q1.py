@@ -161,6 +161,17 @@ def trainNaiveBayesClassifier(trainingData):
     classifierSaveFile.close()
 
 
+def loadSavedClassifier():
+    classifierSaveFile = open('trainedNBClassifier', 'rb')
+    nbClassifier = pickle.load(classifierSaveFile)
+    return nbClassifier
+
+
+def testNBClassifier(evaluationData):
+    nbClassifier = loadSavedClassifier()
+    classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationData)
+    return classifierAccuracy
+
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
@@ -169,4 +180,6 @@ developmentData = [(createFeatureSet(emailText), label) for [emailText, label] i
 testingData = getTestingData(testingLabels)
 testingData = [(createFeatureSet(emailText), label) for [emailText, label] in testingData]
 
-trainNaiveBayesClassifier(trainingData)
+# trainNaiveBayesClassifier(trainingData)
+classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
+print classifierAccuracyOnDevelopmentData
