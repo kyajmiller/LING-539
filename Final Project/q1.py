@@ -70,7 +70,7 @@ def getTestingData(testingLabels):
 
 
 def doesHTMLExist(emailText):
-    if re.search('<HTML>', emailText):
+    if re.search('<html>', emailText.lower()):
         return True
     else:
         return False
@@ -111,8 +111,8 @@ def checkForErectileDysfunction(emailText):
     if maybeCounter >= 3:
         erectileDysfunctionMessage = True
 
-    # return erectileDysfunctionMessage
-    return edCounter
+    return erectileDysfunctionMessage
+    # return edCounter
 
 
 def checkForHealth(emailText):
@@ -129,8 +129,8 @@ def checkForHealth(emailText):
 
     if healthCounter >= 3:
         weightLossOrHealthMessage = True
-    # return weightLossOrHealthMessage
-    return healthCounter
+    return weightLossOrHealthMessage
+    #return healthCounter
 
 
 def checkForMoney(emailText):
@@ -146,8 +146,8 @@ def checkForMoney(emailText):
 
     if moneyCounter >= 2:
         moneyMessage = True
-    # return moneyMessage
-    return moneyCounter
+    return moneyMessage
+    #return moneyCounter
 
 
 def createFeatureSet(emailText):
@@ -162,13 +162,13 @@ def createFeatureSet(emailText):
 
 def trainNaiveBayesClassifier(trainingData):
     nbClassifier = nltk.NaiveBayesClassifier.train(trainingData)
-    classifierSaveFile = open('trainedNBClassifier2', 'wb')
+    classifierSaveFile = open('trainedNBClassifier', 'wb')
     pickle.dump(nbClassifier, classifierSaveFile)
     classifierSaveFile.close()
 
 
 def loadSavedClassifier():
-    classifierSaveFile = open('trainedNBClassifier2', 'rb')
+    classifierSaveFile = open('trainedNBClassifier', 'rb')
     nbClassifier = pickle.load(classifierSaveFile)
     classifierSaveFile.close()
     return nbClassifier
