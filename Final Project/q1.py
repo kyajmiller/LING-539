@@ -168,6 +168,11 @@ def trainNaiveBayesClassifier():
     trainingFeatures = [createFeatureSet(emailText, vector) for [emailText, vector] in
                         zip(trainingEmails, trainingVectors)]
 
+    # print samples of features for write up, the first email in training is a spam and the second is ham
+    # can uncomment this section if you want to see them in console, otherwise see write up
+    print trainingFeatures[0]  # spam email
+    print trainingFeatures[1]  # ham email
+
     # combine features with labels
     trainingSet = [(features, label) for features, label in zip(trainingFeatures, trainingLabels)]
 
