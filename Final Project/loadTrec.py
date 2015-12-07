@@ -185,6 +185,7 @@ def text2vec(stringIn):
     return outVec
 
 
+'''
 #
 # Main Program
 #
@@ -210,3 +211,4 @@ for i in range(0, 10):
 
     print ("")
     print ("")
+'''
