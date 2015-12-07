@@ -10,7 +10,7 @@ from collections import Counter
 # Filenames
 # filenameIndex = "E:\\trec_data\\trec07p\\partial\\index"
 # filenameMessagePrefix = "E:\\trec_data\\trec07p\\data\\inmail."
-filenameIndex = 'goldData\index.txt'
+filenameIndex = 'index.txt'
 filenameMessagePrefix = 'data\inmail.'
 
 # Maximum messages to load
