@@ -1,3 +1,10 @@
+"""
+Kya Miller
+LING 539 Assignment 6 - Final Project
+loadTrec.py - This is the original loadTrec.py file that was supplied with the homework. It has been adapted to be used
+with q1.py by simply commenting out unused code and changing the filepaths. All of the original code should be intact.
+"""
+
 # loadTrec.py
 # Example of loading the TREC SPAM dataset (including the gold annotations), doing very simple preprocessing, and
 #  converting each message to a vector format.
