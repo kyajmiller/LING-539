@@ -15,6 +15,7 @@ import loadTrec
 
 
 def getData(filenameMessagePrefix):
+    # loads the emails and vectors using the loadTrec.loadMessages function. Splits up into training, dev and test sets.
     emailTexts, vectors = loadTrec.loadMessages(filenameMessagePrefix, 3000)
 
     trainingEmails = emailTexts[:1000]
@@ -33,6 +34,7 @@ def getData(filenameMessagePrefix):
 
 
 def getGoldLabels(filenameIndex):
+    # loads the gold labels using the loadTrec.loadGoldIndex function. Splits up into training, dev and test labels.
     goldLabels = loadTrec.loadGoldIndex(filenameIndex, 3000)
     trainingLabels = goldLabels[:1000]
     developmentLabels = goldLabels[1000:2000]
@@ -41,6 +43,8 @@ def getGoldLabels(filenameIndex):
 
 
 def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels):
+    # separates spam and ham emails + vectors; output is used for calculating the cosine similarity of a given email
+    # to either the spam or ham emails
     spamEmails = []
     spamVectors = []
 
@@ -48,9 +52,11 @@ def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels)
     hamVectors = []
 
     for i in range(len(trainingEmails)):
+        # if label = spam then spam
         if trainingLabels[i] == loadTrec.SPAM_MESSAGE:
             spamEmails.append(trainingEmails[i])
             spamVectors.append(trainingVectors[i])
+        # if label = ham then ham
         else:
             hamEmails.append(trainingEmails[i])
             hamVectors.append(trainingVectors[i])
@@ -62,24 +68,30 @@ def separateTrainingSpamFromHam(trainingEmails, trainingVectors, trainingLabels)
 
 
 def calculateMaxCosineSimilarity(emailVector, spamHamVectors):
+    # calculates the cosine similarity of two vectors using the loadTrec.cosine function
     cosineSimilarities = []
     for i in range(len(spamHamVectors)):
         cs = loadTrec.cosine(emailVector, spamHamVectors[i])
         cosineSimilarities.append(cs)
+
+    # get and return the max value
     return max(cosineSimilarities)
 
 
 def cosineSimilarityToSpamMessages(emailVector):
+    # calculate the cosine similarity of an email vector to spam emails from training
     spamEmails, spamVectors = trainingSpam
     return calculateMaxCosineSimilarity(emailVector, spamVectors)
 
 
 def cosineSimilarityToHamMessages(emailVector):
+    # calculate the cosine similarity of an email vector to ham emails from training
     hamEmails, hamVectors = trainingHam
     return calculateMaxCosineSimilarity(emailVector, hamVectors)
 
 
 def doesHTMLExist(emailText):
+    # check if there are HTML tags in the email
     if re.search('<html>', emailText.lower()):
         return True
     else:
@@ -99,7 +111,7 @@ def areThereReallyLongSequences(emailText):
 
 
 def checkForErectileDysfunction(emailText):
-    # check for words involving erectile dysfunction
+    # check for words involving erectile dysfunction, return how many instances
     edWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a', 'manhood', 'small', 'area',
                'perform', 'inches', 'pill', 'length', 'big', 'libido', 'orgasm', 'fix', 'drug']
     edCounter = 0
@@ -111,7 +123,7 @@ def checkForErectileDysfunction(emailText):
 
 
 def checkForHealth(emailText):
-    # check for words involving weight loss
+    # check for words involving weight loss, return how many instances
     weightLossOrHealthWords = ['fat', 'fit', 'weight', 'food', 'loss', 'growing', 'pound', 'kilo', 'health', 'eat',
                                'ate', 'overweight', 'slender', 'energy', 'lose', 'pill', 'anti-aging', 'youth',
                                'prescription', 'drug', 'quality', 'stimulate', 'hormone', 'appetite', 'natural',
@@ -125,7 +137,7 @@ def checkForHealth(emailText):
 
 
 def checkForMoney(emailText):
-    # check for words involving money or ordering things or money scams
+    # check for words involving money or ordering things or money scams, return how many instances
     moneyWords = ['money', 'order', 'buy', 'dollar', 'today', 'transaction', 'commission', 'earn', 'cash', 'payment',
                   'bank', 'receipt', 'work', 'work from home', 'capital', 'pay', 'ship', 'cheap', 'discount', 'price',
                   'delivery', 'refinance', 'property', 'finance']
@@ -138,30 +150,36 @@ def checkForMoney(emailText):
 
 
 def createFeatureSet(emailText, vector):
-    features = {}
-    features['tooLongSequences'] = areThereReallyLongSequences(emailText)
-    features['isAboutED'] = checkForErectileDysfunction(emailText)
-    features['isAboutHealth'] = checkForHealth(emailText)
-    features['isAboutMoney'] = checkForMoney(emailText)
-    features['hasHTML'] = doesHTMLExist(emailText)
-    features['cosineSimilarityToSpam'] = cosineSimilarityToSpamMessages(vector)
-    features['cosineSimilarityToHam'] = cosineSimilarityToHamMessages(vector)
+    # make the feature set by calling the things
+    features = {'tooLongSequences': areThereReallyLongSequences(emailText),
+                'isAboutED': checkForErectileDysfunction(emailText), 'isAboutHealth': checkForHealth(emailText),
+                'isAboutMoney': checkForMoney(emailText), 'hasHTML': doesHTMLExist(emailText),
+                'cosineSimilarityToSpam': cosineSimilarityToSpamMessages(vector),
+                'cosineSimilarityToHam': cosineSimilarityToHamMessages(vector)}
     return features
 
 
 def trainNaiveBayesClassifier():
+    # train the Naive Bayes classifier on the training set and save the classifier to a file
+
+    # get the training features
     trainingFeatures = [createFeatureSet(emailText, vector) for [emailText, vector] in
                         zip(trainingEmails, trainingVectors)]
+
+    # combine features with labels
     trainingSet = [(features, label) for features, label in zip(trainingFeatures, trainingLabels)]
 
+    # train nltk.NaiveBayesClassifier
     nbClassifier = nltk.NaiveBayesClassifier.train(trainingSet)
 
+    # use pickle to save the trained classifier so won't have to do it again every time I want to check the performance
     classifierSaveFile = open('trainedNBClassifier', 'wb')
     pickle.dump(nbClassifier, classifierSaveFile)
     classifierSaveFile.close()
 
 
 def loadSavedClassifier():
+    # load a saved classifier using pickle
     classifierSaveFile = open('trainedNBClassifier', 'rb')
     nbClassifier = pickle.load(classifierSaveFile)
     classifierSaveFile.close()
@@ -169,6 +187,7 @@ def loadSavedClassifier():
 
 
 def displayMostInformativeFeatures(howmany=None):
+    # if you want to see what the most important features were, call this
     nbClassifier = loadSavedClassifier()
     if howmany:
         nbClassifier.show_most_informative_features(howmany)
@@ -177,14 +196,26 @@ def displayMostInformativeFeatures(howmany=None):
 
 
 def testNBClassifier(evaluationData, evaluationLabels):
+    # evaluate the NB classifier on a given set
+
+    # separate data into emails and vectors
     emails, vectors = evaluationData
+
+    # get features
     evaluationFeaturesLists = [createFeatureSet(emailText, vector) for [emailText, vector] in zip(emails, vectors)]
+    # combine features with labels, used to get overall accuracy
     evaluationSet = [(features, label) for features, label in zip(evaluationFeaturesLists, evaluationLabels)]
 
+    # load the classifier
     nbClassifier = loadSavedClassifier()
+
+    # get the accuracy of the classifier using nltk.classify.accuracy
     classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationSet) * 100
+
+    # get the predicted labels because for some godawful reason nltk doesn't have a module to return counts of labels
     predictedLabels = [nbClassifier.classify(featureSet) for featureSet in evaluationFeaturesLists]
 
+    # declare some counters
     totalGoldSpam = 0
     totalGoldHam = 0
     totalPredictedSpam = 0
@@ -194,6 +225,7 @@ def testNBClassifier(evaluationData, evaluationLabels):
     hamAsHam = 0
     hamAsSpam = 0
 
+    # loop through predicted labels vs gold labels
     for predicted, gold in zip(predictedLabels, evaluationLabels):
         # check if things that should have been labeled spam...
         if gold == loadTrec.SPAM_MESSAGE:
@@ -218,11 +250,13 @@ def testNBClassifier(evaluationData, evaluationLabels):
                 hamAsSpam += 1
                 totalPredictedSpam += 1
 
+    # calculate percentages
     trueSpamPercentage = spamAsSpam / totalPredictedSpam * 100
     falseSpamPercentage = hamAsSpam / totalPredictedSpam * 100
     falseHamPercentage = spamAsHam / totalPredictedHam * 100
     trueHamPercentage = hamAsHam / totalPredictedHam * 100
 
+    # print to console
     print 'Classified as Spam\t%s (%.2f)\t%s (%.2f)\t%s' % (
     spamAsSpam, trueSpamPercentage, hamAsSpam, falseSpamPercentage, totalPredictedSpam)
     print 'Classified as Ham\t%s (%.2f)\t%s (%.2f)\t%s' % (
@@ -230,22 +264,33 @@ def testNBClassifier(evaluationData, evaluationLabels):
     print 'Total accuracy: %.2f' % classifierAccuracy
 
 
+# actual program now
+
+# filepaths to files, filepaths that I used are uncommented, original filepaths from loadTrec.py are also included
 filenameIndex = 'index.txt'
 filenameMessagePrefix = 'data\inmail.'
 # filenameIndex = "E:\\trec_data\\trec07p\\partial\\index"
 # filenameMessagePrefix = "E:\\trec_data\\trec07p\\data\\inmail."
 
+# get the labels
 trainingLabels, developmentLabels, testingLabels = getGoldLabels(filenameIndex)
+# get the data
 trainingData, developmentData, testingData = getData(filenameMessagePrefix)
+# split training emails and vectors
 trainingEmails, trainingVectors = trainingData
+# so you can feed into spam vs ham separator
 trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
 
+# train the classifier, commented out for runtime because I don't want to have to train it every time
+# if you want to retrain, just uncomment it
 # trainNaiveBayesClassifier()
 
+# evaluate performance on dev, print
 print '\n\n'
 print 'Performance on dev.\tTrue Spam\tTrue Normal\tTotal'
 testNBClassifier(developmentData, developmentLabels)
 
+# evaluate performance on test, print
 print '\n\n'
 print 'Performance on test\tTrue Spam\tTrue Normal\tTotal'
 testNBClassifier(testingData, testingLabels)
