@@ -91,7 +91,8 @@ def checkForErectileDysfunction(emailText):
     # check for words involving erectile dysfunction
     erectileDysfunctionMessage = False
     definitelyEDWords = ['viagra', 'cialis', 'levitra', 'v i a g r a', 'c i a l i s', 'l e v i t r a']
-    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big', 'libido']
+    wordsRelatingToED = ['manhood', 'small', 'area', 'perform', 'inches', 'pill', 'length', 'big', 'libido', 'orgasm',
+                         'fix', 'drug']
     definiteCounter = 0
     maybeCounter = 0
     for word in definitelyEDWords:
@@ -113,7 +114,9 @@ def checkForHealth(emailText):
     # check for words involving weight loss
     weightLossOrHealthMessage = False
     weightLossOrHealthWords = ['fat', 'fit', 'weight', 'food', 'loss', 'growing', 'pound', 'kilo', 'health', 'eat',
-                               'ate', 'overweight', 'slender', 'energy', 'lose', 'pill', 'anti-aging', 'youth']
+                               'ate', 'overweight', 'slender', 'energy', 'lose', 'pill', 'anti-aging', 'youth',
+                               'prescription', 'drug', 'quality', 'stimulate', 'hormone', 'appetite', 'natural',
+                               'losing', 'substance']
     healthCounter = 0
     for word in weightLossOrHealthWords:
         if re.findall(word, emailText.lower()):
@@ -122,6 +125,22 @@ def checkForHealth(emailText):
     if healthCounter >= 3:
         weightLossOrHealthMessage = True
     return weightLossOrHealthMessage
+
+
+def checkForMoney(emailText):
+    # check for words involving money or ordering things or money scams
+    moneyMessage = False
+    moneyWords = ['money', 'order', 'buy', 'dollar', 'today', 'transaction', 'commission', 'earn', 'cash', 'payment',
+                  'bank', 'receipt', 'work', 'work from home', 'capital', 'pay', 'ship', 'cheap', 'discount', 'price',
+                  'delivery', 'refinance', 'property', 'finance']
+    moneyCounter = 0
+    for word in moneyWords:
+        if re.findall(word, emailText.lower()):
+            moneyCounter += len(re.findall(word, emailText.lower()))
+
+    if moneyCounter >= 2:
+        moneyMessage = True
+    return moneyMessage
 
 
 
