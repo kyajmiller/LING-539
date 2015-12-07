@@ -198,13 +198,15 @@ def checkForMoney(emailText):
     return moneyCounter
 
 
-def createFeatureSet(emailText):
+def createFeatureSet(emailText, vector):
     features = {}
-    features['HTML'] = doesHTMLExist(emailText)
+    # features['HTML'] = doesHTMLExist(emailText)
     features['tooLongSequences'] = areThereReallyLongSequences(emailText)
     features['isAboutED'] = checkForErectileDysfunction(emailText)
     features['isAboutHealth'] = checkForHealth(emailText)
     features['isAboutMoney'] = checkForMoney(emailText)
+    features['cosineSimilarityToSpam'] = cosineSimilarityToSpamMessages(vector)
+    features['cosineSimilarityToHam'] = cosineSimilarityToHamMessages(vector)
     return features
 
 
@@ -231,7 +233,12 @@ def testNBClassifier(evaluationData):
 # trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData, developmentData, testingData = getData()
+trainingEmails, trainingVectors = trainingData
 trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
+
+trainingFeatures = [createFeatureSet(emailText, vector) for [emailText, vector] in zip(trainingEmails, trainingVectors)]
+trainingSet = [(features, label) for features, label in zip(trainingFeatures, trainingLabels)]
+
 '''
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
