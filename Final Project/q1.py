@@ -180,7 +180,7 @@ def testNBClassifier(evaluationData):
     return classifierAccuracy
 
 
-'''
+
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
@@ -188,11 +188,7 @@ developmentData = getDevelopmentData(developmentLabels)
 developmentData = [(createFeatureSet(emailText), label) for [emailText, label] in developmentData]
 testingData = getTestingData(testingLabels)
 testingData = [(createFeatureSet(emailText), label) for [emailText, label] in testingData]
-'''
 
-for features, label in trainingData:
-    print features, label
-
-# trainNaiveBayesClassifier(trainingData)
-# classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
-#print classifierAccuracyOnDevelopmentData
+trainNaiveBayesClassifier(trainingData)
+classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
+print classifierAccuracyOnDevelopmentData
