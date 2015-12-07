@@ -229,9 +229,13 @@ def loadSavedClassifier():
     return nbClassifier
 
 
-def testNBClassifier(evaluationData):
+def testNBClassifier(evaluationData, evaluationLabels):
+    emails, vectors = evaluationData
+    evaluationFeaturesLists = [createFeatureSet(emailText, vector) for [emailText, vector] in zip(emails, vectors)]
+    evaluationSet = [(features, label) for features, label in zip(evaluationFeaturesLists, evaluationLabels)]
+
     nbClassifier = loadSavedClassifier()
-    classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationData)
+    classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationSet)
     return classifierAccuracy
 
 
