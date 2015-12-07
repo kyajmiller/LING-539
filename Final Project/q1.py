@@ -200,11 +200,11 @@ def checkForMoney(emailText):
 
 def createFeatureSet(emailText, vector):
     features = {}
-    # features['HTML'] = doesHTMLExist(emailText)
     features['tooLongSequences'] = areThereReallyLongSequences(emailText)
     features['isAboutED'] = checkForErectileDysfunction(emailText)
     features['isAboutHealth'] = checkForHealth(emailText)
     features['isAboutMoney'] = checkForMoney(emailText)
+    features['hasHTML'] = doesHTMLExist(emailText)
     features['cosineSimilarityToSpam'] = cosineSimilarityToSpamMessages(vector)
     features['cosineSimilarityToHam'] = cosineSimilarityToHamMessages(vector)
     return features
@@ -245,17 +245,5 @@ trainingEmails, trainingVectors = trainingData
 trainingSpam, trainingHam = separateTrainingSpamFromHam(trainingData[0], trainingData[1], trainingLabels)
 
 trainNaiveBayesClassifier()
-
-
-'''
-trainingData = getTrainingData(trainingLabels)
-trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
-developmentData = getDevelopmentData(developmentLabels)
-developmentData = [(createFeatureSet(emailText), label) for [emailText, label] in developmentData]
-testingData = getTestingData(testingLabels)
-testingData = [(createFeatureSet(emailText), label) for [emailText, label] in testingData]
-
-trainNaiveBayesClassifier(trainingData)
-classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
-print classifierAccuracyOnDevelopmentData
-'''
+classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData, developmentLabels)
+print(classifierAccuracyOnDevelopmentData)
