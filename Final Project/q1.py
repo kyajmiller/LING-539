@@ -1,9 +1,11 @@
 """
 Kya Miller
 LING 539 Assignment 6 - Final Project
-Q1 - Attempt at implementing a spam classifier. Imports and uses some utility functions from loadTrec.py. The filepaths
-given to the index.txt file and the emails were changed to fit my directory, but the paths from loadTrec.py are also
-given (commented out right below my paths).
+Q1 - Attempt at implementing a spam classifier. Imports and uses some utility functions from loadTrec.py. In its current
+iteration, loads a pre-trained Naive Bayes classifier, but you can call the function to train a new one / retrain by
+uncommenting the call line.
+The filepaths given to the index.txt file and the emails were changed to fit my directory, but the paths from
+loadTrec.py are also given (commented out right below my paths).
 """
 from __future__ import division
 import nltk
