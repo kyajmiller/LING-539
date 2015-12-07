@@ -143,19 +143,20 @@ def checkForMoney(emailText):
     return moneyMessage
 
 
-
 def createFeatureSet(emailText):
     features = {}
     features['HTML'] = doesHTMLExist(emailText)
     features['tooLongSequences'] = areThereReallyLongSequences(emailText)
     features['isAboutED'] = checkForErectileDysfunction(emailText)
+    features['isAboutHealth'] = checkForHealth(emailText)
+    features['isAboutMoney'] = checkForMoney(emailText)
     return features
 
 
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
 trainingData = [[createFeatureSet(emailText), label] for [emailText, label] in trainingData]
-for features, label in trainingData:
-    print features, label
 developmentData = getDevelopmentData(developmentLabels)
+developmentData = [[createFeatureSet(emailText), label] for [emailText, label] in developmentData]
 testingData = getTestingData(testingLabels)
+testingData = [[createFeatureSet(emailText), label] for [emailText, label] in testingData]
