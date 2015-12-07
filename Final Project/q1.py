@@ -79,7 +79,7 @@ def doesHTMLExist(emailText):
 def areThereReallyLongSequences(emailText):
     # checks for emails that have super long sequences of jumbled text. Simply checks for the existence of 'words' with
     # a length longer than 50 characters
-    words = ' '.split(emailText)
+    words = emailText.split(' ')
     tooLong = False
     for word in words:
         if len(word) > 50:
@@ -96,19 +96,23 @@ def checkForErectileDysfunction(emailText):
                          'fix', 'drug']
     definiteCounter = 0
     maybeCounter = 0
+    edCounter = 0
     for word in definitelyEDWords:
         if re.findall(word, emailText.lower()):
             definiteCounter += len(re.findall(word, emailText.lower()))
+            edCounter += len(re.findall(word, emailText.lower()))
     for word in wordsRelatingToED:
         if re.findall(word, emailText.lower()):
             maybeCounter += len(re.findall(word, emailText.lower()))
+            edCounter += len(re.findall(word, emailText.lower()))
 
     if definiteCounter >= 2:
         erectileDysfunctionMessage = True
     if maybeCounter >= 3:
         erectileDysfunctionMessage = True
 
-    return erectileDysfunctionMessage
+    # return erectileDysfunctionMessage
+    return edCounter
 
 
 def checkForHealth(emailText):
@@ -125,7 +129,8 @@ def checkForHealth(emailText):
 
     if healthCounter >= 3:
         weightLossOrHealthMessage = True
-    return weightLossOrHealthMessage
+    # return weightLossOrHealthMessage
+    return healthCounter
 
 
 def checkForMoney(emailText):
@@ -141,7 +146,8 @@ def checkForMoney(emailText):
 
     if moneyCounter >= 2:
         moneyMessage = True
-    return moneyMessage
+    # return moneyMessage
+    return moneyCounter
 
 
 def createFeatureSet(emailText):
@@ -156,13 +162,13 @@ def createFeatureSet(emailText):
 
 def trainNaiveBayesClassifier(trainingData):
     nbClassifier = nltk.NaiveBayesClassifier.train(trainingData)
-    classifierSaveFile = open('trainedNBClassifier', 'wb')
+    classifierSaveFile = open('trainedNBClassifier2', 'wb')
     pickle.dump(nbClassifier, classifierSaveFile)
     classifierSaveFile.close()
 
 
 def loadSavedClassifier():
-    classifierSaveFile = open('trainedNBClassifier', 'rb')
+    classifierSaveFile = open('trainedNBClassifier2', 'rb')
     nbClassifier = pickle.load(classifierSaveFile)
     classifierSaveFile.close()
     return nbClassifier
@@ -173,6 +179,8 @@ def testNBClassifier(evaluationData):
     classifierAccuracy = nltk.classify.accuracy(nbClassifier, evaluationData)
     return classifierAccuracy
 
+
+'''
 trainingLabels, developmentLabels, testingLabels = getGoldLabels()
 trainingData = getTrainingData(trainingLabels)
 trainingData = [(createFeatureSet(emailText), label) for [emailText, label] in trainingData]
@@ -180,7 +188,11 @@ developmentData = getDevelopmentData(developmentLabels)
 developmentData = [(createFeatureSet(emailText), label) for [emailText, label] in developmentData]
 testingData = getTestingData(testingLabels)
 testingData = [(createFeatureSet(emailText), label) for [emailText, label] in testingData]
+'''
+
+for features, label in trainingData:
+    print features, label
 
 # trainNaiveBayesClassifier(trainingData)
-classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
-print classifierAccuracyOnDevelopmentData
+# classifierAccuracyOnDevelopmentData = testNBClassifier(developmentData)
+#print classifierAccuracyOnDevelopmentData
