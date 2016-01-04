@@ -1,3 +1,10 @@
+"""
+Kya Miller
+LING 539 Assignment 6 - Final Project
+loadTrec.py - This is the original loadTrec.py file that was supplied with the homework. It has been adapted to be used
+with q1.py by simply commenting out unused code and changing the filepaths. All of the original code should be intact.
+"""
+
 # loadTrec.py
 # Example of loading the TREC SPAM dataset (including the gold annotations), doing very simple preprocessing, and
 #  converting each message to a vector format.
@@ -8,8 +15,10 @@ import re
 from collections import Counter
 
 # Filenames
-filenameIndex = "E:\\trec_data\\trec07p\\partial\\index"
-filenameMessagePrefix = "E:\\trec_data\\trec07p\\data\\inmail."
+# filenameIndex = "E:\\trec_data\\trec07p\\partial\\index"
+# filenameMessagePrefix = "E:\\trec_data\\trec07p\\data\\inmail."
+filenameIndex = 'index.txt'
+filenameMessagePrefix = 'data\inmail.'
 
 # Maximum messages to load
 MAX_MESSAGES = 3000
@@ -71,7 +80,7 @@ def loadMessage(filename):
         # Check to see if the header has ended
         if (isHeader == 1) and (len(line) < 2):
             isHeader = 0
-
+    '''
     # Make it easier to segment or filter HTML tags
     stringIn = stringIn.replace("<", " <")
     stringIn = stringIn.replace(">", "> ")
@@ -84,6 +93,7 @@ def loadMessage(filename):
 
     # Optional Add more preprocessing / filtering...
     # ...
+    '''
 
     # print ("stringIn: " + stringIn)
     fp.close()
@@ -183,6 +193,7 @@ def text2vec(stringIn):
     return outVec
 
 
+'''
 #
 # Main Program
 #
@@ -197,14 +208,15 @@ messageGold = loadGoldIndex(filenameIndex, MAX_MESSAGES)
 print ("\n\n")
 
 for i in range(0, 10):
-    print ("Message " + str(i))
+    print ("Message " + str(i + 1))
     print ("Class: " + str(messageGold[i]))
     print ("Text: " + messageText[i])
     print ("Vector: " + str(messageVecs[i]))
 
     print ("Cosine Similarities with other messages: ")
     for j in range(0, 10):
-        print(str(j) + ": %.4f  " % cosine(messageVecs[i], messageVecs[j])),
+        print(str(j + 1) + ": %.4f  " % cosine(messageVecs[i], messageVecs[j])),
 
     print ("")
     print ("")
+'''
